@@ -20,6 +20,14 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
         $state.reload();
     });
 
+    $rootScope.$on('SetAuthenticatedUser', function (event, user) {
+        console.log(user);
+        setAuthenticatedUser(user);
+    });
+
+    var tokenKey = 'notgoogleplus_auth_token';
+    var userObjKey = 'notgoogleplus_auth_user';
+
     // @name Authentication
     // @desc The Factory to be returned
     var Authentication = {
@@ -28,8 +36,6 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
         register: register,
         passwordReset: passwordReset,
         passwordResetConfirm: passwordResetConfirm,
-        getAuthenticatedUser: getAuthenticatedUser,
-        updateAuthenticatedUser: updateAuthenticatedUser,
         setAuthenticatedUser: setAuthenticatedUser,
         fetchAuthenticatedUser: fetchAuthenticatedUser,
         setAuthToken: setAuthToken,
@@ -56,13 +62,12 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
                 password: password
             }
         }).then(function (response) {
-            if (!response.data.token) {
-                return response;
-            } else {
-                setAuthToken(response.data.token);
-                $rootScope.$broadcast('Authenticated');
-                return response;
-            }
+            setAuthToken(response.data.token);
+            $rootScope.$broadcast('Authenticated');
+            return response;
+        }).catch(function (error) {
+            console.log(error);
+            return $q.reject(error);
         });
     }
 
@@ -74,12 +79,11 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
             url: ApiUrls.domain_url + 'api/v1/auth/logout/',
             method: 'POST'
         }).then(function(response) {
-            if(response.data.error) {
-                //Todo: do something!!
-            } else {
-                $rootScope.$broadcast('Unauthenticated');
-                return response;
-            }
+            $rootScope.$broadcast('Unauthenticated');
+            return response;
+        }).catch(function (error) {
+            console.log(error);
+            return $q.reject(error);
         });
     }
 
@@ -95,22 +99,23 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
             method: 'POST',
             data: data
         }).then(function(response) {
-            if (response.data.error) {
-                return response;
-            } else {
-                login(data.email, data.password);
-                return response;
-            }
+            return response;
+        }).catch(function (error) {
+            console.log(error);
+            return $q.reject(error);
         });
     }
 
-    function passwordReset(email) {
+    function passwordReset(data) {
         return $http({
             url: ApiUrls.domain_url + 'api/v1/auth/password/reset/',
             method: 'POST',
-            data:{email: email}
+            data: data
         }).then(function (response) {
             return response;
+        }).catch(function (error) {
+            console.log(error);
+            return $q.reject(error);
         });
     }
 
@@ -121,96 +126,71 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
             data: data
         }).then(function (response) {
             return response;
+        }).catch(function (error) {
+            console.log(error);
+            return $q.reject(error);
         });
     }
 
-    function getAuthenticatedUser() {
-        return $http({
-            url: ApiUrls.domain_url + 'api/v1/auth/me/',
-            method: 'GET'
-        }).then(function (response) {
-            setAuthenticatedUser(response.data);
-            return response;
-        }).catch(function(response) {
-            console.log(response);
-        });
+    function setAuthenticatedUser (user) {
+        $cookies.put(userObjKey, btoa(JSON.stringify(user)));
     }
 
-    function updateAuthenticatedUser(id, data) {
-        return $http({
-            url: ApiUrls.domain_url + 'api/v1/accounts/' + id + '/',
-            method: 'PUT',
-            data: data
-        }).then(function (response) {
-            setAuthenticatedUser(response.data);
-            return response;
-        });
-    }
-
-    function setAuthenticatedUser(user) {
-        $cookies.put("notgoogleplus_auth_user", btoa(JSON.stringify(user)));
-        $rootScope.$broadcast('SetAuthenticatedUser');
-    }
-
-    function fetchAuthenticatedUser() {
-        return !!$cookies.get("notgoogleplus_auth_user")
-            ? JSON.parse(atob($cookies.get("notgoogleplus_auth_user")))
+    function fetchAuthenticatedUser () {
+        return !!$cookies.get(userObjKey)
+            ? JSON.parse(atob($cookies.get(userObjKey)))
             : undefined;
     }
 
-    function removeAuthenticatedUser() {
-        $cookies.remove("notgoogleplus_auth_user");
-        $rootScope.$broadcast('RemoveAuthenticatedUser');
+    function removeAuthenticatedUser () {
+        $cookies.remove(userObjKey);
     }
 
     // @name setAuthToken
     // @desc Store the token obtained in a cookie
     // @param {string} token The token to be stored
     // @returns {undefined}
-    function setAuthToken(token) {
-        $cookies.put("notgoogleplus_token", token);
+    function setAuthToken (token) {
+        $cookies.put(tokenKey, token);
     }
 
     // @name fetchAuthToken
     // @desc Return the stored token if present
     // @returns {token|undefined} if token is present, else 'undefined'
-    function fetchAuthToken() {
-        var token = $cookies.get("notgoogleplus_token");
+    function fetchAuthToken () {
+        var token = $cookies.get(tokenKey);
         return token ? token : undefined;
     }
 
     // @name removeAuthToken
     // @desc Delete the cookie where the user object is stored
     // @returns {undefined}
-    function removeAuthToken() {
-        $cookies.remove("notgoogleplus_token");
+    function removeAuthToken () {
+        $cookies.remove(tokenKey);
     }
 
-    function getAuthHeader() {
+    function getAuthHeader () {
         return fetchAuthToken() ? {'Authorization': 'Token ' + fetchAuthToken()} : undefined;
     }
 
     // @name isAuthenticated
     // @desc Check if the current user is authenticated
     // @returns {boolean} True if user is authenticated, else false
-    function isAuthenticated() {
-        return !!$cookies.get("notgoogleplus_token");
+    function isAuthenticated () {
+        return !!$cookies.get(tokenKey);
     }
 
     // @name isOwner
     // @param {string} username The username accessed by the user.
     // @desc Check if the current username is same as @param
-    // @returns {boolean} True is user is owner, else false
-    function isOwner(username) {
+    // @returns {boolean} True if user is owner, else false
+    function isOwner (username) {
         var deferred = $q.defer();
-        if(!fetchAuthenticatedUser()) {
-            $rootScope.$on('SetAuthenticatedUser', function () {
-                var authenticatedUser = fetchAuthenticatedUser();
-                deferred.resolve(username === authenticatedUser.username);
-            });
-        } else {
+        if(fetchAuthenticatedUser()) {
             var authenticatedUser = fetchAuthenticatedUser();
             deferred.resolve(username === authenticatedUser.username);
+        } else {
+            deferred.reject();
         }
         return deferred.promise;
     }

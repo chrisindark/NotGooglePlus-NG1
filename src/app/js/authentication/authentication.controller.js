@@ -53,7 +53,6 @@ function AuthenticationController($scope, $location, Authentication,
 
     vm.passwordReset = function () {
         Authentication.passwordReset(vm.email).then(function(response) {
-            vm.errors = response.data;
             vm.errors = {};
             vm.closeModal();
             console.log("reset password email sent");
@@ -81,7 +80,7 @@ function AuthenticationController($scope, $location, Authentication,
         vm.closeModal();
         $uibModal.open({
             animation: true,
-            templateUrl: 'app/templates/authentication/' + arg + '.html',
+            templateUrl: 'app/js/authentication/' + arg + '.html',
             controller: 'AuthenticationController',
             controllerAs: 'vm',
             windowClass: 'my-modal'

@@ -1,25 +1,24 @@
 angular
     .module('notgoogleplus.services')
-    .factory('Profile', Profile);
+    .factory('ProfileService', ProfileService);
 
-Profile.$inject = ['$http', 'ApiUrls'];
+ProfileService.$inject = ['$http', 'ApiUrls'];
 
-//@namespace Profile
+//@namespace ProfileService
 //@returns {Factory}
-function Profile($http, ApiUrls) {
-    var Profile = {
+function ProfileService($http, ApiUrls) {
+    var ProfileService = {
         getProfile: getProfile,
         updateProfile: updateProfile,
         destroyProfile: destroyProfile
     };
 
-    return Profile;
+    return ProfileService;
 
     //@name get
     //@desc Gets the profile for the user with username 'username'
     //@param {string} username The username of the user to fetch
     //@returns {Promise}
-    //@memberOf thinkster.profiles.services.Profile
     function getProfile(username) {
         return $http({
             url: ApiUrls.domain_url + 'api/v1/profiles/' + username + '/',
@@ -31,7 +30,6 @@ function Profile($http, ApiUrls) {
     //@desc Destroys the given profile
     //@param {Object} profile The profile to be destroyed
     //@returns {Promise}
-    //@memberOf thinkster.profiles.services.Profile
     function destroyProfile(username) {
         return $http({
             url: ApiUrls.domain_url + 'api/v1/profiles/' + username + '/',
@@ -43,7 +41,6 @@ function Profile($http, ApiUrls) {
     //@desc Updates the given profile
     //@param {Object} profile The profile to be updated
     //@returns {Promise}
-    //@memberOf thinkster.profiles.services.Profile
     function updateProfile(username, data) {
         return $http({
             url: ApiUrls.domain_url + 'api/v1/profiles/' + username + '/',

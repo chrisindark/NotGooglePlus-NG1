@@ -1,11 +1,15 @@
 angular
     .module('notgoogleplus.controllers')
-    .controller('NavbarController', NavbarController);
+    .component('navbarComponent', {
+        templateUrl: 'app/js/layout/navbar.html',
+        controller: NavbarController,
+        controllerAs: 'vm'
+    });
 
-NavbarController.$inject = ['$rootScope', '$scope', 'Authentication', '$uibModal'];
+NavbarController.$inject = ['$rootScope', 'Authentication', 'AccountsService', '$uibModal'];
 
 // @namespace NavbarController
-function NavbarController($rootScope, $scope, Authentication, $uibModal) {
+function NavbarController($rootScope, Authentication, AccountsService, $uibModal) {
     var vm = this;
 
     function activate() {
@@ -14,7 +18,7 @@ function NavbarController($rootScope, $scope, Authentication, $uibModal) {
             if (Authentication.fetchAuthenticatedUser()) {
                 vm.user = Authentication.fetchAuthenticatedUser();
             } else {
-                Authentication.getAuthenticatedUser().then(function(response) {
+                AccountsService.getAuthenticatedUser().then(function(response) {
                     vm.user = Authentication.fetchAuthenticatedUser();
                 });
             }
@@ -30,7 +34,7 @@ function NavbarController($rootScope, $scope, Authentication, $uibModal) {
     vm.openLoginModal = function() {
         $uibModal.open({
             animation: true,
-            templateUrl: 'app/templates/authentication/login.html',
+            templateUrl: 'app/js/authentication/login.html',
             controller: 'AuthenticationController',
             controllerAs: 'vm',
             windowClass: 'my-modal'
@@ -39,8 +43,17 @@ function NavbarController($rootScope, $scope, Authentication, $uibModal) {
 
     vm.openPostModal = function() {
         $uibModal.open({
-            templateUrl: '/templates/posts/new-post.html',
+            templateUrl: 'app/js/posts/new-post.html',
             controller: 'NewPostController',
+            controllerAs: 'vm',
+            windowClass: 'my-modal'
+        });
+    };
+
+    vm.openFileModal = function() {
+        $uibModal.open({
+            templateUrl: 'app/js/posts/new-file.html',
+            controller: 'NewFileController',
             controllerAs: 'vm',
             windowClass: 'my-modal'
         });

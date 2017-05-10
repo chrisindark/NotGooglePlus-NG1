@@ -1,13 +1,13 @@
 angular
     .module('notgoogleplus.services')
-    .factory('Posts', Posts);
+    .factory('PostsService', PostsService);
 
-Posts.$inject = ['$http', 'ApiUrls'];
+PostsService.$inject = ['$http', 'ApiUrls'];
 
-//@namespace Posts
+//@namespace PostsService
 //@returns {Factory}
-function Posts($http, ApiUrls) {
-    var Posts = {
+function PostsService($http, ApiUrls) {
+    var PostsService = {
         allPosts: allPosts,
         createPost: createPost,
         getPost: getPost,
@@ -15,9 +15,7 @@ function Posts($http, ApiUrls) {
         removePost: removePost
     };
 
-    return Posts;
-
-    //@name all
+    //@name allPosts
     //@desc Get all Posts
     //@returns {Promise}
     function allPosts(url, params) {
@@ -30,7 +28,7 @@ function Posts($http, ApiUrls) {
         });
     }
 
-    //@name create
+    //@name createPost
     //@desc Create a new Post
     //@param {string} content The content of the new Post
     //@returns {Promise}
@@ -42,18 +40,19 @@ function Posts($http, ApiUrls) {
         });
     }
 
-    //@name get
-    //@desc Get the Posts of a given user
-    //@param {string} username The username to get Posts for
+    //@name getPost
+    //@desc Get the details of a single post
     //@returns {Promise}
-    function getPost(username, id) {
+    function getPost(id) {
         return $http({
             url: ApiUrls.domain_url + 'api/v1/posts/' + id + '/',
-            method: 'GET',
-            params: {username: username}
+            method: 'GET'
         });
     }
 
+    //@name updatePost
+    //@desc Update the details of a single post
+    //@returns {Promise}
     function updatePost(id, data) {
         return $http({
             url: ApiUrls.domain_url + 'api/v1/posts/' + id + '/',
@@ -74,4 +73,5 @@ function Posts($http, ApiUrls) {
         });
     }
 
+    return PostsService;
 }

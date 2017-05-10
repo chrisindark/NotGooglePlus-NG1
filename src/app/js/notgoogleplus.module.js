@@ -9,7 +9,6 @@ angular
         'ngAnimate',
         'ui.router',
         'ui.bootstrap',
-        'angular-inview',
         'angular-loading-bar',
         'wu.masonry',
         'notgoogleplus.config',
@@ -37,12 +36,3 @@ angular
 
 angular
     .module('notgoogleplus.utils', []);
-
-angular
-    .module('notgoogleplus')
-    .run(run);
-
-function run() {
-    console.log("Angular app started");
-    console.log("Angular app started");
-}

@@ -15,7 +15,8 @@ function config($httpProvider, $locationProvider, $compileProvider) {
 
     // Add HTTP interceptor for handling requests, responses
     // requests and response errors.
-    $httpProvider.interceptors.push('HttpInterceptor');
+    $httpProvider.interceptors.push('ErrorInterceptor');
+    $httpProvider.interceptors.push('TokenInjector');
 
     $.material.init();
 

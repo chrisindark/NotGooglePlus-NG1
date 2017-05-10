@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>NotGooglePlus</title>
 
+        <base href="/">
+
         <link rel="icon" href="./favicon.ico">
 
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
@@ -17,7 +19,6 @@
         <!-- inject:css -->
         <!-- endinject -->
 
-        <base href="/">
     </head>
 
     <body>
@@ -25,11 +26,7 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <ng-include src="'app/templates/layout/navbar.html'"></ng-include>
-
-        <div class="container-fluid my-container">
-            <div class="ui-view"></div>
-        </div>
+        <div ui-view></div>
 
         <!-- bower:js -->
         <!-- endbower -->

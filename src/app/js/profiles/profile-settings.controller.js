@@ -3,11 +3,11 @@ angular
     .controller('ProfileSettingsController', ProfileSettingsController);
 
 ProfileSettingsController.$inject = ['$scope', '$state', '$stateParams',
-    '$timeout', 'Authentication', 'Profile', 'Snackbar'];
+    '$timeout', 'Authentication', 'AccountsService', 'ProfileService', 'Snackbar'];
 
 //@namespace ProfileSettingsController
 function ProfileSettingsController($scope, $state, $stateParams,
-    $timeout, Authentication, Profile, Snackbar) {
+    $timeout, Authentication, AccountsService, ProfileService, Snackbar) {
         var vm = this;
 
         var username = $stateParams.username;
@@ -40,10 +40,10 @@ function ProfileSettingsController($scope, $state, $stateParams,
     //@name getProfile
     //@desc Get this user's profile
     function getProfile() {
-        Profile.getProfile(username).then(function(response) {
-            if(response.data.id) {
-                vm.profile = response.data;
-            }
+        ProfileService.getProfile(username).then(function(response) {
+            vm.profile = response.data;
+        }).catch(function(error) {
+            console.log(error);
         });
     }
 
@@ -53,7 +53,7 @@ function ProfileSettingsController($scope, $state, $stateParams,
         var data = {
             username: vm.user.username
         };
-        Authentication.updateAuthenticatedUser(vm.user.id, data).then(function(response) {
+        AccountsService.updateAuthenticatedUser(vm.user.id, data).then(function(response) {
             vm.errors = {};
             Snackbar.show("Account has been successfully updated!");
             $state.go('profileSettings', {username: response.data.username});
@@ -65,7 +65,7 @@ function ProfileSettingsController($scope, $state, $stateParams,
     //@name deleteAccount
     //@desc Delete this user's account
     function deleteAccount() {
-        Profile.deleteAuthenticatedUser(vm.profile).then(function(response) {
+        AccountsService.deleteAuthenticatedUser(vm.profile).then(function(response) {
             console.log(response);
             Authentication.logout();
         });
@@ -74,7 +74,7 @@ function ProfileSettingsController($scope, $state, $stateParams,
     //@name updateProfile
     //@desc Update this user's profile
     function updateProfile() {
-        Profile.updateProfile(vm.user.username, vm.profile).then(function(response) {
+        ProfileService.updateProfile(vm.user.username, vm.profile).then(function(response) {
             vm.errors = {};
             console.log(response);
             Snackbar.show("Profile has been successfully updated!");

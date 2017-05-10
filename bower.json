@@ -17,24 +17,25 @@
   "dependencies": {
     "jquery": "^2.1.4",
     "bootstrap": "^3.3.6",
+    "bootstrap-material-datetimepicker": "^2.7.1",
     "bootstrap-material-design": "^0.5.10",
     "masonry": "^4.0.0",
     "imagesloaded": "^4.1.0",
-    "bootstrap-material-datetimepicker": "^2.7.1",
     "snackbarjs": "^1.1.0",
     "underscore": "^1.8.3",
     "angular": "^1.6.1",
-    "angular-cookies": "^1.6.1",
     "angular-animate": "^1.6.1",
+    "angular-aria": "^1.6.1",
+    "angular-bootstrap": "^0.14.3",
+    "angular-cookies": "^1.6.1",
+    "angular-loading-bar": "^0.8.0",
+    "angular-masonry": "^0.16.0",
     "angular-messages": "^1.6.1",
     "angular-sanitize": "^1.6.1",
     "angular-touch": "^1.6.1",
     "angular-ui-router": "^0.3.2",
-    "angular-bootstrap": "^0.14.3",
-    "angular-loading-bar": "^0.8.0",
-    "angular-masonry": "^0.16.0",
-    "angular-inview": "^2.2.0",
-    "moment": "^2.18.1"
+    "moment": "^2.18.1",
+    "marked": "^0.3.6"
   },
   "overrides": {
     "bootstrap": {
@@ -51,5 +52,10 @@
     }
   },
   "description": "",
-  "private": true
+  "private": true,
+  "resolutions": {
+    "angular": "^1.6.1",
+    "jquery": "^2.1.4",
+    "bootstrap-material-design": "^0.5.10"
+  }
 }

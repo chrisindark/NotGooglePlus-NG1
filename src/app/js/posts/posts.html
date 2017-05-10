@@ -1,0 +1,51 @@
+<select class="form-control"
+        ng-model="vm.params.o"
+        ng-change="vm.onSortChange()">
+    <option value="created_at" index="0">Sort by date asc</option>
+    <option value="-created_at" index="1">Sort by date desc</option>
+</select>
+
+<uib-pagination ng-if="vm.totalItems"
+                total-items="vm.totalItems"
+                items-per-page="vm.itemsPerPage"
+                max-size="vm.maxSize ? vm.maxSize : 5"
+                ng-model="vm.params.page"
+                ng-change="vm.onPageChange()"></uib-pagination>
+
+<div class="my-wall">
+    <div masonry="{transitionDuration: '0', stagger: '0s'}"
+        ng-if="vm.posts.results && vm.posts.results.length" class="">
+        <div class="masonry-brick my-brick" ng-repeat="post in vm.posts.results">
+            <div class="well box">
+                <div class="post">
+                    <div class="">
+                        <a class="post-user" ui-sref="profile({ username: post.user.username })">
+                            <img src="" class="post-user-avatar">
+                            +{{post.user.username}}
+                        </a>
+                    </div>
+
+                    <div class="post-content">
+                        <p class="text-adjust">{{post.content}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="vm.posts.results && !vm.posts.results.length">
+        <div class="no-posts-here">
+            <em>There are no posts here.</em>
+        </div>
+    </div>
+
+    <!--<div class="col-xs-12 col-md-4 col-md-offset-4 load-more" ng-if="vm.loadMore"-->
+        <!--ng-click="vm.getNextPosts()" ng-class="{'my-btn-disable': vm.showLoading}">-->
+        <!--<button type="button" class="btn btn-raised btn-info btn-block">Load More</button>-->
+    <!--</div>-->
+    <uib-pagination ng-if="vm.totalItems"
+                    total-items="vm.totalItems" items-per-page="vm.itemsPerPage"
+                    max-size="vm.maxSize ? vm.maxSize : 5"
+                    ng-model="vm.params.page"
+                    ng-change="vm.onPageChange()"></uib-pagination>
+</div>

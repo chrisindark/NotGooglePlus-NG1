@@ -1,0 +1,13 @@
+<div style="height: 30px; margin-left: 25px">
+    <div ng-repeat="parent in parents">
+        <div style="float: left; padding: 0 5px;">{{ parent.name }}</div>
+        <span style="float: left;" ng-hide="$last">/</span>
+    </div>
+
+    <div style="float: left"> ||| </div>
+
+    <div ng-repeat="child in children">
+        <div style="float: left; padding: 0 5px;">{{ child.name }}</div>
+        <span style="float: left;" ng-hide="$last">/</span>
+    </div>
+</div>

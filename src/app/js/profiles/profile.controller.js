@@ -2,10 +2,10 @@ angular
     .module('notgoogleplus.controllers')
     .controller('ProfileController', ProfileController);
 
-ProfileController.$inject = ['$scope', '$state', '$stateParams', '$timeout', 'Authentication', 'Posts', 'Profile', 'Snackbar'];
+ProfileController.$inject = ['$scope', '$state', '$stateParams', '$timeout', 'Authentication', 'PostsService', 'ProfileService', 'Snackbar'];
 
 //@namespace ProfileController
-function ProfileController($scope, $state, $stateParams, $timeout, Authentication, Posts, Profile, Snackbar) {
+function ProfileController($scope, $state, $stateParams, $timeout, Authentication, PostsService, ProfileService, Snackbar) {
     var vm = this;
 
     var username = $stateParams.username;
@@ -23,12 +23,12 @@ function ProfileController($scope, $state, $stateParams, $timeout, Authenticatio
     };
 
     function getProfile() {
-        Profile.getProfile(username).then(function(response) {
-            if(response.data.id) {
-                vm.profile = response.data;
-                vm.profile.username = username;
-                getPosts();
-            }
+        ProfileService.getProfile(username).then(function(response) {
+            vm.profile = response.data;
+            vm.profile.username = username;
+            getPosts();
+        }).catch(function(error) {
+
         });
     }
 
@@ -42,15 +42,13 @@ function ProfileController($scope, $state, $stateParams, $timeout, Authenticatio
 
     function getPosts(url) {
         vm.showLoading = true;
-        Posts.allPosts(url, vm.params).then(function(response) {
-            if(response.data.results) {
-                vm.posts.results = vm.posts.results.concat(response.data.results);
-                vm.posts.next = response.data.next;
-                $timeout(function() {
-                    vm.loadMore = !!vm.posts.next;
-                    vm.showLoading = false;
-                }, 100);
-            }
+        PostsService.allPosts(url, vm.params).then(function(response) {
+            vm.posts.results = vm.posts.results.concat(response.data.results);
+            vm.posts.next = response.data.next;
+            $timeout(function() {
+                vm.loadMore = !!vm.posts.next;
+                vm.showLoading = false;
+            }, 100);
         });
     }
 
@@ -65,17 +63,13 @@ function ProfileController($scope, $state, $stateParams, $timeout, Authenticatio
     vm.removePost = function(post, index) {
         if (vm.isOwner) {
             var removedPost = vm.posts.splice(index, 1);
-            Posts.removePost(post.author.username, post.id).then(postSuccessFn, postErrorFn);
-
-            function postSuccessFn(data, status, headers, config) {
+            PostsService.removePost(post.author.username, post.id).then(function(response) {
                 Snackbar.show("Success! Post deleted.");
-            }
-
-            function postErrorFn(data, status, headers, config) {
+            }).catch(function(error) {
                 console.log(removedPost[0]);
                 vm.posts.splice(index, 0, removedPost[0]);
-                Snackbar.error(data.error);
-            }
+                Snackbar.error(error);
+            });
         }
     };
 
