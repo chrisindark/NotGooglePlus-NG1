@@ -10,7 +10,7 @@ angular
         'ui.router',
         'ui.bootstrap',
         'angular-loading-bar',
-        'wu.masonry',
+        // 'wu.masonry',
         'notgoogleplus.config',
         'notgoogleplus.routes',
         'notgoogleplus.services',

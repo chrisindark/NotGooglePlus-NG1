@@ -8,7 +8,7 @@
 <div class="modal-body">
     <form name="vm.form" ng-submit="vm.submit()">
         <div class="form-group label-static" ng-class="{'has-error': vm.errors.content}">
-            <label for="post_content" class="control-label">Content</label>
+            <label for="content" class="control-label">Content</label>
             <textarea class="form-control"
                       id="content"
                       name="content"
@@ -27,10 +27,8 @@
 </div>
 
 <div class="modal-footer">
-    <div class="col-xs-12">
-        <a class="btn btn-primary btn-fab btn-raised" style="float: left;"
-            href="javascript:void(0)" ng-click="vm.openFileModal()">
-            <i class="material-icons">photo_camera</i>
-        </a>
+    <div class="form-group">
+        <a href="javascript:void(0)" ng-click="vm.openFileModal()"
+           class="btn btn-raised btn-primary btn-block">Select File</a>
     </div>
 </div>

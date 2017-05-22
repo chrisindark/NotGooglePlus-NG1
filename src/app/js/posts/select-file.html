@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="vm.closeModal()">
+        <i class="material-icons">close</i>
+    </button>
+    <h2 class="text-center no-margin">Select File</h2>
+</div>
+
+<div class="modal-body">
+    <form name="vm.form" ng-submit="vm.submit()">
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-raised btn-primary btn-block">Submit</button>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <my-upload-dir selected-file="vm.selectedFile"></my-upload-dir>
+</div>

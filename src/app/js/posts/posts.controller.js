@@ -14,9 +14,9 @@ function PostsController($rootScope, $scope, $state, Authentication, PostsServic
     vm.posts = {};
     // vm.posts.results = [];
 
-    function getPosts(url) {
+    function getPosts() {
         vm.showLoading = true;
-        PostsService.allPosts(url, vm.params).then(function (response) {
+        PostsService.allPosts(vm.params).then(function (response) {
             vm.posts.results = response.data.results;
             vm.posts.next = response.data.next;
             vm.totalItems = response.data.count;

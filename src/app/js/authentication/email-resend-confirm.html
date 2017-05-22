@@ -1,0 +1,23 @@
+<div class="col-xs-12 col-md-4 col-md-offset-4">
+    <div class="well">
+        <h2 class="text-center no-margin">Email Resend Confirmation</h2>
+        <form name="vm.form" ng-submit="vm.emailResendConfirm()">
+            <div class="alert alert-danger" ng-show="vm.errors.non_field_errors"
+                 ng-repeat="error in vm.errors['non_field_errors']">
+                <span ng-bind="error"></span>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': vm.errors['email']}">
+                <label for="email" class="control-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email"
+                       ng-model="vm.email" placeholder="ex. joy@example.com" >
+                <span class="help" ng-if="vm.errors.email"
+                      ng-bind="vm.errors.email"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-raised btn-primary btn-block">Resend Email</button>
+            </div>
+        </form>
+    </div>
+</div>

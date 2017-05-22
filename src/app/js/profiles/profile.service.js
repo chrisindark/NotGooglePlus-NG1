@@ -21,7 +21,7 @@ function ProfileService($http, ApiUrls) {
     //@returns {Promise}
     function getProfile(username) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/profiles/' + username + '/',
+            url: ApiUrls.domainUrl + 'api/v1/profiles/' + username + '/',
             method: 'GET'
         });
     }
@@ -32,7 +32,7 @@ function ProfileService($http, ApiUrls) {
     //@returns {Promise}
     function destroyProfile(username) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/profiles/' + username + '/',
+            url: ApiUrls.domainUrl + 'api/v1/profiles/' + username + '/',
             method: 'DELETE'
         });
     }
@@ -43,7 +43,7 @@ function ProfileService($http, ApiUrls) {
     //@returns {Promise}
     function updateProfile(username, data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/profiles/' + username + '/',
+            url: ApiUrls.domainUrl + 'api/v1/profiles/' + username + '/',
             method: "PUT",
             data: data
         });

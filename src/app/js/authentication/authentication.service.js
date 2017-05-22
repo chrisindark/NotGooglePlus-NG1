@@ -34,6 +34,7 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
         login: login,
         logout: logout,
         register: register,
+        emailResendConfirm: emailResendConfirm,
         passwordReset: passwordReset,
         passwordResetConfirm: passwordResetConfirm,
         setAuthenticatedUser: setAuthenticatedUser,
@@ -55,7 +56,7 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
     // @returns {Promise}
     function login(username, password) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/auth/login/',
+            url: ApiUrls.domainUrl + 'api/v1/auth/login/',
             method: 'POST',
             data: {
                 username: username,
@@ -76,7 +77,7 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
     // @returns {Promise}
     function logout() {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/auth/logout/',
+            url: ApiUrls.domainUrl + 'api/v1/auth/logout/',
             method: 'POST'
         }).then(function(response) {
             $rootScope.$broadcast('Unauthenticated');
@@ -95,7 +96,7 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
     // @returns {Promise}
     function register(data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/accounts/',
+            url: ApiUrls.domainUrl + 'api/v1/accounts/',
             method: 'POST',
             data: data
         }).then(function(response) {
@@ -108,7 +109,20 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
 
     function passwordReset(data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/auth/password/reset/',
+            url: ApiUrls.domainUrl + 'api/v1/auth/password/reset/',
+            method: 'POST',
+            data: data
+        }).then(function (response) {
+            return response;
+        }).catch(function (error) {
+            console.log(error);
+            return $q.reject(error);
+        });
+    }
+
+    function emailResendConfirm(data) {
+        return $http({
+            url: ApiUrls.domainUrl + 'api/v1/auth/account/activate/',
             method: 'POST',
             data: data
         }).then(function (response) {
@@ -121,7 +135,7 @@ function Authentication($rootScope, $http, $q, $cookies, $state, ApiUrls, Snackb
 
     function passwordResetConfirm(data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/auth/password/reset/confirm/',
+            url: ApiUrls.domainUrl + 'api/v1/auth/password/reset/confirm/',
             method: 'POST',
             data: data
         }).then(function (response) {

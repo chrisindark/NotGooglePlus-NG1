@@ -1,29 +1,28 @@
 angular
     .module('notgoogleplus.services')
-    .factory('Files', Files);
+    .factory('FilesService', FilesService);
 
-Files.$inject = ['$http', 'ApiUrls'];
+FilesService.$inject = ['$http', 'ApiUrls'];
 
-//@namespace Files
+//@namespace FilesService
 //@returns {Factory}
-function Files($http, ApiUrls) {
-    var Files = {
+function FilesService($http, ApiUrls) {
+    var FilesService = {
         allFiles: allFiles,
         createFile: createFile,
         getFile: getFile,
         updateFile: updateFile,
-        removeFile: removeFiles
+        removeFile: removeFile
     };
 
-    return Files;
+    return FilesService;
 
     //@name all
     //@desc Get all Files
     //@returns {Promise}
-    function allFiles(url, params) {
-        url = url ? url : ApiUrls.domain_url + 'api/v1/files/';
+    function allFiles(params) {
         return $http({
-            url: url,
+            url: ApiUrls.domainUrl + 'api/v1/files/',
             method: 'GET',
             params: params
         });
@@ -33,25 +32,32 @@ function Files($http, ApiUrls) {
     //@desc Create a new File
     //@param {string} content The content of the new File
     //@returns {Promise}
-    function createFile(content) {
+    function createFile(fileObj) {
+        var fd = createUploadObject(fileObj);
+
+        // adding a content type header to request
+        var customHeaderObj = {};
+        customHeaderObj['Content-Type'] = undefined;
+
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/files/',
+            url: ApiUrls.domainUrl + 'api/v1/files/',
             method: 'POST',
-            data: {content: content}
+            data: fd,
+            headers: customHeaderObj
         });
     }
 
-    function getFile(username, id) {
+    function getFile(id, params) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/files/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/files/' + id + '/',
             method: 'GET',
-            params: {username: username}
+            params: params
         });
     }
 
     function updateFile(id, data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/files/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/files/' + id + '/',
             method: 'PUT',
             data: data
         });
@@ -63,10 +69,65 @@ function Files($http, ApiUrls) {
     //@returns {Promise}
     function removeFile(username, id) {
         return $http.delete({
-            url: ApiUrls.domain_url + 'api/v1/files/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/files/' + id + '/',
             method: 'DELETE',
             params: {username: username}
         });
     }
+
+    function createUploadObject(fileObj) {
+        var fd = new FormData();
+        fd.append('file', fileObj);
+
+        return fd;
+    }
+
+}
+
+// @name FileExtension
+// @desc Factory function to check extension type of file
+// by reading the file name and return the type of file
+// as image/video
+angular
+    .module('notgoogleplus.services')
+    .factory('FileExtension', FileExtension);
+
+function FileExtension() {
+    var FileExtension = {};
+
+    FileExtension.getExtension = function (filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+    };
+
+    FileExtension.isImage = function (filename) {
+        var ext = FileExtension.getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'jpg':
+                return true;
+            case 'jpeg':
+                return true;
+            case 'png':
+                return true;
+        }
+        return false;
+    };
+
+    FileExtension.isVideo = function (filename) {
+        var ext = FileExtension.getExtension(filename);
+        switch (ext.toLowerCase()) {
+            case 'mp4':
+                return true;
+            case 'mpeg4':
+                return true;
+            case 'mov':
+                return true;
+            case 'ogg':
+                return true;
+        }
+        return false;
+    };
+
+    return FileExtension;
 
 }

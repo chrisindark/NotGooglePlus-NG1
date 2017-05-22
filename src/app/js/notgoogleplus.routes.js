@@ -35,7 +35,15 @@ function routeConfig($stateProvider, $urlRouterProvider, $injector) {
             controllerAs: 'vm',
             templateUrl: 'app/js/articles/articles.html'
         })
+        .state('emailResendConfirm', {
+            parent: 'home',
+            url: '/email/resend/confirm',
+            controller: 'AuthenticationController',
+            controllerAs: 'vm',
+            templateUrl: 'app/js/authentication/email-resend-confirm.html'
+        })
         .state('passwordResetConfirm', {
+            parent: 'home',
             url: '/password/reset/confirm/:uid/:token',
             controller: 'AuthenticationController',
             controllerAs: 'vm',
@@ -70,7 +78,6 @@ function routeConfig($stateProvider, $urlRouterProvider, $injector) {
         });
 
     $urlRouterProvider.when('/', ['$state', function ($state) {
-        console.log($state);
         $state.go('posts');
     }]);
     $urlRouterProvider.otherwise('/');

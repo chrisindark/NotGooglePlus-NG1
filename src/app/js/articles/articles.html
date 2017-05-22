@@ -1,27 +1,34 @@
-<select class="form-control"
-        ng-model="vm.params.o"
-        ng-change="vm.onSortChange()">
-    <option value="created_at" index="0">Sort by date asc</option>
-    <option value="-created_at" index="1">Sort by date desc</option>
-</select>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="col-md-offset-5 col-md-3 col-xs-12">
+            <select class="form-control" style="background-color: white; margin: 20px 0;"
+                    ng-model="vm.params.o"
+                    ng-change="vm.onSortChange()">
+                <option value="created_at" index="0">Sort by date asc</option>
+                <option value="-created_at" index="1">Sort by date desc</option>
+            </select>
+        </div>
 
-<uib-pagination ng-if="vm.totalItems"
-                total-items="vm.totalItems"
-                items-per-page="vm.itemsPerPage"
-                max-size="vm.maxSize ? vm.maxSize : 5"
-                ng-model="vm.params.page"
-                ng-change="vm.onPageChange()"></uib-pagination>
+        <div class="col-md-4 col-xs-12">
+            <uib-pagination ng-if="vm.totalItems"
+                            total-items="vm.totalItems"
+                            items-per-page="vm.itemsPerPage"
+                            max-size="vm.maxSize ? vm.maxSize : 5"
+                            ng-model="vm.params.page"
+                            ng-change="vm.onPageChange()"></uib-pagination>
+        </div>
+    </div>
+</div>
 
 <div class="my-wall">
-    <div masonry="{transitionDuration: '0', stagger: '0s'}"
-         ng-if="vm.articles.results && vm.articles.results.length" class="">
-        <div class="masonry-brick my-brick" ng-repeat="article in vm.articles.results">
+    <div ng-if="vm.articles.results && vm.articles.results.length" class="">
+        <div class="" ng-repeat="article in vm.articles.results">
             <div class="well box">
                 <div class="post">
                     <div class="">
-                        <a class="post-user" ui-sref="profile({ username: article.author.username })">
+                        <a class="post-user" ui-sref="profile({ username: article.user.username })">
                             <img src="" class="post-user-avatar">
-                            +{{article.author.username}}
+                            +{{article.user.username}}
                         </a>
                     </div>
 
@@ -38,19 +45,24 @@
 
     <div ng-if="vm.articles.results && !vm.articles.results.length">
         <div class="no-posts-here">
-            <em>There are no posts here.</em>
+            <em>There are no articles here.</em>
         </div>
     </div>
+</div>
 
-    <!--<div class="col-xs-12 col-md-4 col-md-offset-4 load-more" ng-if="vm.loadMore"-->
-         <!--ng-click="vm.getNextArticles()" ng-class="{'my-btn-disable': vm.showLoading}">-->
-        <!--<button type="button" class="btn btn-raised btn-info btn-block">Load More</button>-->
+<!--<div class="col-xs-12 col-md-4 col-md-offset-4 load-more" ng-if="vm.loadMore"-->
+     <!--ng-click="vm.getNextArticles()" ng-class="{'my-btn-disable': vm.showLoading}">-->
+    <!--<button type="button" class="btn btn-raised btn-info btn-block">Load More</button>-->
 
-    <uib-pagination ng-if="vm.totalItems"
-                    total-items="vm.totalItems"
-                    items-per-page="vm.itemsPerPage"
-                    max-size="vm.maxSize ? vm.maxSize : 5"
-                    ng-model="vm.params.page"
-                    ng-change="vm.onPageChange()"></uib-pagination>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="col-md-offset-8 col-md-4 col-xs-12">
+            <uib-pagination ng-if="vm.totalItems"
+                            total-items="vm.totalItems"
+                            items-per-page="vm.itemsPerPage"
+                            max-size="vm.maxSize ? vm.maxSize : 5"
+                            ng-model="vm.params.page"
+                            ng-change="vm.onPageChange()"></uib-pagination>
+        </div>
     </div>
 </div>

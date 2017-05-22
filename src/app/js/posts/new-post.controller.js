@@ -2,10 +2,12 @@ angular
     .module('notgoogleplus.controllers')
     .controller('NewPostController', NewPostController);
 
-NewPostController.$inject = ['$rootScope', '$scope', 'Authentication', 'Snackbar', 'Posts', '$uibModal'];
+NewPostController.$inject = ['$rootScope', '$scope', 'Authentication', 'PostsService', 'FilterService',
+    'Snackbar', '$uibModal'];
 
 //@namespace NewPostController
-function NewPostController($rootScope, $scope, Authentication, Snackbar, Posts, $uibModal) {
+function NewPostController($rootScope, $scope, Authentication, PostsService, FilterService,
+                           Snackbar, $uibModal) {
     var vm = this;
 
     vm.closeModal = function() {
@@ -15,28 +17,26 @@ function NewPostController($rootScope, $scope, Authentication, Snackbar, Posts, 
     //@name submit
     //@desc Create a new Post
     vm.submit = function() {
-        Posts.createPost(vm.content).then(function (response) {
-            if(response.data.error) {
-                vm.errors = response.data;
-            } else {
-                vm.errors = {};
-                vm.closeModal();
-                console.log("post created");
-                $rootScope.$emit('post.created', response.data);
-            }
+        PostsService.createPost(vm.content).then(function (response) {
+            vm.errors = {};
+            vm.closeModal();
+            console.log("post created");
+            $rootScope.$emit('post.created', response.data);
+        }).catch(function (error) {
+            vm.errors = response.data;
         });
     };
 
     vm.openFileModal = function() {
         $uibModal.open({
-            templateUrl: '/templates/posts/new-file.html',
-            controller: 'NewFileController',
+            templateUrl: '/app/js/posts/select-file.html',
+            controller: 'SelectFileController',
             controllerAs: 'vm',
             windowClass: 'my-modal'
         });
     };
 
-    var deregisterEvent = $rootScope.$on('file.selected', function(event, file) {
+    var deregisterEvent = $rootScope.$on('file.uploaded', function(event, file) {
         console.log("file event caught");
     });
 

@@ -14,12 +14,12 @@
         <div class="collapse navbar-collapse" id="not-google-plus-nav">
             <ul class="nav navbar-nav pull-right" ng-if="vm.isAuthenticated && vm.user">
                 <li>
-                    <a href="#/home/+{{vm.user.username}}"
+                    <a ui-sref="profile({ username: vm.user.username })"
                        data-toggle="collapse"
                        data-target="#not-google-plus-nav">+{{vm.user.username}}</a>
                 </li>
                 <li>
-                    <a href="#/home/+{{vm.user.username}}/settings"
+                    <a ui-sref="profileSettings({ username: vm.user.username })"
                        data-toggle="collapse"
                        data-target="#not-google-plus-nav">Settings</a>
                 </li>

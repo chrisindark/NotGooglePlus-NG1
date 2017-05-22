@@ -11,7 +11,7 @@ function ArticlesService($http, ApiUrls) {
     //@desc Get all Articles
     //@returns {Promise}
     this.allArticles = function(url, params) {
-        url = url ? url : ApiUrls.domain_url + 'api/v1/articles/';
+        url = url ? url : ApiUrls.domainUrl + 'api/v1/articles/';
         // params = params ? params : {};
         return $http({
             url: url,
@@ -26,7 +26,7 @@ function ArticlesService($http, ApiUrls) {
     //@returns {Promise}
     this.createArticle = function(data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/articles/',
+            url: ApiUrls.domainUrl + 'api/v1/articles/',
             method: 'POST',
             data: data
         });
@@ -37,7 +37,7 @@ function ArticlesService($http, ApiUrls) {
     //@returns {Promise}
     this.getArticle = function(id) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/articles/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/articles/' + id + '/',
             method: 'GET'
         });
     };
@@ -47,7 +47,7 @@ function ArticlesService($http, ApiUrls) {
     //@returns {Promise}
     this.updateArticle = function(id, data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/articles/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/articles/' + id + '/',
             method: 'PUT',
             data: data
         });
@@ -59,7 +59,7 @@ function ArticlesService($http, ApiUrls) {
     //@returns {Promise}
     this.removeArticle = function(id) {
         return $http.delete({
-            url: ApiUrls.domain_url + 'api/v1/articles/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/articles/' + id + '/',
             method: 'DELETE'
         });
     };

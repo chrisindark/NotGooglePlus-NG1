@@ -50,15 +50,6 @@ function NavbarController($rootScope, Authentication, AccountsService, $uibModal
         });
     };
 
-    vm.openFileModal = function() {
-        $uibModal.open({
-            templateUrl: 'app/js/posts/new-file.html',
-            controller: 'NewFileController',
-            controllerAs: 'vm',
-            windowClass: 'my-modal'
-        });
-    };
-
     activate();
     console.log('Navbar controller loaded');
 

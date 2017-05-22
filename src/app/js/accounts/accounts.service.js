@@ -8,7 +8,7 @@ function AccountsService ($rootScope, $http, $q, ApiUrls) {
 
     this.getAuthenticatedUser = function () {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/auth/me/',
+            url: ApiUrls.domainUrl + 'api/v1/auth/me/',
             method: 'GET'
         }).then(function (response) {
             $rootScope.$broadcast('SetAuthenticatedUser', response.data);
@@ -21,7 +21,7 @@ function AccountsService ($rootScope, $http, $q, ApiUrls) {
 
     this.updateAuthenticatedUser = function (id, data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/accounts/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/accounts/' + id + '/',
             method: 'PUT',
             data: data
         }).then(function (response) {
@@ -35,7 +35,7 @@ function AccountsService ($rootScope, $http, $q, ApiUrls) {
 
     this.deleteAuthenticatedUser = function (id) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/accounts/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/accounts/' + id + '/',
             method: 'DELETE'
         }).then(function (response) {
             $rootScope.$broadcast('DeleteAuthenticatedUser', response.data);

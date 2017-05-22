@@ -51,6 +51,18 @@ function AuthenticationController($scope, $location, Authentication,
         });
     };
 
+    vm.emailResendConfirm = function () {
+        var data = {
+            email: vm.email
+        };
+        Authentication.emailResendConfirm(data).then(function(response) {
+            vm.errors = {};
+            console.log("confirmation email sent");
+        }).catch(function(response) {
+            vm.errors = response.data;
+        });
+    };
+
     vm.passwordReset = function () {
         Authentication.passwordReset(vm.email).then(function(response) {
             vm.errors = {};

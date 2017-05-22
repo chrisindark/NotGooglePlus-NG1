@@ -18,11 +18,9 @@ function PostsService($http, ApiUrls) {
     //@name allPosts
     //@desc Get all Posts
     //@returns {Promise}
-    function allPosts(url, params) {
-        url = url ? url : ApiUrls.domain_url + 'api/v1/posts/';
-        // params = params ? params : {};
+    function allPosts(params) {
         return $http({
-            url: url,
+            url: ApiUrls.domainUrl + 'api/v1/posts/',
             method: 'GET',
             params: params
         });
@@ -34,7 +32,7 @@ function PostsService($http, ApiUrls) {
     //@returns {Promise}
     function createPost(content) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/posts/',
+            url: ApiUrls.domainUrl + 'api/v1/posts/',
             method: 'POST',
             data: {content: content}
         });
@@ -45,7 +43,7 @@ function PostsService($http, ApiUrls) {
     //@returns {Promise}
     function getPost(id) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/posts/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/posts/' + id + '/',
             method: 'GET'
         });
     }
@@ -55,7 +53,7 @@ function PostsService($http, ApiUrls) {
     //@returns {Promise}
     function updatePost(id, data) {
         return $http({
-            url: ApiUrls.domain_url + 'api/v1/posts/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/posts/' + id + '/',
             method: 'PUT',
             data: data
         });
@@ -67,7 +65,7 @@ function PostsService($http, ApiUrls) {
     //@returns {Promise}
     function removePost(username, id) {
         return $http.delete({
-            url: ApiUrls.domain_url + 'api/v1/posts/' + id + '/',
+            url: ApiUrls.domainUrl + 'api/v1/posts/' + id + '/',
             method: 'DELETE',
             params: {username: username}
         });

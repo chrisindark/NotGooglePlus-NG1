@@ -42,15 +42,13 @@ function ErrorInterceptor($rootScope, $q, $injector) {
         // ErrorInterceptor.showErrorMessage(statusText);
         console.log("error: ", statusText);
 
-        if (response.status === '401') {
+        if (response.status === 401) {
             $rootScope.$broadcast('Unauthenticated');
             // $state.go('home');
-        }
-        else if (response.status === '400' || response.status === '403' ||
-            response.status === '500' || response.status === '503') {
+        } else if (response.status === 400 || response.status === 403 ||
+            response.status === 500 || response.status === 503) {
             // $state.go('home');
-        }
-        else if (response.status === '404') {
+        } else if (response.status === 404) {
             // $state.go('error');
         }
 
@@ -156,7 +154,8 @@ function run ($rootScope, $state, $location, Authentication, AccountsService) {
         '/home/tabs',
         '/home/tabs/posts',
         '/home/tabs/articles',
-        '/password/reset/confirm/:uid/:token'
+        '/home/email/resend/confirm',
+        '/home/password/reset/confirm/:uid/:token'
     ];
 
     var routesThatRequireAdmin = [

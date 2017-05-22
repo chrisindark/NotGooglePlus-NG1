@@ -6,7 +6,8 @@ ApiUrls.$inject = [];
 
 function ApiUrls() {
     var ApiUrls = {};
-    ApiUrls.domain_url = 'http://localhost:8000/';
+    ApiUrls.domainUrl = 'http://localhost:8000/';
+    // ApiUrls.domainUrl = 'http://ancient-tor-16694.herokuapp.com/';
 
     return ApiUrls;
 }

@@ -7,7 +7,7 @@ config.$inject = ['$httpProvider', '$locationProvider', '$compileProvider'];
 // @desc Enable HTML5 routing
 function config($httpProvider, $locationProvider, $compileProvider) {
     $locationProvider.hashPrefix('');
-    // $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);
 
 
     // $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
