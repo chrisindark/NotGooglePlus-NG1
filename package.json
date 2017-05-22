@@ -10,7 +10,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp serve",
-    "postinstall": "chmod 755 ./scripts/postInstall.sh && ./scripts/postInstall.sh"
+    "//": [
+      {
+        "postinstall": "chmod 755 ./scripts/postInstall.sh && ./scripts/postInstall.sh"
+      }
+    ]
   },
   "repository": {},
   "bugs": {},
