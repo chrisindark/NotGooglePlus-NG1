@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="my-content-body">
-                    <h4 class="text-adjust" ng-if="!comment.editMode">{{comment.content}}</h4>
+                    <h4 class="text-adjust" ng-if="!comment.editMode"  ng-bind-html="vm.markdown(comment.content)"></h4>
 
                     <form ng-submit="vm.submit($index)" ng-if="comment.editMode">
                         <div class="form-group no-margin" ng-class="{'has-error': comment.errors.content}">

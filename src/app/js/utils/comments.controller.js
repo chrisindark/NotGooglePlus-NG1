@@ -17,11 +17,11 @@
     });
 
     CommentController.$inject = ['$rootScope', '$scope', '$state', '$stateParams',
-        'Authentication', 'Snackbar', 'CommentsService', 'PopupService'];
+        'Authentication', 'Snackbar', 'CommentsService', 'MarkedService', 'PopupService'];
 
     function CommentController($rootScope, $scope, $state, $stateParams,
                                Authentication, Snackbar, CommentsService,
-                               PopupService) {
+                               MarkedService, PopupService) {
         var vm = this;
 
         vm.commentParentId = $stateParams.id;
@@ -45,6 +45,12 @@
                     console.log(error);
                 });
         }
+
+        vm.markdown = function(content) {
+            return content
+                ? MarkedService.markdown(content)
+                : undefined;
+        };
 
         //@name submit
         //@desc Create a new Comment
