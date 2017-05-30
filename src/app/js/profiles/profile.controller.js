@@ -2,13 +2,15 @@ angular
     .module('notgoogleplus.controllers')
     .controller('ProfileController', ProfileController);
 
-ProfileController.$inject = ['$scope', '$state', '$stateParams', '$timeout', 'Authentication', 'PostsService', 'ProfileService', 'Snackbar'];
+ProfileController.$inject = ['$scope', '$state', '$stateParams', '$timeout', 'Authentication',
+    'ProfileService', 'PostsService', 'ArticlesService', 'Snackbar'];
 
 //@namespace ProfileController
-function ProfileController($scope, $state, $stateParams, $timeout, Authentication, PostsService, ProfileService, Snackbar) {
+function ProfileController($scope, $state, $stateParams, $timeout, Authentication,
+                           ProfileService, PostsService, ArticlesService, Snackbar) {
     var vm = this;
 
-    var username = $stateParams.username;
+    vm.username = $stateParams.username;
     vm.showLoading = false;
     vm.loadMore = false;
     vm.isAuthenticated = Authentication.isAuthenticated();
@@ -16,28 +18,24 @@ function ProfileController($scope, $state, $stateParams, $timeout, Authenticatio
     vm.posts = {};
     vm.posts.results = [];
 
-    vm.params = {
-        'user__username': username,
-        'o': '-created_at',
-        'page_size': 10
+    vm.tabList = {
+        'profilePosts': {
+            'heading': 'Posts',
+            'href': 'profilePosts'
+        },
+        'profileArticles': {
+            'heading': 'Articles',
+            'href': 'profileArticles'
+        }
     };
 
     function getProfile() {
-        ProfileService.getProfile(username).then(function(response) {
+        ProfileService.getProfile(vm.username).then(function(response) {
             vm.profile = response.data;
-            vm.profile.username = username;
-            getPosts();
+            // getPosts();
         }).catch(function(error) {
-
+            console.log(error);
         });
-    }
-
-    function isOwner() {
-        if(vm.isAuthenticated) {
-            Authentication.isOwner(username).then(function(response) {
-                vm.isOwner = response;
-            });
-        }
     }
 
     function getPosts(url) {
@@ -47,6 +45,18 @@ function ProfileController($scope, $state, $stateParams, $timeout, Authenticatio
             vm.posts.next = response.data.next;
             $timeout(function() {
                 vm.loadMore = !!vm.posts.next;
+                vm.showLoading = false;
+            }, 100);
+        });
+    }
+
+    function getArticles(url) {
+        vm.showLoading = true;
+        ArticlesService.allArticles(url, vm.params).then(function(response) {
+            vm.articles.results = vm.articles.results.concat(response.data.results);
+            vm.articles.next = response.data.next;
+            $timeout(function() {
+                vm.loadMore = !!vm.articles.next;
                 vm.showLoading = false;
             }, 100);
         });
@@ -66,18 +76,35 @@ function ProfileController($scope, $state, $stateParams, $timeout, Authenticatio
             PostsService.removePost(post.author.username, post.id).then(function(response) {
                 Snackbar.show("Success! Post deleted.");
             }).catch(function(error) {
-                console.log(removedPost[0]);
                 vm.posts.splice(index, 0, removedPost[0]);
                 Snackbar.error(error);
             });
         }
     };
 
+    function isOwner() {
+        if(vm.isAuthenticated) {
+            Authentication.isOwner(vm.username).then(function(response) {
+                vm.isOwner = response;
+            });
+        }
+    }
+
     //@name activate
     //@desc Actions to be performed when the controller is instantiated
     function activate() {
         getProfile();
         isOwner();
+
+        vm.params = {
+            'username': vm.username
+        };
+
+        if ($state.current.name === 'profile') {
+            // if state is 'profile' redirect to another state
+            // as if profile is abstract
+            $state.go('profilePosts', vm.params);
+        }
     }
 
     activate();

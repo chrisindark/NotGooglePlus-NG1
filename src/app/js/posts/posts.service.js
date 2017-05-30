@@ -2,11 +2,11 @@ angular
     .module('notgoogleplus.services')
     .factory('PostsService', PostsService);
 
-PostsService.$inject = ['$http', 'ApiUrls'];
+PostsService.$inject = ['$http', 'ApiUrls', 'Snackbar'];
 
 //@namespace PostsService
 //@returns {Factory}
-function PostsService($http, ApiUrls) {
+function PostsService($http, ApiUrls, Snackbar) {
     var PostsService = {
         allPosts: allPosts,
         createPost: createPost,
@@ -14,6 +14,8 @@ function PostsService($http, ApiUrls) {
         updatePost: updatePost,
         removePost: removePost
     };
+
+    return PostsService;
 
     //@name allPosts
     //@desc Get all Posts
@@ -30,11 +32,14 @@ function PostsService($http, ApiUrls) {
     //@desc Create a new Post
     //@param {string} content The content of the new Post
     //@returns {Promise}
-    function createPost(content) {
+    function createPost(data) {
         return $http({
             url: ApiUrls.domainUrl + 'api/v1/posts/',
             method: 'POST',
-            data: {content: content}
+            data: data
+        }).then(function (response) {
+            Snackbar.show("Post has been successfully created!");
+            return response
         });
     }
 
@@ -56,6 +61,9 @@ function PostsService($http, ApiUrls) {
             url: ApiUrls.domainUrl + 'api/v1/posts/' + id + '/',
             method: 'PUT',
             data: data
+        }).then(function (response) {
+            Snackbar.show("Post has been successfully updated!");
+            return response
         });
     }
 
@@ -63,13 +71,14 @@ function PostsService($http, ApiUrls) {
     //@desc Delete the posts of a given user
     //@param {string} username The username to get Posts for
     //@returns {Promise}
-    function removePost(username, id) {
-        return $http.delete({
+    function removePost(id) {
+        return $http({
             url: ApiUrls.domainUrl + 'api/v1/posts/' + id + '/',
-            method: 'DELETE',
-            params: {username: username}
+            method: 'DELETE'
+        }).then(function (response) {
+            Snackbar.show("Post has been successfully deleted!");
+            return response
         });
     }
 
-    return PostsService;
 }

@@ -6,52 +6,51 @@ angular
         controllerAs: 'vm'
     });
 
-NavbarController.$inject = ['$rootScope', 'Authentication', 'AccountsService', '$uibModal'];
+NavbarController.$inject = ['$rootScope', 'Authentication', 'AccountsService', 'PopupService'];
 
 // @namespace NavbarController
-function NavbarController($rootScope, Authentication, AccountsService, $uibModal) {
+function NavbarController($rootScope, Authentication, AccountsService, PopupService) {
     var vm = this;
-
-    function activate() {
-        vm.isAuthenticated = Authentication.isAuthenticated();
-        if (vm.isAuthenticated) {
-            if (Authentication.fetchAuthenticatedUser()) {
-                vm.user = Authentication.fetchAuthenticatedUser();
-            } else {
-                AccountsService.getAuthenticatedUser().then(function(response) {
-                    vm.user = Authentication.fetchAuthenticatedUser();
-                });
-            }
-        }
-    }
 
     // @name logout
     // @desc Log the user out
     vm.logout = function() {
-        Authentication.logout();
+        Authentication.logout().then(function (response) {
+            console.log('user logged out');
+        });
     };
 
     vm.openLoginModal = function() {
-        $uibModal.open({
-            animation: true,
+        var modalDefaults = {
+            backdrop: false,
+            keyboard: false,
+            modalFade: false,
+            animation: false,
             templateUrl: 'app/js/authentication/login.html',
             controller: 'AuthenticationController',
             controllerAs: 'vm',
             windowClass: 'my-modal'
-        });
+        };
+
+        PopupService.show(modalDefaults);
     };
 
-    vm.openPostModal = function() {
-        $uibModal.open({
-            templateUrl: 'app/js/posts/new-post.html',
-            controller: 'NewPostController',
-            controllerAs: 'vm',
-            windowClass: 'my-modal'
-        });
-    };
+    function activate() {
+        // console.log('NavbarController loaded');
+        vm.isAuthenticated = Authentication.isAuthenticated();
+        if (vm.isAuthenticated) {
+            if (Authentication.fetchAuthenticatedUser()) {
+                vm.user = Authentication.fetchAuthenticatedUser();
+            }
+            // else {
+            //     AccountsService.getAuthenticatedUser().then(function(response) {
+            //         vm.user = Authentication.fetchAuthenticatedUser();
+            //     });
+            // }
+        }
+    }
 
     activate();
-    console.log('Navbar controller loaded');
 
     $rootScope.$on('Authenticated', function() {
         activate();

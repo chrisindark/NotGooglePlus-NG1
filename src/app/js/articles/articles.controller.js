@@ -2,15 +2,22 @@ angular
     .module('notgoogleplus.controllers')
     .controller('ArticlesController', ArticlesController);
 
-ArticlesController.$inject = ['$rootScope', '$scope', 'Authentication', 'ArticlesService', 'FilterService', 'MarkedService'];
+ArticlesController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'Authentication', 'ArticlesService', 'FilterService', 'MarkedService'];
 
 //@namespace ArticlesController
-function ArticlesController($rootScope, $scope, Authentication, ArticlesService, FilterService, MarkedService) {
+function ArticlesController($rootScope, $scope, $state, $stateParams, Authentication, ArticlesService, FilterService, MarkedService) {
     var vm = this;
+
+    vm.params = $stateParams || {};
 
     vm.isAuthenticated = Authentication.isAuthenticated();
     vm.articles = {};
     // vm.articles.results = [];
+    vm.params = angular.extend(vm.params, {
+        page_size : 25,
+        page: 1,
+        o: "-created_at"
+    });
 
     function getArticles(url) {
         ArticlesService.allArticles(url, vm.params).then(function (response) {
@@ -42,14 +49,14 @@ function ArticlesController($rootScope, $scope, Authentication, ArticlesService,
         getArticles();
     };
 
-    vm.convertContent = function(content) {
-        console.log(MarkedService.markit(content));
-        return MarkedService.markit(content);
+    vm.markdown = function(content) {
+        return MarkedService.markdown(content);
     };
 
     //@name activate
     //@desc Actions to be performed when this controller is instantiated
     function activate() {
+        FilterService.initModelValues(vm.params);
         vm.params = FilterService.getModelValues();
         getArticles();
     }

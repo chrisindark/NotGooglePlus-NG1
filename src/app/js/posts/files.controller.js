@@ -1,16 +1,18 @@
 angular
     .module('notgoogleplus.controllers')
-    .controller('SelectFileController', SelectFileController);
+    .controller('FilesController', FilesController);
 
-SelectFileController.$inject = ['$rootScope', '$scope', 'Authentication', 'PostsService',
-    'FilesService', 'FilterService', 'Snackbar', '$uibModal'];
+FilesController.$inject = ['$rootScope', '$scope', 'Authentication', 'FilesService',
+    'PostsService', 'FilterService', 'PopupService'];
 
-//@namespace SelectFileController
-function SelectFileController($rootScope, $scope, Authentication, PostsService,
-                           FilesService, FilterService, Snackbar, $uibModal) {
+//@namespace FilesController
+function FilesController($rootScope, $scope, Authentication, FilesService,
+                         PostsService, FilterService, PopupService) {
     var vm = this;
+    vm.user = Authentication.fetchAuthenticatedUser();
     vm.files = {};
     vm.selectedFile = undefined;
+
     vm.closeModal = function() {
         $scope.$close();
     };
@@ -38,7 +40,7 @@ function SelectFileController($rootScope, $scope, Authentication, PostsService,
     });
 
     function getFiles() {
-        FilesService.allFiles(vm.params).then(function (response) {
+        FilesService.allFiles(vm.user.username, vm.params).then(function (response) {
             vm.files.results = response.data.results;
             console.log(response.data);
         }).catch(function (error) {

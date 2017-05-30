@@ -1,46 +1,3 @@
-html, body {
-    position: relative;
-    min-height: 100%;
-    height: 100%;
-}
-
-body {
-    padding-top: 70px;
-}
-
-.no-padding {
-    padding: 0 !important;
-}
-
-.no-margin {
-    margin: 0 !important;
-}
-
-.my-btn-disable {
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-@-moz-keyframes spin {
-    from { -moz-transform: rotate(0deg); }
-    to { -moz-transform: rotate(360deg); }
-}
-@-webkit-keyframes spin {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
-}
-@keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
-}
-
-.elem-spin {
-    animation-name: spin;
-    animation-duration: 1000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-
 .my-container {
     padding: 0;
     min-height: 100%;
@@ -50,6 +7,112 @@ body {
     min-height: 100%;
     height: 100%;
 }
+
+.my-btn-disable {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.my-list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item-heading {
+    margin-bottom: 20px;
+}
+
+.list-group .list-group-item .row-picture.my-profile-picture img {
+    width: 150px;
+    height: 150px;
+}
+
+.list-group .list-group-item .row-picture.my-profile-icon img {
+    width: 70px;
+    height: 70px;
+}
+
+.panel .panel-body h3 {
+    margin-top: 10px;
+}
+
+/* view spinner css class */
+.image-loader-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    background-color: white;
+}
+
+.image-loader-container .spinner svg {
+    position: absolute;
+    top: 42%;
+    left: 46%;
+    width: 8%;
+    height: 16%;
+    fill: rgb(71, 188, 195);
+    stroke: rgb(71, 188, 195);
+}
+
+
+
+/* loading animation css */
+.loading-background {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.loading-element {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    background-color: rgb(71, 188, 195);
+    z-index: 1000;
+}
+
+.loading-element .spinner svg {
+    margin-top: 46vh;
+    width: 8vh;
+    height: 8vh;
+    stroke: white;
+    fill: white;
+}
+
+/* css to detect orientation and add overlay */
+.orientation-element {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    background-color: rgb(71, 188, 195);
+    z-index: 1000;
+    display:none;
+}
+
+.orientation-element div {
+    display: inline-block;
+    margin-top: 44vh;
+    width: 12vh;
+    height: 12vh;
+}
+
+.orientation-element img {
+    width: 100%;
+}
+
+@media all and (orientation: landscape) and (max-width: 767px) {
+    .orientation-element {
+         display: inherit;
+    }
+}
+
+
 
 /* style for changing angular loading bar */
 #loading-bar .bar {
@@ -74,44 +137,80 @@ body {
 
 .btn.btn-add-new-post {
     position: fixed;
-    bottom: 60px;
+    bottom: 30px;
     right: 25px;
-    z-index: 1030;
+    z-index: 100;
 }
 
-.no-posts-here {
+.no-content-here {
     text-align: center;
 }
 
-.post .post-user {
+.my-user-item {
     display: block;
+}
+
+.my-user-item:hover {
+    cursor: pointer;
+}
+
+.my-user-username {
+    padding-left: 10px;
     font-weight: bold;
     padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
     text-decoration: none;
 }
 
-.post .post-user-avatar {
-    width: 36px;
-    height: 36px;
+.my-user-options {
+    display: inline-block;
+    position: relative;
+    top: 5px;
+    right: 10px;
+    float: right;
+}
+
+
+.my-user-avatar {
+    width: 40px;
+    height: 40px;
     border-radius:50%;
     background-color: teal;
 }
 
-.post .post-content {
-    padding: 20px 0;
-}
-
-.my-inline-block {
+.my-user-date {
+    padding-top: 5px;
+    padding-left: 10px;
+    text-decoration: none;
     display: inline-block;
+    color: teal;
 }
 
-.text-adjust {
-    word-wrap: break-word;
+.my-content-header {
+    padding: 5px 0 15px;
+    border-bottom: 1px solid teal;
 }
 
-.help {
-    color: red;
+.my-content-body {
+    padding: 20px 10px;
+}
+
+.my-content-footer {
+    padding: 20px 10px;
+}
+
+.my-article-container {
+    height: 500px;
+    overflow: hidden;
+}
+
+.my-article-overlay {
+    position: relative;
+    height: 60px;
+    top: -60px;
+    background: -webkit-linear-gradient(transparent, white);
+    background: -o-linear-gradient(transparent, white);
+    background: -moz-linear-gradient(transparent, white);
+    background: linear-gradient(transparent, white);
 }
 
 .my-wall {
@@ -132,25 +231,6 @@ body {
 
 .load-more {
     margin-bottom: 30px;
-}
-
-.my-modal .modal-footer {
-    padding: 24px;
-}
-
-@media screen and (max-width: 480px) {
-    .my-modal .modal-dialog {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .my-modal .modal-content {
-        height: auto;
-        min-height: 100%;
-        border-radius: 0;
-    }
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
@@ -199,18 +279,7 @@ body {
     }
 }
 
-.md-dialog-container {
-    z-index: 1050;
-}
-
-.my-form-md-dialog {
-    max-width: 100%;
-    width: 50%;
-    max-height: 100%;
-    height: 100%;
-}
-
-/* Bootstrap datepicker styles*/
+/* Bootstrap datepicker styles */
 ul.dropdown-menu > li > div > table > tbody > tr > td > button {
     padding: 5px 10px !important;
     margin: 10px 0 !important;
@@ -222,8 +291,8 @@ ul.dropdown-menu > li > div > table > tbody > tr > td > button {
 
 ul.dropdown-menu > li > div > table > tbody > tr > td > button.active > span.text-info {
     color: black;
-}
-*/
+}*/
+
 ul.dropdown-menu > li > div > table > tbody > tr > td > button.btn-info {
     color: white !important;
 }

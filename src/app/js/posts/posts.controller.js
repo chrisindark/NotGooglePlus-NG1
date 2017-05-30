@@ -2,20 +2,24 @@ angular
     .module('notgoogleplus.controllers')
     .controller('PostsController', PostsController);
 
-PostsController.$inject = ['$rootScope', '$scope', '$state', 'Authentication', 'PostsService', 'FilterService'];
+PostsController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'Authentication', 'PostsService', 'FilterService'];
 
 //@namespace PostsController
-function PostsController($rootScope, $scope, $state, Authentication, PostsService, FilterService) {
+function PostsController($rootScope, $scope, $state, $stateParams, Authentication, PostsService, FilterService) {
     var vm = this;
 
-    vm.showLoading = false;
-    vm.loadMore = false;
+    vm.params = $stateParams || {};
+
     vm.isAuthenticated = Authentication.isAuthenticated();
     vm.posts = {};
     // vm.posts.results = [];
+    vm.params = angular.extend(vm.params, {
+        page_size : 25,
+        page: 1,
+        o: "-created_at"
+    });
 
     function getPosts() {
-        vm.showLoading = true;
         PostsService.allPosts(vm.params).then(function (response) {
             vm.posts.results = response.data.results;
             vm.posts.next = response.data.next;
@@ -48,6 +52,8 @@ function PostsController($rootScope, $scope, $state, Authentication, PostsServic
     //@name activate
     //@desc Actions to be performed when this controller is instantiated
     function activate() {
+        // add default filter params to FilterService
+        FilterService.initModelValues(vm.params);
         vm.params = FilterService.getModelValues();
         getPosts();
     }

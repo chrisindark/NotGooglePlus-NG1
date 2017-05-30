@@ -1,13 +1,16 @@
-angular
-    .module('notgoogleplus.utils')
-    .factory('ApiUrls', ApiUrls);
+(function () {
+    angular
+        .module('notgoogleplus.utils')
+        .factory('ApiUrls', ApiUrls);
 
-ApiUrls.$inject = [];
+    ApiUrls.$inject = [];
 
-function ApiUrls() {
-    var ApiUrls = {};
-    // ApiUrls.domainUrl = 'http://localhost:8000/';
-    ApiUrls.domainUrl = 'https://ancient-tor-16694.herokuapp.com/';
+    function ApiUrls() {
+        var ApiUrls = {};
+        // ApiUrls.domainUrl = 'http://localhost:8000/';
+        ApiUrls.domainUrl = 'https://ancient-tor-16694.herokuapp.com/';
 
-    return ApiUrls;
-}
+        return ApiUrls;
+    }
+
+})();

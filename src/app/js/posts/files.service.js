@@ -12,7 +12,7 @@ function FilesService($http, ApiUrls) {
         createFile: createFile,
         getFile: getFile,
         updateFile: updateFile,
-        removeFile: removeFile
+        deleteFile: deleteFile
     };
 
     return FilesService;
@@ -20,9 +20,9 @@ function FilesService($http, ApiUrls) {
     //@name all
     //@desc Get all Files
     //@returns {Promise}
-    function allFiles(params) {
+    function allFiles(username, params) {
         return $http({
-            url: ApiUrls.domainUrl + 'api/v1/files/',
+            url: ApiUrls.domainUrl + 'api/v1/files/' + username + '/',
             method: 'GET',
             params: params
         });
@@ -30,7 +30,7 @@ function FilesService($http, ApiUrls) {
 
     //@name create
     //@desc Create a new File
-    //@param {string} content The content of the new File
+    //@param {file obj} fileObj The content of the new File
     //@returns {Promise}
     function createFile(fileObj) {
         var fd = createUploadObject(fileObj);
@@ -63,11 +63,11 @@ function FilesService($http, ApiUrls) {
         });
     }
 
-    //@name removePost
+    //@name deleteFile
     //@desc Delete a post of a given user
     //@param {string} username
     //@returns {Promise}
-    function removeFile(username, id) {
+    function deleteFile(username, id) {
         return $http.delete({
             url: ApiUrls.domainUrl + 'api/v1/files/' + id + '/',
             method: 'DELETE',

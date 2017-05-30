@@ -1,8 +1,8 @@
 <div class="col-xs-12" role="tabpanel">
     <ul class="nav nav-tabs nav-justified" role="tablist">
-        <li role="presentation" ng-repeat="tab in ctrl.tabs"
-            ng-class="{'active': tab.active, 'disabled': tab.disabled}"
-            ng-click="ctrl.selectTab(tab)">
+        <li role="presentation" ng-repeat="tab in vm.tabList"
+            ng-class="{'active btn-primary': tab.active, 'btn-info': !tab.active, 'disabled': tab.disabled}"
+            ng-click="vm.selectTab(tab)">
             <a ui-sref="{{tab.href}}" ng-bind="tab.heading"></a>
         </li>
     </ul>

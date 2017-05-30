@@ -1,0 +1,102 @@
+<div class="" ng-show="vm.post">
+    <div class="jumbotron">
+        <div class="" style="">
+            <h1 class="text-center">{{vm.post.title}}</h1>
+
+            <div class="list-group text-center">
+                <div class="list-group-item">
+                    <div class="row-picture my-profile-icon">
+                        <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <div ng-if="vm.postId">
+                    <p class="my-inline-block">
+                        <a ui-sref="profile({username: vm.post.user.username})">
+                            {{vm.post.user.first_name}} {{vm.post.user.last_name}}
+                            <span>(+{{vm.post.user.username}})</span>
+                        </a>
+                    </p>
+                </div>
+                <div ng-if="!vm.postId">
+                    <p class="my-inline-block">
+                        <a ui-sref="profile({username: vm.profile.username})">
+                            {{vm.profile.first_name}} {{vm.profile.last_name}}
+                            <span>(+{{vm.profile.username}})</span></a>
+                    </p>
+                </div>
+
+                <div class="togglebutton my-inline-block" style="padding-left: 20px;"
+                    ng-if="vm.postId && vm.isOwner">
+                    <label>
+                        <input type="checkbox" ng-model="vm.editMode">
+                        <span class="toggle"></span>Edit Post
+                    </label>
+                </div>
+
+                <div ng-show="vm.postId">
+                    <p class="no-margin">Created on: {{vm.post.created_at | date: 'd, MMM, yyyy'}}</p>
+                    <p class="">Updated on: {{vm.post.updated_at | date: 'd, MMM, yyyy'}}</p>
+                </div>
+
+                <div class="text-right" style="padding: 0 20px" ng-if="vm.isOwner">
+                    <button type="button" class="btn btn-raised btn-danger"
+                            ng-click="vm.removePost()">Delete Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="" ng-show="vm.post && vm.postId && !vm.editMode">
+    <div class="jumbotron">
+        <div style="padding: 20px 20px">
+            <h3 class="text-adjust">{{vm.post.content}}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron" ng-if="vm.editMode">
+    <h2 class="text-center no-margin">{{vm.formTitle}}</h2>
+
+    <form name="vm.form" ng-submit="vm.submit()">
+        <div class="form-group label-static" ng-class="{'has-error': vm.errors.title}">
+            <label for="title" class="control-label">Title</label>
+            <input class="form-control"
+                      id="title"
+                      name="title"
+                      type="text"
+                      placeholder="ex. NotGooglePlus Post!"
+                      ng-model="vm.post.title" autofocus required />
+            <span class="help" ng-if="vm.errors.title"
+                  ng-bind="vm.errors.title"></span>
+        </div>
+
+        <div class="form-group label-static" ng-class="{'has-error': vm.errors.content}">
+            <label for="content" class="control-label">Content</label>
+            <textarea class="form-control"
+                      id="content"
+                      name="content"
+                      rows="10"
+                      placeholder="ex. This is my first time posting on NotGooglePlus!"
+                      ng-model="vm.post.content" autofocus required>
+            </textarea>
+            <span class="help" ng-if="vm.errors.content"
+                  ng-bind="vm.errors.content"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+
+            <a href="javascript:void(0)" ng-click="vm.openFileModal()"
+               class="btn btn-raised btn-primary">Select File</a>
+        </div>
+    </form>
+</div>
+
+<div ng-if="vm.postId">
+    <comment-component comment-type="posts"
+                       comment-parent="vm.post"></comment-component>
+</div>

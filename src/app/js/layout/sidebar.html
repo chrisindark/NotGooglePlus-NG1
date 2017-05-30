@@ -1,0 +1,85 @@
+<div id="side-bar" class="side-content slide-left">
+    <ul>
+        <li><p>Sidebar</p></li>
+        <li><a my-ripples-dir>Hi</a></li>
+        <li><a my-ripples-dir>Hey</a></li>
+        <li><a my-ripples-dir>Hello</a></li>
+        <li><a my-ripples-dir>Hiya</a></li>
+        <li><a my-ripples-dir>Allo Allo</a></li>
+    <ul>
+</div>
+
+
+<style type="text/css">
+    body {
+        overflow-x: hidden;
+    }
+
+    .overflow-hidden {
+        overflow: hidden;
+    }
+
+    .side-content {
+        transition: all ease-in-out 0.5s;
+        position: fixed;
+        top: 60px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: inline-block;
+        /*height: 100%;*/
+        /*width: 100%;*/
+        background-color: teal;
+        z-index: 10;
+    }
+
+    @media screen and (max-width: 1200px) {
+        .side-content {
+            top: 50px;
+        }
+    }
+
+    .side-content > ul {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        list-style: none;
+    }
+
+    .side-content > ul > li > p {
+        color: white;
+        margin: 0;
+        padding: 20px;
+        font-size: 2em;
+        font-weight: 900;
+    }
+
+    .side-content > ul > li > p:before {
+        content: "\039e";
+        margin-right: 10px; 
+    }
+
+    .side-content > ul > li > a {
+        display: block;
+        line-height: 50px;
+        padding: 0 30px;
+        color: white;
+    }
+
+    .side-content > ul > li > a:hover {
+        cursor: pointer;
+        text-decoration: none;
+        background-color: #00aa9a;
+    }
+
+    .slide-right {
+        transition: all ease-in-out 0.5s;
+        transform: translate(24%, 0);
+    }
+
+    .slide-left {
+        transition: all ease-in-out 0.5s;
+        transform: translate(-100%, 0);
+    }
+
+</style>

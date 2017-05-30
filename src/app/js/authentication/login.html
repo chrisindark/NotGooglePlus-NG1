@@ -2,14 +2,13 @@
     <button type="button" class="close" ng-click="vm.closeModal()">
         <i class="material-icons">close</i>
     </button>
-    <h2 class="text-center no-margin">Login</h2>
+    <h2 class="text-center no-margin">Sign in</h2>
 </div>
 
 <div class="modal-body">
     <form name="vm.form" ng-submit="vm.login()">
-        <div class="alert alert-danger" ng-show="vm.errors.non_field_errors"
-            ng-repeat="error in vm.errors['non_field_errors']">
-                <span ng-bind="error"></span>
+        <div class="alert alert-danger" ng-if="vm.errors.non_field_errors">
+                <span ng-bind="vm.errors.non_field_errors"></span>
         </div>
 
         <div class="form-group" ng-class="{'has-error': vm.errors['username']}">
@@ -21,7 +20,6 @@
         </div>
 
         <div class="form-group" ng-class="{'has-error': vm.errors['password']}">
-            <a href="" class="pull-right" ng-click="vm.changeModal('password-reset')">Forgot Password?</a>
             <label for="password" class="control-label">Password</label>
             <input type="password" class="form-control" id="password" name="password"
                 ng-model="vm.password" placeholder="ex. thisisnotgoogleplus" required>
@@ -29,10 +27,18 @@
                 ng-bind="vm.errors.password"></span>
         </div>
 
-        <a href="" class="pull-right" ng-click="vm.changeModal('register')">Not a member? Sign up</a>
         <div class="form-group">
-            <button type="submit" class="btn btn-raised btn-primary btn-block">Login</button>
+            <button type="submit" class="btn btn-raised btn-primary btn-block">Sign in</button>
         </div>
+
+        <a href="javascript:void(0)"
+           class="pull-right"
+           ng-click="vm.changeModal('password-reset')">Forgot Password?</a>
+        <br>
+        <br>
+        <a href="javascript:void(0)"
+           class="pull-right"
+           ng-click="vm.changeModal('register')">Not a member? Sign up</a>
     </form>
 </div>
 

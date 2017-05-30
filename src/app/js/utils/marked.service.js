@@ -16,8 +16,9 @@
             return marked(content);
         };
 
-        this.markit = function(content, options) {
+        this.markdown = function(content, options) {
             return _marked(content, options);
         };
     }
+
 })();

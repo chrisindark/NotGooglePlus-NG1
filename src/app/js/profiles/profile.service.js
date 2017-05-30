@@ -2,15 +2,17 @@ angular
     .module('notgoogleplus.services')
     .factory('ProfileService', ProfileService);
 
-ProfileService.$inject = ['$http', 'ApiUrls'];
+ProfileService.$inject = ['$http', 'ApiUrls', 'Snackbar'];
 
 //@namespace ProfileService
 //@returns {Factory}
-function ProfileService($http, ApiUrls) {
+function ProfileService($http, ApiUrls, Snackbar) {
+    var self = this;
+
     var ProfileService = {
         getProfile: getProfile,
         updateProfile: updateProfile,
-        destroyProfile: destroyProfile
+        deleteProfile: deleteProfile
     };
 
     return ProfileService;
@@ -23,29 +25,38 @@ function ProfileService($http, ApiUrls) {
         return $http({
             url: ApiUrls.domainUrl + 'api/v1/profiles/' + username + '/',
             method: 'GET'
+        }).then(function (response) {
+            return response;
         });
     }
 
-    //@name destroy
+    //@name deleteProfile
     //@desc Destroys the given profile
-    //@param {Object} profile The profile to be destroyed
+    //@param {string} username The profile to be destroyed
     //@returns {Promise}
-    function destroyProfile(username) {
+    function deleteProfile(username) {
         return $http({
             url: ApiUrls.domainUrl + 'api/v1/profiles/' + username + '/',
             method: 'DELETE'
+        }).then(function (response) {
+            Snackbar.show("Profile has been successfully deleted!");
+            return response;
         });
     }
 
     //@name update
     //@desc Updates the given profile
-    //@param {Object} profile The profile to be updated
+    //@param {username} username The profile to be updated
+    //@param {object} data The profile data to be updated
     //@returns {Promise}
     function updateProfile(username, data) {
         return $http({
             url: ApiUrls.domainUrl + 'api/v1/profiles/' + username + '/',
             method: "PUT",
             data: data
+        }).then(function (response) {
+            Snackbar.show("Profile has been successfully updated!");
+            return response
         });
     }
 

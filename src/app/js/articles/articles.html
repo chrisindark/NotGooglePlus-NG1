@@ -20,31 +20,63 @@
     </div>
 </div>
 
-<div class="my-wall">
+<div class="">
     <div ng-if="vm.articles.results && vm.articles.results.length" class="">
-        <div class="" ng-repeat="article in vm.articles.results">
+        <div style="padding: 20px" ng-repeat="article in vm.articles.results">
+
             <div class="well box">
-                <div class="post">
-                    <div class="">
-                        <a class="post-user" ui-sref="profile({ username: article.user.user.username })">
-                            <img src="" class="post-user-avatar">
-                            +{{article.user.user.username}}
-                        </a>
+                <div class="my-article-container">
+                    <div class="my-content-header">
+                        <div class="my-user-item" ui-sref="articleDetail({ id: article.id })">
+                            <a class="my-user-username" ui-sref="profile({ username: article.user.username })"
+                               ng-click="$event.stopPropagation()">
+                                <img class="my-user-avatar" src="http://i.stack.imgur.com/Dj7eP.jpg">
+                                +{{article.user.username}}</a>
+                            <div class="my-user-date">
+                                <span>{{ article.updated_at | date: 'd, MMM, yyyy' }}</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="post-content">
-                        <p class="text-adjust">{{article.description}}</p>
-                    </div>
-                    <div class="post-content">
-                        <p class="text-adjust" ng-bind-html="vm.convertContent(article.content)"></p>
+                    <div class="my-content-body">
+                        <div class="text-center">
+                            <h1 class="text-adjust">{{article.title}}</h1>
+                        </div>
+
+                        <div class="text-center">
+                            <h2 class="text-adjust">{{article.description}}</h2>
+                        </div>
+
+                        <div class="my-content">
+                            <div class="text-adjust" ng-bind-html="vm.markdown(article.content)"></div>
+                        </div>
                     </div>
                 </div>
+
+                <div class="my-article-overlay" style=""></div>
+
+                <div class="text-center">
+                    <a ui-sref="articleDetail({ id: article.id })">
+                        <h3>Read More</h3>
+                    </a>
+                </div>
+
+                <br>
+
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a ui-sref="articleDetail({ id: article.id })">Comments
+                            <span class="badge">{{article.comments_count}}</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
+
         </div>
     </div>
 
     <div ng-if="vm.articles.results && !vm.articles.results.length">
-        <div class="no-posts-here">
+        <div class="no-content-here">
             <em>There are no articles here.</em>
         </div>
     </div>
@@ -66,3 +98,10 @@
         </div>
     </div>
 </div>
+
+<a href="javascript:void(0)"
+    class="btn btn-primary btn-fab btn-raised btn-add-new-post"
+    ui-sref="articleNew"
+    ng-if="vm.isAuthenticated">
+    <i class="material-icons">add</i>
+</a>

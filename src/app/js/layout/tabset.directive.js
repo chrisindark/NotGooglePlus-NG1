@@ -7,40 +7,37 @@ myTabset.$inject = ['$state'];
 function myTabset ($state) {
     return {
         restrict: 'E',
-        scope: {},
         templateUrl: 'app/js/layout/tabset.html',
-        bindToController: true,
-        controllerAs: 'ctrl',
+        scope: {},
+        bindToController: {
+            tabList: '='
+        },
+        controllerAs: 'vm',
         controller: function () {
             var vm = this;
 
-            vm.tabList = {
-                'posts': {
-                    'heading': 'Posts',
-                    'href': 'posts'
-                },
-                'articles': {
-                    'heading': 'Articles',
-                    'href': 'articles'
-                }
-            };
+            vm.$onInit = function() {
+                vm.addTab();
+            }
+
             vm.tabs = [];
             vm.addTab = function () {
                 angular.forEach(vm.tabList, function (tab) {
                     vm.tabs.push(tab);
-                    // if (vm.tabs.length === 1) {
-                    //     tab.active = true;
-                    // }
                 });
-                vm.tabList[$state.current.name].active = true;
+
+                if (_.contains(_.keys(vm.tabList), $state.current.name)) {
+                    vm.tabList[$state.current.name].active = true;
+                } else {
+                    vm.tabList[_.keys(vm.tabList)[0]].active = true;
+                }
             };
-            vm.addTab();
 
             vm.selectTab = function (selectedTab) {
-                if (selectedTab.disabled) {
-                    return;
-                }
-                angular.forEach(vm.tabs, function (tab) {
+                // if (selectedTab.disabled) {
+                //     return;
+                // }
+                angular.forEach(vm.tabList, function (tab) {
                     if (tab.active && selectedTab !== tab) {
                         tab.active = false;
                     }

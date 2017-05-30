@@ -1,0 +1,72 @@
+<div id="search-bar" class="container-fluid main-content">
+    <div class="col-xs-12">
+        <div class="bs-component">
+            <div class="col-xs-8 col-xs-offset-2">
+                <div class="ct-search well col-xs-12">
+                    <form class="bs-component">
+                        <div class="col-xs-8" style="margin-top: 10px">
+                            <input id="search-city" class="form-control" style="height: 35px"
+                                   type="text" placeholder="Search City" autocomplete="off"
+                                   ng-model="data['search_term']" ng-change="getCities(data)">
+
+                            <div class="city-list-wrapper" ng-if="cities.length > 0" ng-show="showResults">
+                                <ul>
+                                    <li ng-repeat="city in cities">
+                                        <a ng-bind="city.fields.city_name" ng-click="selectCity(city)"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4">
+                            <button class="btn btn-primary btn-lg btn-block btn-raised with-ripples"
+                               ng-click="getHotels()" ng-disabled="disableGetHotels || (data['search_term'] == '')">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+
+<style type="text/css">
+    .main-content {
+        transition: all ease-in-out 0.5s;
+        margin: 70px 0 70px 0; 
+    }
+
+    .ct-search {
+        height: 7em;
+    }
+
+    .city-list-wrapper {
+        position: relative;
+        z-index: 1;
+    }
+
+    .city-list-wrapper > ul {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        min-height: 3em;
+        max-height: 20em;
+        overflow: auto;
+        list-style: none;
+        background-color: whitesmoke;
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.4)
+    }
+
+    .city-list-wrapper > ul > li > a {
+        /* color: black; */
+        display: block;
+        line-height: 35px;
+        padding: 0 20px;
+    }
+
+    .city-list-wrapper > ul > li > a:hover {
+        cursor: pointer;
+        text-decoration: none;
+        background-color: #e6fffc;
+        color: black;
+    }
+
+</style>

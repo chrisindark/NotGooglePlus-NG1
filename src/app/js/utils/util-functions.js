@@ -94,7 +94,21 @@ function childrenById (id) {
     childrenByCode(treeObjById[id].code);
 }
 
+function getKeys (object) {
+    if (!object) {
+        return;
+    }
+    var arr = [];
+    for (var key in object) {
+        arr.push(key);
+    }
+    return arr;
+}
+
 function removeEmptyKeys (object) {
+    if (!object) {
+        return;
+    }
     for (var key in object) {
         if (!object[key]) {
             delete object[key];

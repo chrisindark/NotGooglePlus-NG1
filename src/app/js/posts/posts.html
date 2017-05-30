@@ -23,26 +23,41 @@
 <div class="my-wall">
     <div ng-if="vm.posts.results && vm.posts.results.length" class="">
         <div class="my-brick" ng-repeat="post in vm.posts.results" my-ng-repeat-finished>
-            <div class="well box">
-                <div class="post">
-                    <div class="">
-                        <a class="post-user" ui-sref="profile({ username: post.user.user.username })">
-                            <img src="" class="post-user-avatar">
-                            +{{post.user.user.username}}
-                        </a>
-                    </div>
 
-                    <div class="post-content">
-                        <p class="text-adjust">{{post.content}}</p>
+            <div class="well box">
+                <div class="my-content-header">
+                    <div class="my-user-item" ui-sref="postDetail({ id: post.id })">
+                        <a class="my-user-username" ui-sref="profile({ username: post.user.username })"
+                           ng-click="$event.stopPropagation()">
+                            <img class="my-user-avatar" src="http://i.stack.imgur.com/Dj7eP.jpg">
+                            +{{post.user.username}}</a>
+                        <div class="my-user-date">
+                            <span>{{ post.updated_at | date: 'd, MMM, yyyy' }}</span>
+                        </div>
                     </div>
                 </div>
+
+                <div class="my-content-body">
+                    <h2 class="text-adjust">{{post.title}}</h2>
+                    <br>
+                    <h4 class="text-adjust">{{post.content}}</h4>
+                </div>
+
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a ui-sref="postDetail({ id: post.id })"">Comments
+                            <span class="badge">{{post.comments_count}}</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
+
         </div>
     </div>
 
     <div ng-if="vm.posts.results && !vm.posts.results.length">
         <div class="no-posts-here">
-            <em>There are no posts here.</em>
+            <h2>There are no posts here.</h2>
         </div>
     </div>
 </div>
@@ -63,3 +78,10 @@
         </div>
     </div>
 </div>
+
+<a href="javascript:void(0)"
+    class="btn btn-primary btn-fab btn-raised btn-add-new-post"
+    ui-sref="postNew"
+    ng-if="vm.isAuthenticated">
+    <i class="material-icons">add</i>
+</a>

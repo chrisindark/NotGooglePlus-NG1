@@ -2,11 +2,11 @@ angular
     .module('notgoogleplus.services')
     .service('ArticlesService', ArticlesService);
 
-ArticlesService.$inject = ['$http', 'ApiUrls'];
+ArticlesService.$inject = ['$http', 'ApiUrls', 'Snackbar'];
 
 //@namespace Posts
 //@returns {Factory}
-function ArticlesService($http, ApiUrls) {
+function ArticlesService($http, ApiUrls, Snackbar) {
     //@name allArticles
     //@desc Get all Articles
     //@returns {Promise}
@@ -29,6 +29,9 @@ function ArticlesService($http, ApiUrls) {
             url: ApiUrls.domainUrl + 'api/v1/articles/',
             method: 'POST',
             data: data
+        }).then(function (response) {
+            Snackbar.show("Article has been successfully created!");
+            return response
         });
     };
 
@@ -50,17 +53,23 @@ function ArticlesService($http, ApiUrls) {
             url: ApiUrls.domainUrl + 'api/v1/articles/' + id + '/',
             method: 'PUT',
             data: data
+        }).then(function (response) {
+            Snackbar.show("Article has been successfully updated!");
+            return response
         });
     };
 
-    //@name removePost
-    //@desc Delete the posts of a given user
-    //@param {string} username The username to get Posts for
+    //@name removeArticle
+    //@desc Delete the articles of a given user
+    //@param {id} id The id of the article to delete
     //@returns {Promise}
     this.removeArticle = function(id) {
-        return $http.delete({
+        return $http({
             url: ApiUrls.domainUrl + 'api/v1/articles/' + id + '/',
             method: 'DELETE'
+        }).then(function (response) {
+            Snackbar.show("Article has been successfully deleted!");
+            return response
         });
     };
 

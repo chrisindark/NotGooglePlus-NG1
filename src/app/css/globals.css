@@ -1,0 +1,67 @@
+html, body {
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    padding-top: 70px;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+a:hover {
+    opacity: 0.8;
+    text-decoration: none;
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.elem-spin {
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.my-inline-block {
+    display: inline-block;
+}
+
+.text-adjust {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.help {
+    color: red;
+}
+
+.teal {
+    color: teal;
+}
+
+.footer {
+    position: relative;
+    bottom: -10px;
+    width: 100%;
+    height: 50px;
+    background-color: #009688;
+}
