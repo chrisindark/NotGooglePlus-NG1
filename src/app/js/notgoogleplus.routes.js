@@ -83,7 +83,7 @@
                 }
             })
             .state('profileSettings', {
-                parent: 'profile',
+                parent: 'home',
                 url: '/+:username/settings',
                 controller: 'ProfileSettingsController',
                 controllerAs: 'vm',

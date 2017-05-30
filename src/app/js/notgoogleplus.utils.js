@@ -43,12 +43,11 @@
             // ErrorInterceptor.showErrorMessage(statusText);
             console.log("error: ", statusText);
 
-            if (response.status === 401) {
+            if (response.status === 401 || response.status === 403) {
                 $rootScope.$broadcast('Unauthenticated');
-            } else if (response.status === 400 || response.status === 403 ||
-                response.status === 500 || response.status === 503) {
+            } else if (response.status === 400 || response.status === 500) {
                 // do something
-            } else if (response.status === 404) {
+            } else if (response.status === 404 || response.status === 503) {
                 $rootScope.$broadcast('ErrorIntercepted', {
                     response: response,
                     statusText: statusText
@@ -212,7 +211,7 @@
                 // if user is not authenticated
                 if (!Authentication.isAuthenticated()) {
                     event.preventDefault();
-                    $state.go('home');
+                    $state.go('home', {}, {reload: true});
                 } else {
                     // if user is authenticated, check if user is owner of account
                     if (toState.name === 'profileSettings' && toParams.username) {
@@ -221,7 +220,7 @@
                             // })
                             .catch(function () {
                                 Snackbar.error('You are not authorised to view this page.');
-                                $state.go('home');
+                                $state.go('home', {}, {reload: true});
                             });
                     }
                 }

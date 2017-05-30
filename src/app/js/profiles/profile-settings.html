@@ -1,5 +1,20 @@
-<div class="col-md-6 col-md-offset-3 col-xs-12 no-padding">
-    <div class="well" ng-show="vm.user">
+<div class="profile" ng-show="vm.profile">
+    <div class="jumbotron">
+        <div class="list-group text-center">
+                <div class="list-group-item">
+                    <div class="row-picture my-profile-picture">
+                        <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon">
+                    </div>
+                </div>
+                <h1 class="">{{vm.profile.first_name}} {{vm.profile.last_name}}</h1>
+                <h2 class="">+{{vm.profile.username}}</h2>
+                <p class="">{{vm.profile.tagline}}</p>
+            </div>
+    </div>
+</div>
+
+<div class="col-md-8 col-md-offset-2 col-xs-12 no-padding" ng-show="vm.profile">
+    <div class="well">
         <form role="form" class="settings" ng-submit="vm.updateAccount()">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -21,7 +36,7 @@
         </form>
     </div>
 
-    <div class="well" ng-show="vm.profile">
+    <div class="well">
         <form role="form" class="settings" ng-submit="vm.updateProfile()">
             <div class="form-group" ng-class="{'has-error': vm.errors.first_name}">
                 <label for="first_name">First name</label>
@@ -89,12 +104,14 @@
                     ng-bind="vm.errors.gender"></span>
             </div>
 
-            <div class="form-group" style="text-align: center">
-                <button type="submit" class="btn btn-raised btn-block btn-primary">Submit</button>
+            <div class="">
+                <div class="form-group" style="text-align: center">
+                    <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+                    <button type="button" class="btn btn-raised btn-danger"
+                                    ng-click="vm.deleteAccount()">Delete Profile</button>
+                </div>
             </div>
 
-            <button type="button" class="btn btn-raised btn-block btn-danger"
-                ng-click="vm.deleteAccount()">Delete Account</button>
         </form>
     </div>
 </div>
