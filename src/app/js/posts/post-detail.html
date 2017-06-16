@@ -96,7 +96,7 @@
     </form>
 </div>
 
-<div ng-if="vm.postId">
+<div ng-show="vm.postId && vm.post">
     <comment-component comment-type="posts"
                        comment-parent="vm.post"></comment-component>
 </div>

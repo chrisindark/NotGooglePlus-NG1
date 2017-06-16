@@ -1,0 +1,43 @@
+.file-wrapper {
+    height: 370px;
+    padding: 10px 0;
+    border: 1px solid #eee;
+    overflow: auto;
+}
+
+.outer-file-item {
+    display: inline-block;
+    width: 125px;
+    height: 125px;
+    margin: 5px 5px;
+    overflow: hidden;
+}
+
+.inner-file-item {
+    display: inline-block;
+    position: relative;
+    right: -50%;
+    cursor: pointer;
+}
+
+.file-item-img {
+    position: relative;
+    left: -50%;
+    max-height: 250px;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+
+input[type=file].input-file-upload {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+

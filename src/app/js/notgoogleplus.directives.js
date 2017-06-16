@@ -8,25 +8,25 @@
             // restrict: 'A',
             // scope: {},
             link: function(scope, element, attrs) {
-                element.on('click', function(event) {
-                    // adding css for hamburger button
-                    if ($('#sidebar-toggle').hasClass('active')) {
-                        $('#sidebar-toggle').removeClass('active');
-                    } else {
-                        $('#sidebar-toggle').addClass('active');
-                    }
+                // element.on('click', function(event) {
+                //     // adding css for hamburger button
+                //     if ($('#sidebar-toggle').hasClass('active')) {
+                //         $('#sidebar-toggle').removeClass('active');
+                //     } else {
+                //         $('#sidebar-toggle').addClass('active');
+                //     }
 
-                    // adding css for sliding sidebar into view
-                    if ($('#side-bar').hasClass('slide-left')) {
-                        $('#side-bar').removeClass('slide-left');
-                        $('#main-bar').addClass('slide-right');
-                        $('body').addClass('overflow-hidden');
-                    } else {
-                        $('#side-bar').addClass('slide-left');
-                        $('#main-bar').removeClass('slide-right');
-                        $('body').removeClass('overflow-hidden');
-                    }
-                });
+                //     // adding css for sliding sidebar into view
+                //     if ($('#side-bar').hasClass('slide-left')) {
+                //         $('#side-bar').removeClass('slide-left');
+                //         $('#main-bar').addClass('slide-right');
+                //         $('body').addClass('overflow-hidden');
+                //     } else {
+                //         $('#side-bar').addClass('slide-left');
+                //         $('#main-bar').removeClass('slide-right');
+                //         $('body').removeClass('overflow-hidden');
+                //     }
+                // });
             }
         };
     }
@@ -48,7 +48,7 @@
     }
 
     // @name formValidation
-    // @desc Directive function to show errors in forms 
+    // @desc Directive function to show errors in forms
     angular
         .module('notgoogleplus.directives')
         .directive('formValidation', formValidation);
@@ -107,7 +107,7 @@
     function orientationDir($rootScope) {
         return {
             restrict: 'E',
-            template: '<div id="note-orientation-overlay" class="orientation-element">' +
+            template: '<div id="orientation-overlay" class="orientation-element">' +
                 '<div><img src="../assets/icons/turn_to_portrait.svg"></div></div>',
             link: function (scope, element, attrs) {
                 // @name $rootScope event listeners
@@ -179,9 +179,9 @@
         .module('notgoogleplus.directives')
         .directive('myUploadDir', myUploadDir);
 
-    myUploadDir.$inject = ['$rootScope', 'FilesService', 'FileExtension'];
+    myUploadDir.$inject = ['$rootScope', '$timeout', 'FilesService', 'FileExtension'];
 
-    function myUploadDir($rootScope, FilesService, FileExtension) {
+    function myUploadDir($rootScope, $timeout, FilesService, FileExtension) {
         return {
             restrict: 'E',
             scope: {
@@ -189,7 +189,7 @@
             },
             template: '<label for="file-upload"></label>' +
             '<input type="file" id="file-upload" name="file-upload"' +
-            'class="input-file" accept="image/*, video/*">' +
+            'class="input-file-upload" accept="image/*, video/*">' +
             '<button class="btn btn-primary btn-raised"' +
             'ng-click="selectFile()">Upload</button>',
 
@@ -204,8 +204,7 @@
                 function onChangeCallback (event) {
                     if (FileExtension.isImage(event.target.files[0].name)
                         || FileExtension.isVideo(event.target.files[0].name)) {
-                        scope.selectedFile = event.target.files[0];
-                        // $rootScope.$emit('file.selected', scope.selectedFile);
+                        scope.uploadFile(event.target.files[0]);
                         event.target.value = '';
                     }
                     else {
@@ -220,11 +219,16 @@
                 // @desc function to upload the selected file and broadcast
                 // an event when the action is successful.
                 scope.uploadFile = function (file) {
-                    FilesService.uploadFile(file).then(function (response) {
-                        if (response) {
-                            $rootScope.$broadcast('UploadSuccessful', response);
-                        }
-                    });
+                    FilesService.createFile(file)
+                        .then(function (response) {
+                            scope.selectedFile = response.data;
+                            // $timeout(function () {
+                            //     scope.$apply();
+                            // });
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                 };
             }
         };
@@ -241,16 +245,16 @@
         return {
             restrict: 'A',
             scope: {
-                message: '=',
+                agdMessage: '=',
                 // take the length of chars left
-                charsLeft: '=',
+                agdCharsLeft: '=',
                 // take the submit disable option flag
-                disableSubmit: '='
+                agdDisableSubmit: '='
             },
             link: function (scope, element, attrs) {
                 // added watch event to check for changes
                 // to message in the controller
-                scope.$watch('message', function (newValue, oldValue) {
+                scope.$watch('agdMessage', function (newValue, oldValue) {
                     if (newValue) {
                         resizeElement();
                     }

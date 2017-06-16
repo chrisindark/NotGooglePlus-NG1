@@ -1,0 +1,63 @@
+<div class="">
+    <div class="well">
+        <div class="my-content-header">
+            <div class="my-user-item">
+                <a class="my-user-username" ui-sref="profile({ username: vm.comment.user.username })"
+                   ng-click="$event.stopPropagation()">
+                    <img class="my-user-avatar" src="http://i.stack.imgur.com/Dj7eP.jpg">
+                    {{vm.comment.user.username}}</a>
+                <div class="my-user-date">
+                    <span>{{ vm.comment.updated_at | date: 'd, MMM, yyyy' }}</span>
+                </div>
+
+                <div class="my-user-options dropdown"
+                     ng-if="vm.user.username === vm.comment.user.username">
+                                <span class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="material-icons teal">more_vert</i>
+                                </span>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#" class="no-margin btn btn-primary" ng-click="vm.doEdit($index)"><h5>Edit</h5></a></li>
+                        <li><a href="#" class="no-margin btn btn-danger" ng-click="vm.doDelete($index)">
+                            <h5>Delete</h5>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-content-body">
+            <h4 class="text-adjust" ng-if="!vm.comment.editMode" ng-bind-html="vm.markdown(vm.comment.content)"></h4>
+
+            <form ng-submit="vm.submit($index)" ng-if="vm.comment.editMode">
+                <div class="form-group no-margin" ng-class="{'has-error': vm.comment.errors.content}">
+                    <label class="control-label">Content</label>
+                    <textarea class="form-control"
+                              name="content"
+                              rows="2"
+                              required
+                              auto-grow-dir
+                              agd-message="vm.comment.content"
+                              ng-model="vm.comment.content">
+                                </textarea>
+                </div>
+                <span class="help" ng-if="vm.comment.errors.content"
+                      ng-bind="vm.comment.errors.content"></span>
+                <div class="form-group no-margin">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-warning"
+                                ng-click="vm.comment.editMode = !vm.comment.editMode">Cancel</button>
+                        <button type="submit" class="btn btn-raised btn-primary"
+                            ng-disabled="vm.isSubmitted">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="my-content-footer">
+                        <span class="">
+                            <i class="material-icons teal">favorite</i>
+                            <i class="material-icons teal">favorite_border</i>
+                        </span>
+        </div>
+    </div>
+</div>

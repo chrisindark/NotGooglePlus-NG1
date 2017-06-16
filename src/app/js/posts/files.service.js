@@ -4,6 +4,14 @@ angular
 
 FilesService.$inject = ['$http', 'ApiUrls'];
 
+
+    function createUploadObject(fileObj) {
+        var fd = new FormData();
+        fd.append('file', fileObj);
+
+        return fd;
+    }
+
 //@namespace FilesService
 //@returns {Factory}
 function FilesService($http, ApiUrls) {
@@ -40,7 +48,7 @@ function FilesService($http, ApiUrls) {
         customHeaderObj['Content-Type'] = undefined;
 
         return $http({
-            url: ApiUrls.domainUrl + 'api/v1/files/',
+            url: ApiUrls.domainUrl + 'api/v1/files/christopherp/',
             method: 'POST',
             data: fd,
             headers: customHeaderObj
@@ -73,13 +81,6 @@ function FilesService($http, ApiUrls) {
             method: 'DELETE',
             params: {username: username}
         });
-    }
-
-    function createUploadObject(fileObj) {
-        var fd = new FormData();
-        fd.append('file', fileObj);
-
-        return fd;
     }
 
 }

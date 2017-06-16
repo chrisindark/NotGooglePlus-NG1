@@ -12,7 +12,7 @@
             </div>
 
             <div class="text-center">
-                <div ng-if="vm.articleId">
+                <div ng-show="vm.articleId">
                     <p class="my-inline-block">
                         <a ui-sref="profile({username: vm.article.user.username})">
                             {{vm.article.user.first_name}} {{vm.article.user.last_name}}
@@ -20,7 +20,7 @@
                         </a>
                     </p>
                 </div>
-                <div ng-if="!vm.articleId">
+                <div ng-show="!vm.articleId">
                     <p class="my-inline-block">
                         <a ui-sref="profile({username: vm.profile.username})">
                             {{vm.profile.first_name}} {{vm.profile.last_name}}
@@ -141,7 +141,7 @@
     </form>
 </div>
 
-<div ng-if="vm.articleId">
+<div ng-show="vm.articleId && vm.article">
     <comment-component comment-type="articles"
                        comment-parent="vm.article"></comment-component>
 </div>

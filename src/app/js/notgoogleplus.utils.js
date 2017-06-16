@@ -142,91 +142,29 @@
     }
 
     angular
-        .module('notgoogleplus')
-        .run(run);
+        .module('notgoogleplus.utils')
+        .factory('AppVersionInterceptor', AppVersionInterceptor);
 
-    run.$inject = ['$rootScope', '$state', '$stateParams', '$location',
-        'Authentication', 'SessionService', 'Snackbar'];
+    AppVersionInterceptor.$inject = ['$window'];
 
-    function run ($rootScope, $state, $stateParams, $location,
-                  Authentication, SessionService, Snackbar) {
-        // $rootScope.$state = $state;
-        // $rootScope.$stateParams = $stateParams;
-        $rootScope._ = _;
+    function AppVersionInterceptor($window) {
+        var AppVersionInterceptor = {};
 
-        // set type of session service on app init
-        SessionService.checkWebStorage();
+        AppVersionInterceptor.response = function (response) {
+            var headerVersion = response.headers()['app-version'];
+            var appVersion = $window.localStorage['app-version'];
 
-        $rootScope.$on('ErrorIntercepted', function (event, args) {
-            $state.go('error', {
-                errorObj: {
-                    code: args.response.status,
-                    detail: args.response.data.detail,
-                    message: args.statusText
-                }
-            });
-        });
-
-        // enumerate routes that don't need authentication
-        var statesThatDontRequireAuth = [
-            'home',
-            'tabs',
-            'posts',
-            'postDetail',
-            'articles',
-            'articleDetail',
-            'emailResendConfirm',
-            'passwordResetConfirm'
-        ];
-
-        var statesThatRequireAdmin = [
-            'admin'
-        ];
-
-        // check if current location matches route that doesn't require authentication
-        var routeCheck = function (route) {
-            return _.contains(statesThatDontRequireAuth, route);
+            // check if headerVersion is present (not present when assets are served)
+            // and either appVersion is not present or headerVersion and appVersion
+            // dont match, then store the new version and reload tab.
+            if (!!headerVersion && (!appVersion || headerVersion !== appVersion)) {
+                $window.localStorage['app-version'] = headerVersion;
+                $window.location.reload();
+            }
+            return response
         };
 
-        var routeAdmin = function(route) {
-            return _.contains(statesThatRequireAdmin, route);
-        };
-
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
-            // redirectTo option in states to help in redirection
-            // if (toState.redirectTo) {
-            //     event.preventDefault();
-            //     $state.go(toState.redirectTo, toParams)
-            // }
-            // // reload parent state 'tabs' on change of child states
-            // if (toState.parent === 'tabs') {
-            //     toState.reload = true;
-            // }
-            // if state doesn't require auth
-            if (routeCheck(toState.name)) {
-                // do something
-            }
-            // if state requires auth
-            if (!routeCheck(toState.name)) {
-                // if user is not authenticated
-                if (!Authentication.isAuthenticated()) {
-                    event.preventDefault();
-                    $state.go('home', {}, {reload: true});
-                } else {
-                    // if user is authenticated, check if user is owner of account
-                    if (toState.name === 'profileSettings' && toParams.username) {
-                        Authentication.isOwner(toParams.username)
-                            // .then(function () {
-                            // })
-                            .catch(function () {
-                                Snackbar.error('You are not authorised to view this page.');
-                                $state.go('home', {}, {reload: true});
-                            });
-                    }
-                }
-            }
-        });
-
-    }
+        return AppVersionInterceptor;
+  }
 
 })();

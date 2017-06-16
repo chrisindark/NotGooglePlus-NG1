@@ -10,47 +10,8 @@
     function Authentication($rootScope, $http, $q, $state, ApiUrls, Snackbar, SessionService) {
         var self = this;
 
-        $rootScope.$on('Authenticated', function () {
-            $state.reload();
-        });
-
-        // @name $rootScope event listener
-        // @desc listen on event 'Unauthenticated'.
-        $rootScope.$on('Unauthenticated', function () {
-            // remove cookies/tokens if present.
-            self.removeAuthToken();
-            self.removeAuthenticatedUser();
-            $state.reload();
-        });
-
-        $rootScope.$on('SetAuthenticatedUser', function (event, user) {
-            self.setAuthenticatedUser(user);
-            $state.reload();
-        });
-
         var tokenKey = 'notgoogleplus_auth_token';
         var userObjKey = 'notgoogleplus_auth_user';
-
-        // // @name Authentication
-        // // @desc The Factory to be returned
-        // var Authentication = {
-        //     login: login,
-        //     logout: logout,
-        //     register: register,
-        //     emailResendConfirm: emailResendConfirm,
-        //     passwordReset: passwordReset,
-        //     passwordResetConfirm: passwordResetConfirm,
-        //     setAuthenticatedUser: setAuthenticatedUser,
-        //     fetchAuthenticatedUser: fetchAuthenticatedUser,
-        //     setAuthToken: setAuthToken,
-        //     fetchAuthToken: fetchAuthToken,
-        //     removeAuthToken: removeAuthToken,
-        //     getAuthHeader: getAuthHeader,
-        //     isAuthenticated: isAuthenticated,
-        //     isOwner: isOwner
-        // };
-        //
-        // return Authentication;
 
         // @name login
         // @desc Try to log in with username and password

@@ -20,12 +20,12 @@
             };
 
             Authentication.login(data)
-                .then(function(response) {
+                .then(function (response) {
                     vm.errors = {};
                     vm.closeModal();
                     console.log("user logged in");
                 })
-                .catch(function(response) {
+                .catch(function (response) {
                     vm.errors = response.data;
                 });
         };
@@ -41,12 +41,12 @@
             };
 
             Authentication.register(data)
-                .then(function(response) {
+                .then(function (response) {
                     vm.errors = {};
                     vm.closeModal();
                     console.log("user registered");
                 })
-                .catch(function(response) {
+                .catch(function (response) {
                     vm.errors = response.data;
                 });
         };
@@ -57,10 +57,10 @@
             };
 
             Authentication.emailResendConfirm(data)
-                .then(function(response) {
+                .then(function (response) {
                     vm.errors = {};
                     console.log("confirmation email sent");
-                }).catch(function(response) {
+                }).catch(function (response) {
                     vm.errors = response.data;
                 });
         };
@@ -71,12 +71,12 @@
             };
 
             Authentication.passwordReset(data)
-                .then(function(response) {
+                .then(function (response) {
                     vm.errors = {};
                     vm.closeModal();
                     console.log("reset password email sent");
                 })
-                .catch(function(response) {
+                .catch(function (response) {
                     vm.errors = response.data;
                 });
         };
@@ -90,16 +90,16 @@
             };
 
             Authentication.passwordResetConfirm(data)
-                .then(function(response) {
+                .then(function (response) {
                     vm.errors = {};
                     console.log("password reset complete");
                 })
-                .catch(function(response) {
+                .catch(function (response) {
                     vm.errors = response.data;
                 });
         };
 
-        vm.changeModal = function(arg) {
+        vm.changeModal = function (arg) {
             vm.closeModal();
 
             var modalDefaults = {
@@ -116,13 +116,13 @@
             PopupService.show(modalDefaults);
         };
 
-        vm.closeModal = function() {
+        vm.closeModal = function () {
             $scope.$close();
         };
 
         // @name activate
         // @desc Actions to be performed when this controller is instantiated
-        function activate() {
+        function activate () {
             // If the user is authenticated, the modal should not open
             if (Authentication.isAuthenticated()) {
                 $state.go('home');

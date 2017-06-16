@@ -20,6 +20,7 @@
         // requests and response errors.
         $httpProvider.interceptors.push('ErrorInterceptor');
         $httpProvider.interceptors.push('TokenInjector');
+        $httpProvider.interceptors.push('AppVersionInterceptor');
 
         // initialize materialjs for bootstrap
         $.material.init();

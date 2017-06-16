@@ -34,18 +34,23 @@ function FilesController($rootScope, $scope, Authentication, FilesService,
         // });
     };
 
-    $scope.$watch(vm.selectedFile, function (oldValue, newValue) {
-        console.log(oldValue);
+    $scope.$watch('vm.selectedFile', function (newValue, oldValue) {
+        if (newValue) {
+            // vm.closeModal();
+            console.log(newValue);
+        }
         console.log(newValue);
+        // vm.files.results.push();
     });
 
     function getFiles() {
-        FilesService.allFiles(vm.user.username, vm.params).then(function (response) {
-            vm.files.results = response.data.results;
-            console.log(response.data);
-        }).catch(function (error) {
-            console.log(error);
-        });
+        FilesService.allFiles(vm.user.username, vm.params)
+            .then(function (response) {
+                vm.files.results = response.data.results;
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
     }
 
     function activate () {
