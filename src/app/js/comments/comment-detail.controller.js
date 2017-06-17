@@ -57,7 +57,7 @@
                 });
         };
 
-        vm.doDelete = function ($index) {
+        vm.doDelete = function () {
             var modalDefaults = {
                 backdrop: false,
                 keyboard: false,

@@ -58,7 +58,6 @@
         };
 
         vm.doDelete = function (comment, commentIndex) {
-            console.log(comment, commentIndex);
             vm.comments.splice(commentIndex, 1);
         };
 

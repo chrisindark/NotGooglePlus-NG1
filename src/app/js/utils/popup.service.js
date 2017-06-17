@@ -33,7 +33,9 @@ function PopupService($uibModal) {
         angular.extend(tempModalOptions, modalOptions, customModalOptions);
 
         if (!tempModalDefaults.controller) {
-            tempModalDefaults.controller = function ($scope, $uibModalInstance) {
+            TempModalController.$inject = ['$scope', '$uibModalInstance'];
+
+            function TempModalController($scope, $uibModalInstance) {
                 $scope.modalOptions = tempModalOptions;
                 $scope.modalOptions.ok = function (result) {
                     $uibModalInstance.close(result);
@@ -42,6 +44,7 @@ function PopupService($uibModal) {
                     $uibModalInstance.dismiss('cancel');
                 };
             }
+            tempModalDefaults.controller = TempModalController;
         }
 
         return $uibModal.open(tempModalDefaults).result;
