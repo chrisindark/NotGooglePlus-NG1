@@ -10,7 +10,7 @@ function PopupService($uibModal) {
         backdrop: true,
         keyboard: true,
         modalFade: true,
-        templateUrl: '/app/js/utils/popup-modal.html',
+        templateUrl: 'app/js/utils/popup-modal.html',
         windowClass: 'my-popup-modal'
     };
 
