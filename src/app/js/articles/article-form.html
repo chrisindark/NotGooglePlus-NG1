@@ -1,0 +1,90 @@
+<div class="jumbotron" ng-if="vm.editMode">
+
+    <form name="vm.form" ng-submit="vm.submit()">
+        <fieldset ng-disabled="vm.isSubmitting">
+
+            <h2 class="text-center no-margin">{{vm.formTitle}}</h2>
+            <div class="togglebutton text-center">
+                <label>
+                    <input type="checkbox" ng-model="vm.previewArticle">
+                    <span class="toggle"></span>Preview
+                </label>
+            </div>
+
+            <fieldset class="form-group" ng-class="{'has-error': vm.article.errors.title}">
+                <label for="title" class="control-label">Title</label>
+                <input class="form-control form-control-lg"
+                       type="text"
+                       id="title"
+                       name="title"
+                       ng-model="vm.article.title"
+                       placeholder="Article Title"
+                       autofocus
+                       >
+                <span class="help" ng-if="vm.article.errors.title"
+                      ng-bind="vm.article.errors.title"></span>
+            </fieldset>
+
+            <div ng-if="!vm.previewArticle">
+                <div class="form-group" ng-class="{'has-error': vm.article.errors.description}">
+                    <label for="description" class="control-label">Description</label>
+                    <textarea class="form-control"
+                              id="description"
+                              name="description"
+                              placeholder="What's this article about?"
+                              auto-grow-dir
+                              agd-message="vm.article.description"
+                              ng-model="vm.article.description">
+                    </textarea>
+                    <span class="help" ng-if="vm.article.errors.description"
+                          ng-bind="vm.article.errors.description"></span>
+                </div>
+            </div>
+
+            <div ng-if="!vm.previewArticle">
+                <div class="form-group label-static" ng-class="{'has-error': vm.article.errors.content}">
+                    <label for="content" class="control-label">Content</label>
+                    <textarea class="form-control"
+                              id="content"
+                              name="content"
+                              rows="2"
+                              placeholder="ex. This is my first time posting on NotGooglePlus!"
+                              auto-grow-dir
+                              agd-message="vm.article.content"
+                              ng-model="vm.article.content">
+                    </textarea>
+                    <span class="help" ng-if="vm.article.errors.content"
+                          ng-bind="vm.article.errors.content"></span>
+                </div>
+            </div>
+
+            <div style="padding: 20px 0" ng-if="vm.previewArticle">
+                <article-preview article="vm.article"></article-preview>
+            </div>
+
+            <div class="togglebutton text-center">
+                <label>
+                    <input type="checkbox" ng-model="vm.previewArticle">
+                    <span class="toggle"></span>Preview
+                </label>
+            </div>
+
+            <label class="control-label">Tags</label>
+            <ui-select multiple ng-model="vm.article.tags" ng-class="{'my-ui-select': true}">
+                <ui-select-match>
+                    <span ng-bind="$item.tag"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="tag.id as tag in vm.tagsList | filter: $select.search">
+                    <span ng-bind="tag.tag"></span>
+                </ui-select-choices>
+            </ui-select>
+            <span class="help" ng-if="vm.article.errors.tags"
+                  ng-bind="vm.article.errors.tags"></span>
+
+            <fieldset class="form-group text-center">
+                <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+            </fieldset>
+
+        </fieldset>
+    </form>
+</div>

@@ -4,18 +4,30 @@
             <select class="form-control" style="background-color: white; margin: 20px 0;"
                     ng-model="vm.params.o"
                     ng-change="vm.onSortChange()">
-                <option value="created_at" index="0">Sort by date asc</option>
-                <option value="-created_at" index="1">Sort by date desc</option>
+                <option value="{{option.value}}" ng-bind="option.key"
+                    ng-repeat="option in vm.sortOptions track by option.key"></option>
+                <!-- <option value="created_at" index="0">Sort by date asc</option> -->
+                <!-- <option value="-created_at" index="1">Sort by date desc</option> -->
             </select>
+            <!-- <ui-select ng-model="vm.params.o" ng-class="{'my-ui-select': true}">
+                <ui-select-match>
+                    <span ng-bind="$select.selected.key"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="option.value as option in vm.sortOptions">
+                    <span ng-bind="option.key"></span>
+                </ui-select-choices>
+            </ui-select> -->
         </div>
 
-        <div class="col-md-4 col-xs-12">
-            <uib-pagination ng-if="vm.totalItems"
+        <div class="col-md-4 col-xs-12 text-center">
+            <ul uib-pagination ng-if="vm.totalItems"
                             total-items="vm.totalItems"
                             items-per-page="vm.itemsPerPage"
                             max-size="vm.maxSize ? vm.maxSize : 5"
                             ng-model="vm.params.page"
-                            ng-change="vm.onPageChange()"></uib-pagination>
+                            ng-change="vm.onPageChange()"
+                            previous-text="&lsaquo;" next-text="&rsaquo;">
+            </ul>
         </div>
     </div>
 </div>
@@ -41,11 +53,20 @@
                     <h2 class="text-adjust">{{post.title}}</h2>
                     <br>
                     <h4 class="text-adjust">{{post.content}}</h4>
+
+                    <div id="file" class="post-media row" ng-if="post.file">
+                        <div class="col-xs-12" ng-if="post.file.file_type === 'image'">
+                            <div>
+                                <img ng-src="{{post.file.file}}" alt="image" class="img-responsive" my-image-loader>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
                 </div>
 
                 <ul class="nav nav-pills">
                     <li class="active">
-                        <a ui-sref="postDetail({ id: post.id })"">Comments
+                        <a ui-sref="postDetail({ id: post.id })">Comments
                             <span class="badge">{{post.comments_count}}</span>
                         </a>
                     </li>

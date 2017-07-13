@@ -1,0 +1,45 @@
+<div class="jumbotron" ng-if="vm.editMode">
+    <h2 class="text-center no-margin">{{vm.formTitle}}</h2>
+
+    <form name="vm.form" ng-submit="vm.submit()">
+        <div class="form-group label-static" ng-class="{'has-error': vm.post.errors.title}">
+            <label for="title" class="control-label">Title</label>
+            <input class="form-control"
+                   id="title"
+                   name="title"
+                   type="text"
+                   placeholder="ex. NotGooglePlus Post!"
+                   ng-model="vm.post.title" autofocus required />
+            <span class="help" ng-if="vm.post.errors.title"
+                  ng-bind="vm.post.errors.title"></span>
+        </div>
+
+        <div class="form-group label-static" ng-class="{'has-error': vm.post.errors.content}">
+            <label for="content" class="control-label">Content</label>
+            <textarea class="form-control"
+                      id="content"
+                      name="content"
+                      rows="10"
+                      placeholder="ex. This is my first time posting on NotGooglePlus!"
+                      ng-model="vm.post.content" autofocus required>
+            </textarea>
+            <span class="help" ng-if="vm.post.errors.content"
+                  ng-bind="vm.post.errors.content"></span>
+        </div>
+
+        <div class="form-group label-static" ng-class="{'has-error': vm.post.errors.file}"
+             ng-if="vm.post.file">
+            <label for="file" class="control-label">File</label>
+            <span class="help" ng-if="vm.post.errors.file"
+                  ng-bind="vm.post.errors.file"></span>
+            <post-media-component post="vm.post"></post-media-component>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-raised btn-primary">Submit</button>
+
+            <a href="javascript:void(0)" ng-click="vm.openFileModal()"
+               class="btn btn-raised btn-primary">Select File</a>
+        </div>
+    </form>
+</div>

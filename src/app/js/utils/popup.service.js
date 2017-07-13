@@ -5,6 +5,7 @@ angular
 PopupService.$inject = ['$uibModal'];
 
 function PopupService($uibModal) {
+    var self = this;
 
     var modalDefaults = {
         backdrop: true,
@@ -21,7 +22,7 @@ function PopupService($uibModal) {
         bodyText: 'Perform this action?'
     };
 
-    this._show = function (customModalDefaults, customModalOptions) {
+    var _show = function (customModalDefaults, customModalOptions) {
         //Create temp objects to work with since we're in a singleton service
         var tempModalDefaults = {};
         var tempModalOptions = {};
@@ -47,15 +48,48 @@ function PopupService($uibModal) {
             tempModalDefaults.controller = TempModalController;
         }
 
-        return $uibModal.open(tempModalDefaults).result;
+        return $uibModal.open(tempModalDefaults); //$uibModal.open(tempModalDefaults).result;
     };
 
+    var _open = function (modalInstance) {
+        return modalInstance.opened;
+    };
+
+    var _result = function (modalInstance) {
+        return modalInstance.result;
+    };
+
+    var _render = function (modalInstance) {
+        return modalInstance.rendered;
+    };
+
+    // function used to return a promise that is
+    // resolved when a modal gets opened after downloading
+    // content's template and resolving all variables.
+    this.open = function (customModalDefaults, customModalOptions) {
+        if (!customModalDefaults){
+            customModalDefaults = {};
+        }
+        customModalDefaults.backdrop = 'static';
+        return _open(_show(customModalDefaults, customModalOptions));
+    };
+
+    // function used to return a promise that is
+    // resolved when a modal is closed and rejected when a modal is dismissed.
     this.show = function (customModalDefaults, customModalOptions) {
         if (!customModalDefaults){
             customModalDefaults = {};
         }
         customModalDefaults.backdrop = 'static';
-        return this._show(customModalDefaults, customModalOptions);
+        return _result(_show(customModalDefaults, customModalOptions));
     };
+
+    this.render = function (customModalDefaults, customModalOptions) {
+        if (!customModalDefaults){
+            customModalDefaults = {};
+        }
+        customModalDefaults.backdrop = 'static';
+        return _render(_show(customModalDefaults, customModalOptions));
+    }
 
 }

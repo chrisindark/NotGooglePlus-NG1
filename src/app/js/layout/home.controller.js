@@ -2,10 +2,12 @@ angular
     .module('notgoogleplus.controllers')
     .controller('HomeController', HomeController);
 
-HomeController.$inject = ['$scope', '$state', 'Authentication', 'AccountsService'];
+HomeController.$inject = ['$state', 'Authentication', 'AccountsService',
+    'TagsService'];
 
 // @namespace HomeController
-function HomeController($scope, $state, Authentication, AccountsService) {
+function HomeController($state, Authentication, AccountsService,
+                        TagsService) {
     var vm = this;
 
     vm.tabList = {

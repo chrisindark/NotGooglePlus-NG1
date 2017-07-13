@@ -1,4 +1,4 @@
-<div class="" ng-show="vm.article">
+<div class="" ng-if="vm.article">
     <div class="jumbotron">
         <div class="" style="">
             <h1 class="text-center"
@@ -7,7 +7,9 @@
             <div class="list-group text-center">
                 <div class="list-group-item">
                     <div class="row-picture my-profile-icon">
-                        <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon">
+                        <div>
+                            <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -42,107 +44,38 @@
                     </label>
                 </div>
 
-                <div class="text-right" style="padding: 0 20px">
+                <div class="col-xs-12 col-md-6 col-md-offset-3 no-padding no-float">
+                    <a href="javascript:void(0)" ng-repeat="tag in vm.tagsList"
+                       ng-if="vm.article.tags.indexOf(tag.id) !== -1"
+                       style="margin-right: 10px;"
+                       class="btn btn-raised btn-sm btn-primary">{{tag.tag}}</a>
+                </div>
+
+                <div class="col-xs-12 col-md-2 col-md-offset-10 no-padding no-float">
                     <button type="button" class="btn btn-raised btn-danger" ng-if="vm.isOwner"
-                            ng-click="vm.removeArticle()">Delete Article</button>
+                            ng-click="vm.doDelete()">Delete Article</button>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 
-<div class="" ng-show="vm.article && vm.articleId && !vm.editMode">
-    <div class="jumbotron">
-        <div class="text-left" style="padding: 20px 20px">
-            <h2 ng-bind-html="vm.markdown(vm.article.description)"></h2>
-        </div>
-        <div>
-            <div ng-bind-html="vm.markdown(vm.article.content)"></div>
-        </div>
+<div class="" ng-if="vm.article && vm.articleId && !vm.editMode">
+    <div class="jumbotron" style="padding: 20px">
+        <article-preview article="vm.article"></article-preview>
     </div>
 </div>
 
-<div class="jumbotron" ng-if="vm.editMode">
-    <h2 class="text-center no-margin">{{vm.formTitle}}</h2>
-    <div class="togglebutton text-center">
-                <label>
-                    <input type="checkbox" ng-model="vm.previewArticle">
-                    <span class="toggle"></span>Preview
-                </label>
-            </div>
+<article-form article-id="vm.articleId"
+              article="vm.article"
+              tags-list="vm.tagsList"
+              edit-mode="vm.editMode"
+              form-title="vm.formTitle"
+              on-create="vm.doCreate(article)"
+              on-update="vm.doUpdate(article)"></article-form>
 
-    <form name="vm.form" ng-submit="vm.submit()">
-        <fieldset ng-disabled="vm.isSubmitting">
-
-            <fieldset class="form-group" ng-class="{'has-error': vm.errors.title}">
-                <label for="title" class="control-label">Title</label>
-                <input class="form-control form-control-lg"
-                       type="text"
-                       id="title"
-                       name="title"
-                       ng-model="vm.article.title"
-                       placeholder="Article Title"
-                       autofocus
-                       required>
-                <span class="help" ng-if="vm.errors.title"
-                      ng-bind="vm.errors.title"></span>
-            </fieldset>
-
-            <div ng-if="!vm.previewArticle">
-                <div class="form-group" ng-class="{'has-error': vm.errors.description}">
-                    <label for="description" class="control-label">Description</label>
-                    <input class="form-control"
-                              type="text"
-                              id="description"
-                              name="description"
-                              ng-model="vm.article.description"
-                              placeholder="What's this article about?"
-                              required>
-                    <span class="help" ng-if="vm.errors.description"
-                              ng-bind="vm.errors.description"></span>
-                </div>
-            </div>
-
-            <div ng-if="!vm.previewArticle">
-                <div class="form-group label-static" ng-class="{'has-error': vm.errors.content}">
-                    <label for="content" class="control-label">Content</label>
-                    <textarea class="form-control"
-                              id="content"
-                              name="content"
-                              rows="2"
-                              placeholder="ex. This is my first time posting on NotGooglePlus!"
-                              required
-                              auto-grow-dir
-                              message="vm.article.content"
-                              ng-model="vm.article.content">
-                    </textarea>
-                    <span class="help" ng-if="vm.errors.content"
-                          ng-bind="vm.errors.content"></span>
-                </div>
-            </div>
-
-            <div style="padding: 20px 0" ng-if="vm.previewArticle">
-                <div class="text-adjust" ng-bind-html="vm.markdown(vm.article.description)"></div>
-                <div class="text-adjust" ng-bind-html="vm.markdown(vm.article.content)"></div>
-            </div>
-
-            <div class="togglebutton text-center">
-                <label>
-                    <input type="checkbox" ng-model="vm.previewArticle">
-                    <span class="toggle"></span>Preview
-                </label>
-            </div>
-
-
-            <fieldset class="form-group text-center">
-                    <button type="submit" class="btn btn-raised btn-primary">Submit</button>
-            </fieldset>
-
-        </fieldset>
-    </form>
-</div>
-
-<div ng-show="vm.articleId && vm.article">
+<div ng-if="vm.articleId && vm.article">
     <comment-component comment-type="articles"
                        comment-parent="vm.article"></comment-component>
 </div>

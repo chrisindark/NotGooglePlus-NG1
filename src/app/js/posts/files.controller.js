@@ -1,63 +1,77 @@
-angular
-    .module('notgoogleplus.controllers')
-    .controller('FilesController', FilesController);
+(function () {
+    angular
+        .module('notgoogleplus.controllers')
+        .controller('FilesController', FilesController);
 
-FilesController.$inject = ['$rootScope', '$scope', 'Authentication', 'FilesService',
-    'PostsService', 'FilterService', 'PopupService'];
+    FilesController.$inject = ['$rootScope', '$scope', 'Authentication',
+        'FilesService', 'FilterService'];
 
-//@namespace FilesController
-function FilesController($rootScope, $scope, Authentication, FilesService,
-                         PostsService, FilterService, PopupService) {
-    var vm = this;
-    vm.user = Authentication.fetchAuthenticatedUser();
-    vm.files = {};
-    vm.selectedFile = undefined;
+    //@namespace FilesController
+    function FilesController($rootScope, $scope, Authentication,
+                             FilesService, FilterService) {
+        var vm = this;
 
-    vm.closeModal = function() {
-        $scope.$close();
-    };
+        vm.files = {};
+        vm.selectedFile = undefined;
 
-    //@name submit
-    //@desc Create a new Post
-    vm.submit = function() {
-        console.log(vm.selectedFile);
-        // $rootScope.$emit('file.selected', 'vm.file');
-        // Posts.createPost(vm.content).then(function (response) {
-        //     if(response.data.error) {
-        //         vm.errors = response.data;
-        //     } else {
-        //         vm.errors = {};
-        //         vm.closeModal();
-        //         console.log("post created");
-        //         $rootScope.$broadcast('file.uploaded', response.data);
-        //     }
-        // });
-    };
+        vm.closeModal = function() {
+            $scope.$close();
+        };
 
-    $scope.$watch('vm.selectedFile', function (newValue, oldValue) {
-        if (newValue) {
-            // vm.closeModal();
-            console.log(newValue);
+        vm.submit = function () {
+            $rootScope.$emit('file.selected', vm.selectedFile);
+            vm.closeModal();
+        };
+
+        vm.selectFile = function (file) {
+            if (vm.selectedFile && vm.selectedFile.id === file.id) {
+                vm.selectedFile = undefined;
+                return;
+            }
+            vm.selectedFile = file;
+        };
+
+        $scope.$watch('vm.selectedFile', function (newValue, oldValue) {
+            if (newValue) {
+                // vm.closeModal();
+            }
+            // vm.files.results.push();
+        });
+
+        var deregisterEventReceived = $rootScope.$on('file.received', function (event, file) {
+            console.log("file.received event caught");
+            console.log(file);
+            vm.selectedFile = file;
+        });
+
+        $scope.$on('$destroy', deregisterEventReceived);
+
+        var deregisterEventUploaded = $rootScope.$on('file.uploaded', function (event, file) {
+            console.log("file.uploaded event caught");
+            console.log(file);
+            vm.files.results.push(file);
+            vm.selectedFile = file;
+        });
+
+        $scope.$on('$destroy', deregisterEventUploaded);
+
+        function getFiles() {
+            FilesService.allFiles(vm.user.username, vm.params)
+                .then(function (response) {
+                    vm.files.results = response.data.results;
+                }).catch(function (error) {
+                    console.log(error);
+                });
         }
-        console.log(newValue);
-        // vm.files.results.push();
-    });
 
-    function getFiles() {
-        FilesService.allFiles(vm.user.username, vm.params)
-            .then(function (response) {
-                vm.files.results = response.data.results;
-                console.log(response.data);
-            }).catch(function (error) {
-                console.log(error);
-            });
+        function activate () {
+            vm.user = Authentication.fetchAuthenticatedUser();
+            vm.params = FilterService.getModelValues();
+            getFiles();
+        }
+
+        activate();
+
     }
 
-    function activate () {
-        vm.params = FilterService.getModelValues();
-        getFiles();
-    }
-
-    activate();
-
-}
+})();

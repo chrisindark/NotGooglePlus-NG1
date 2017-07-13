@@ -21,9 +21,37 @@
     margin-bottom: 20px;
 }
 
-.list-group .list-group-item .row-picture.my-profile-picture img {
+.list-group .list-group-item .row-picture.my-profile-picture {
+    display: inline-block;
     width: 150px;
     height: 150px;
+    overflow: hidden;
+    padding: 0;
+    border-radius: 100%;
+}
+
+.list-group .list-group-item .row-picture.my-profile-picture > div {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+}
+
+.list-group .list-group-item .row-picture.my-profile-picture img {
+    position: relative;
+    width: initial;
+    height: 100%;
+    max-height: 250px;
+    max-width: 250px;
+    margin-top: 50%;
+    margin-left: 50%;
+    padding: 0;
+    -moz-transform: translateY(-50%) translateX(-50%);;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    -o-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
 }
 
 .list-group .list-group-item .row-picture.my-profile-icon img {
@@ -46,14 +74,23 @@
     background-color: white;
 }
 
-.image-loader-container .spinner svg {
+.image-loader-container .spinner {
     position: absolute;
-    top: 42%;
-    left: 46%;
-    width: 8%;
-    height: 16%;
-    fill: rgb(71, 188, 195);
-    stroke: rgb(71, 188, 195);
+    top: 25vh;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.spinner-profile {
+    top: 30% !important;
+    left: 30% !important;
+}
+
+.image-loader-container .spinner i {
+    background-color: white !important;
+    color: #00b0ff !important;
+    font-size: 25px !important;
 }
 
 
@@ -135,6 +172,47 @@
     color: white;
 }
 
+#article-markdown {}
+
+#article-markdown img {
+    width: 100%;
+}
+
+.post-media {
+    margin-bottom: 20px;
+    padding-top: 10px;
+}
+
+.post-media img {
+    width: 100%
+}
+
+/*.post-media .video-js {*/
+    /*position: relative;*/
+    /*width: 100%;*/
+    /*height: 0;*/
+    /*min-width: 300px;*/
+    /*min-height: 150px;*/
+/*}*/
+
+.video-js-responsive-container.vjs-hd {
+    padding-top: 56.25%;
+}
+.video-js-responsive-container.vjs-sd {
+    padding-top: 75%;
+}
+.video-js-responsive-container {
+    width: 100%;
+    position: relative;
+}
+.video-js-responsive-container .video-js {
+    height: 100% !important;
+    width: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .btn.btn-add-new-post {
     position: fixed;
     bottom: 30px;
@@ -144,6 +222,10 @@
 
 .no-content-here {
     text-align: center;
+}
+
+.my-articles-container {
+    padding: 20px;
 }
 
 .my-user-item {
@@ -168,7 +250,6 @@
     right: 10px;
     float: right;
 }
-
 
 .my-user-avatar {
     width: 40px;
@@ -222,6 +303,12 @@
 
 .load-more {
     margin-bottom: 30px;
+}
+
+@media screen and (max-width: 480px) {
+    .my-articles-container {
+        padding: 0;
+    }
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
@@ -286,4 +373,17 @@ ul.dropdown-menu > li > div > table > tbody > tr > td > button.active > span.tex
 
 ul.dropdown-menu > li > div > table > tbody > tr > td > button.btn-info {
     color: white !important;
+}
+
+
+.my-ui-select.ui-select-multiple.ui-select-bootstrap .ui-select-match-item {
+    background-color: #009688;
+    color: white;
+}
+
+.my-ui-select.ui-select-multiple.ui-select-bootstrap .ui-select-match .close {
+    font-size: 2em;
+    opacity: 1;
+    color: white;
+    text-shadow: 0 0 0 #fff;
 }

@@ -4,8 +4,8 @@ angular
 
 ArticlesService.$inject = ['$http', 'ApiUrls', 'Snackbar'];
 
-//@namespace Posts
-//@returns {Factory}
+//@namespace ArticlesService
+//@returns {Service}
 function ArticlesService($http, ApiUrls, Snackbar) {
     //@name allArticles
     //@desc Get all Articles

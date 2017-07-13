@@ -1,6 +1,7 @@
 .file-wrapper {
+    text-align: center;
     height: 370px;
-    padding: 10px 0;
+    padding: 10px 5px;
     border: 1px solid #eee;
     overflow: auto;
 }

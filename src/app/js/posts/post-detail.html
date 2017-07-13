@@ -1,4 +1,4 @@
-<div class="" ng-show="vm.post">
+<div class="" ng-if="vm.post">
     <div class="jumbotron">
         <div class="" style="">
             <h1 class="text-center"
@@ -7,7 +7,9 @@
             <div class="list-group text-center">
                 <div class="list-group-item">
                     <div class="row-picture my-profile-icon">
-                        <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon">
+                        <div>
+                            <img class="circle" ng-src="{{vm.post.user.image}}" alt="icon">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,67 +39,34 @@
                     </label>
                 </div>
 
-                <div ng-show="vm.postId">
+                <div ng-if="vm.postId">
                     <p class="no-margin">Created on: {{vm.post.created_at | date: 'd, MMM, yyyy'}}</p>
                     <p class="">Updated on: {{vm.post.updated_at | date: 'd, MMM, yyyy'}}</p>
                 </div>
 
-                <div class="text-right" style="padding: 0 20px" ng-if="vm.isOwner">
-                    <button type="button" class="btn btn-raised btn-danger"
-                            ng-click="vm.removePost()">Delete Post</button>
+                <div class="col-xs-12 col-md-2 col-md-offset-10 no-padding no-float">
+                    <button type="button" class="btn btn-raised btn-danger" ng-if="vm.isOwner"
+                            ng-click="vm.doDelete()">Delete Post</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="" ng-show="vm.post && vm.postId && !vm.editMode">
-    <div class="jumbotron">
-        <div style="padding: 20px 20px">
-            <h3 class="text-adjust">{{vm.post.content}}</h3>
-        </div>
+<div class="" ng-if="vm.post && vm.postId && !vm.editMode">
+    <div class="jumbotron" style="padding: 20px">
+        <post-preview post="vm.post"></post-preview>
     </div>
 </div>
 
-<div class="jumbotron" ng-if="vm.editMode">
-    <h2 class="text-center no-margin">{{vm.formTitle}}</h2>
+<post-form post-id="vm.postId"
+           post="vm.post"
+           edit-mode="vm.editMode"
+           form-title="vm.formTitle"
+           on-create="vm.doCreate(post)"
+           on-update="vm.doUpdate(post)"></post-form>
 
-    <form name="vm.form" ng-submit="vm.submit()">
-        <div class="form-group label-static" ng-class="{'has-error': vm.errors.title}">
-            <label for="title" class="control-label">Title</label>
-            <input class="form-control"
-                      id="title"
-                      name="title"
-                      type="text"
-                      placeholder="ex. NotGooglePlus Post!"
-                      ng-model="vm.post.title" autofocus required />
-            <span class="help" ng-if="vm.errors.title"
-                  ng-bind="vm.errors.title"></span>
-        </div>
-
-        <div class="form-group label-static" ng-class="{'has-error': vm.errors.content}">
-            <label for="content" class="control-label">Content</label>
-            <textarea class="form-control"
-                      id="content"
-                      name="content"
-                      rows="10"
-                      placeholder="ex. This is my first time posting on NotGooglePlus!"
-                      ng-model="vm.post.content" autofocus required>
-            </textarea>
-            <span class="help" ng-if="vm.errors.content"
-                  ng-bind="vm.errors.content"></span>
-        </div>
-
-        <div class="form-group text-center">
-            <button type="submit" class="btn btn-raised btn-primary">Submit</button>
-
-            <a href="javascript:void(0)" ng-click="vm.openFileModal()"
-               class="btn btn-raised btn-primary">Select File</a>
-        </div>
-    </form>
-</div>
-
-<div ng-show="vm.postId && vm.post">
+<div ng-if="vm.postId && vm.post">
     <comment-component comment-type="posts"
                        comment-parent="vm.post"></comment-component>
 </div>

@@ -19,21 +19,21 @@ function PostsController($rootScope, $scope, $state, $stateParams, Authenticatio
         o: "-created_at"
     });
 
-    function getPosts() {
-        PostsService.allPosts(vm.params).then(function (response) {
-            vm.posts.results = response.data.results;
-            vm.posts.next = response.data.next;
-            vm.totalItems = response.data.count;
-            vm.itemsPerPage = vm.params.page_size;
+    function getPosts () {
+        PostsService.allPosts(vm.params)
+            .then(function (response) {
+                vm.posts.results = response.data.results;
+                vm.posts.next = response.data.next;
+                vm.totalItems = response.data.count;
+                vm.itemsPerPage = vm.params.page_size;
 
-            FilterService.setModelValues(vm.params);
-
-        }).catch(function (error) {
-            console.log(error);
-        });
+                FilterService.setModelValues(vm.params);
+            }).catch(function (error) {
+                console.log(error);
+            });
     }
 
-    vm.getNextPosts = function() {
+    vm.getNextPosts = function () {
         if(vm.posts.next) {
             // vm.params = {};
             getPosts(vm.posts.next);
@@ -45,13 +45,24 @@ function PostsController($rootScope, $scope, $state, $stateParams, Authenticatio
         getPosts();
     };
 
+    vm.sortOptions = [
+        {
+            key: 'Sort by date asc',
+            value: 'created_at'
+        },
+        {
+            key: 'Sort by date desc',
+            value: '-created_at'
+        }
+    ];
+
     vm.onSortChange = function() {
         getPosts();
     };
 
     //@name activate
     //@desc Actions to be performed when this controller is instantiated
-    function activate() {
+    function activate () {
         // add default filter params to FilterService
         FilterService.initModelValues(vm.params);
         vm.params = FilterService.getModelValues();

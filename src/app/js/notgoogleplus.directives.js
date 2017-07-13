@@ -86,9 +86,18 @@
     function myImageLoader($compile) {
         return {
             restrict: 'A',
+            scope: {
+                eClass: '@'
+            },
             link: function (scope, element, attrs) {
                 var loader = $compile('<div class="image-loader-container">'+
-                    '<span></span></div>')(scope);
+                    '<span class="spinner"><i class="fa fa-snowflake-o fa-spin" aria-hidden="true"></i>' +
+                    '</span></div>')(scope);
+
+                if (scope.eClass) {
+                    loader.find('.spinner').addClass(scope.eClass);
+                }
+
                 element.after(loader);
                 element.bind('load', function () {
                     loader.remove();
@@ -158,13 +167,20 @@
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
+                // check if scope is last in the ng-repeat list
                 if (scope.$last) {
+                    // check if masonry already initialized
+                    // by checking 'my-masonry' attribute
+                    // and reinitialize masonry
                     if (element.parent().attr('my-masonry')) {
                         element.parent().masonry('destroy');
                     }
                     $timeout(function () {
-                        element.parent().masonry({itemSelector: '.my-brick'});
-                        element.parent().attr('my-masonry', 'my-masonry');
+                        // wait for images to load before initiating masonry
+                        element.parent().imagesLoaded(function () {
+                            element.parent().masonry({itemSelector: '.my-brick'});
+                            element.parent().attr('my-masonry', 'my-masonry');
+                        });
                     });
                 }
             }
@@ -184,14 +200,8 @@
     function myUploadDir($rootScope, $timeout, FilesService, FileExtension) {
         return {
             restrict: 'E',
-            scope: {
-                selectedFile: '='
-            },
-            template: '<label for="file-upload"></label>' +
-            '<input type="file" id="file-upload" name="file-upload"' +
-            'class="input-file-upload" accept="image/*, video/*">' +
-            '<button class="btn btn-primary btn-raised"' +
-            'ng-click="selectFile()">Upload</button>',
+            scope: {},
+            templateUrl: 'app/js/utils/upload-file.html',
 
             link: function (scope, element, attrs) {
                 scope.fileUpload = document.getElementById('file-upload');
@@ -221,10 +231,8 @@
                 scope.uploadFile = function (file) {
                     FilesService.createFile(file)
                         .then(function (response) {
-                            scope.selectedFile = response.data;
-                            // $timeout(function () {
-                            //     scope.$apply();
-                            // });
+                            var selectedFile = response.data;
+                            $rootScope.$emit('file.uploaded', selectedFile);
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -241,6 +249,7 @@
 
     autoGrowDir.$inject = ['$timeout'];
 
+    // directive to be used with input elements and textareas
     function autoGrowDir($timeout) {
         return {
             restrict: 'A',
@@ -276,6 +285,27 @@
 
             }
         };
+    }
+
+    angular
+        .module('notgoogleplus.directives')
+        .directive('myVideoJsDir', myVideoJsDir);
+
+    myVideoJsDir.$inject = ['$window'];
+
+    function myVideoJsDir ($window) {
+        return {
+            restrict: 'A',
+            scope: {},
+            link: function (scope, element, attrs) {
+                var options = {};
+                var player = $window.videojs(element[0].id, options);
+
+                scope.$on('$destroy', function () {
+                    player.dispose();
+                });
+            }
+        }
     }
 
 })();

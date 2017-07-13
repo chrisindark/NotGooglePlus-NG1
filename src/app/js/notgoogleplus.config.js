@@ -12,7 +12,6 @@
         $locationProvider.hashPrefix('');
         $locationProvider.html5Mode(true);
 
-
         // $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
         // $httpProvider.defaults.xsrfCookieName = 'csrftoken';
 

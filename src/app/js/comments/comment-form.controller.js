@@ -31,6 +31,10 @@
                 Snackbar.show('Please sign in to add comments !!');
                 return;
             }
+
+            // return if comment is empty
+            if (!vm.comment.content.trim()) { return; }
+
             vm.isSubmitted = true;
             CommentsService.create(vm.commentParent.id, vm.comment)
                 .then(function (response) {

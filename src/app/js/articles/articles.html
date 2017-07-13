@@ -9,20 +9,21 @@
             </select>
         </div>
 
-        <div class="col-md-4 col-xs-12">
-            <uib-pagination ng-if="vm.totalItems"
+        <div class="col-md-4 col-xs-12 text-center">
+            <ul uib-pagination ng-if="vm.totalItems"
                             total-items="vm.totalItems"
                             items-per-page="vm.itemsPerPage"
                             max-size="vm.maxSize ? vm.maxSize : 5"
                             ng-model="vm.params.page"
-                            ng-change="vm.onPageChange()"></uib-pagination>
+                            ng-change="vm.onPageChange()">
+            </ul>
         </div>
     </div>
 </div>
 
-<div class="">
+<div class="my-articles-container col-xs-12 col-md-10 col-md-offset-1">
     <div ng-if="vm.articles.results && vm.articles.results.length" class="">
-        <div style="padding: 20px" ng-repeat="article in vm.articles.results">
+        <div ng-repeat="article in vm.articles.results">
 
             <div class="well box">
                 <div class="my-article-container">
@@ -80,6 +81,7 @@
             <em>There are no articles here.</em>
         </div>
     </div>
+
 </div>
 
 <!--<div class="col-xs-12 col-md-4 col-md-offset-4 load-more" ng-if="vm.loadMore"-->

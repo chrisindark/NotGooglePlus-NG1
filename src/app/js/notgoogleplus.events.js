@@ -3,17 +3,30 @@
         .module('notgoogleplus')
         .run(run);
 
-    run.$inject = ['$rootScope', '$state', '$stateParams', '$location',
-        'Authentication', 'SessionService', 'Snackbar'];
+    run.$inject = ['$rootScope', '$state', '$stateParams', '$window',
+        'Authentication', 'SessionService', 'Snackbar', '$anchorScroll'];
 
-    function run ($rootScope, $state, $stateParams, $location,
-                  Authentication, SessionService, Snackbar) {
+    function run ($rootScope, $state, $stateParams, $window,
+                  Authentication, SessionService, Snackbar, $anchorScroll) {
+        // added to rootScope to be available in templates
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
         $rootScope._ = _; // added _ to use underscore functions in templates
 
         // set type of session service on app init
         SessionService.checkWebStorage();
+
+        // hack to scroll to top when navigating to new URLS but not back/forward
+        var wrap = function (method) {
+            var orig = $window.window.history[method];
+            $window.window.history[method] = function () {
+                var retval = orig.apply(this, Array.prototype.slice.call(arguments));
+                $anchorScroll();
+                return retval;
+            };
+        };
+        wrap('pushState');
+        wrap('replaceState');
 
         $rootScope.$on('ErrorIntercepted', function (event, args) {
             $state.go('error', {
@@ -93,11 +106,15 @@
                     // if user is authenticated, check if user is owner of account
                     if (toState.name === 'profileSettings' && toParams.username) {
                         Authentication.isOwner(toParams.username)
-                            // .then(function () {
-                            // })
+                            .then(function () {
+                                // do something
+                            })
                             .catch(function () {
                                 Snackbar.error('You are not authorised to view this page.');
                                 $state.go('home', {}, {reload: true});
+                            })
+                            .finally(function () {
+                                // do something
                             });
                     }
                 }

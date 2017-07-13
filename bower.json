@@ -34,21 +34,10 @@
     "angular-touch": "^1.6.1",
     "angular-ui-router": "~0.4.2",
     "moment": "^2.18.1",
-    "marked": "^0.3.6"
-  },
-  "overrides": {
-    "bootstrap": {
-      "main": [
-        "dist/js/bootstrap.js",
-        "dist/css/bootstrap.css"
-      ]
-    },
-    "masonry": {
-      "main": [
-        "dist/masonry.pkgd.js"
-      ],
-      "dependencies": {}
-    }
+    "marked": "^0.3.6",
+    "angular-ui-select": "^0.19.8",
+    "video.js": "5.20.1",
+    "components-font-awesome": "^4.7.0"
   },
   "description": "",
   "private": true,

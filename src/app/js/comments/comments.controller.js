@@ -49,7 +49,6 @@
         }
 
         vm.doUpdate = function (comment, commentIndex) {
-            console.log(comment, commentIndex);
             vm.comments[commentIndex] = comment;
         };
 

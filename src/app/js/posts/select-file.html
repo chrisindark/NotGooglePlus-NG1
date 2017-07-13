@@ -8,7 +8,9 @@
 <div class="modal-body">
     <form name="vm.form" ng-submit="vm.submit()">
         <div class="file-wrapper">
-            <div class="outer-file-item" ng-repeat="file in vm.files.results">
+            <div class="outer-file-item" ng-repeat="file in vm.files.results"
+                 ng-click="vm.selectFile(file)"
+                 ng-class="vm.selectedFile.id === file.id ? 'selected-file': ''">
                 <div class="inner-file-item">
                     <img class="file-item-img" ng-src="{{file.file}}">
                 </div>
@@ -25,3 +27,9 @@
 </div>
 
 <div class="modal-footer"></div>
+
+<style>
+    .selected-file {
+        border: 5px solid teal;
+    }
+</style>

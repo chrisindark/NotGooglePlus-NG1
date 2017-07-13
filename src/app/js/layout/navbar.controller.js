@@ -35,6 +35,22 @@ function NavbarController($rootScope, Authentication, AccountsService, PopupServ
         PopupService.show(modalDefaults);
     };
 
+    vm.openSidebarModal = function () {
+        var modalDefaults = {
+            backdrop: false,
+            keyboard: false,
+            modalFade: false,
+            animation: false,
+            templateUrl: 'app/js/layout/sidebar.html',
+            controller: 'SidebarController',
+            controllerAs: 'vm',
+            windowClass: 'my-modal'
+        };
+
+        PopupService.show(modalDefaults);
+
+    };
+
     function activate() {
         // console.log('NavbarController loaded');
         vm.isAuthenticated = Authentication.isAuthenticated();
