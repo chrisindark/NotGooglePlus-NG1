@@ -1,9 +1,11 @@
 var express = require('express');
 var path = require('path');
-var router = express.Router();
+var compression = require('compression')
 
+var router = express.Router();
 var app = express();
 
+app.use(compression());
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
 
