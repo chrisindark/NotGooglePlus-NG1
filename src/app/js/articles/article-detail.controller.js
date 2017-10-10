@@ -5,13 +5,12 @@
 
     ArticleDetailController.$inject = ['$state', '$stateParams',
         'Authentication', 'ArticlesService', 'ProfileService',
-        'TagsService', 'PopupService'];
+        'TagsService', 'PopupService', 'Snackbar', 'Utility'];
 
     //@namespace ArticleDetailController
     function ArticleDetailController ($state, $stateParams,
-                                     Authentication, ArticlesService,
-                                     ProfileService, TagsService,
-                                     PopupService) {
+        Authentication, ArticlesService, ProfileService,
+        TagsService, PopupService, Snackbar, Utility) {
         var vm = this;
 
         vm.articleId = $stateParams.id;
@@ -59,7 +58,6 @@
         // Function called to get authenticated user's account
         // and profile object when new article is created
         function getProfile () {
-            vm.user = Authentication.fetchAuthenticatedUser();
             ProfileService.getProfile(vm.user.username)
                 .then(function (response) {
                     vm.profile = response.data;
@@ -106,15 +104,48 @@
                 });
         };
 
+        vm.doLike = function (boolFlag) {
+            if (!vm.isAuthenticated) {
+                Snackbar.show('Please sign in to like/unlike articles !!');
+                return;
+            } else if (vm.isSubmitted) {
+                return;
+            }
+            vm.isSubmitted = true;
+
+            var data = {};
+            if (vm.article.liked === boolFlag) {
+                data.liked = null;
+            } else {
+                data.liked = boolFlag;
+            }
+
+            ArticlesService.voteArticle(vm.articleId, data)
+                .then(function (response) {
+                    if (response.data.liked) {
+                        Snackbar.show("Added to liked articles!");
+                    }
+                    Utility.likeUnlike(vm.article, response);
+                    vm.isSubmitted = false;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        };
+
         //@name activate
         //@desc Actions to be performed when the controller is instantiated
         function activate () {
             getArticle();
             getTagsList();
 
+            vm.isAuthenticated = Authentication.isAuthenticated();
+            vm.user = Authentication.fetchAuthenticatedUser();
+
             if (!vm.articleId) {
                 getProfile();
             }
+
         }
 
         activate();

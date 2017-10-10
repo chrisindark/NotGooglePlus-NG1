@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation" my-navbar-dir>
     <div class="container-fluid">
         <div class="navbar-header custom-navbar-header">
 
@@ -23,33 +23,24 @@
         <div class="collapse navbar-collapse" id="not-google-plus-nav">
             <ul class="nav navbar-nav pull-right" ng-if="vm.isAuthenticated && vm.user">
                 <li>
-                    <a ui-sref="profile({ username: vm.user.username })"
-                        ui-sref-opts="{ reload: true }"
-                        data-toggle="collapse"
-                        data-target="#not-google-plus-nav">+{{vm.user.username}}</a>
+                    <a ui-sref="profile({ username: vm.user.username })">+{{vm.user.username}}</a>
                 </li>
                 <li>
-                    <a ui-sref="profileSettings({ username: vm.user.username })"
-                        ui-sref-opts="{ reload: true }"
-                        data-toggle="collapse"
-                        data-target="#not-google-plus-nav">Settings</a>
+                    <a ui-sref="profileSettings({ username: vm.user.username })">Settings</a>
                 </li>
                 <li>
                     <a href="javascript:void(0)"
-                       data-toggle="collapse"
-                       data-target="#not-google-plus-nav" ng-click="vm.logout()">Logout</a>
+                        ng-click="vm.logout()">Logout</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav pull-right" ng-if="!vm.isAuthenticated">
                 <li>
                     <a href="javascript:void(0)"
-                       data-toggle="collapse"
-                        data-target="#not-google-plus-nav" ng-click="vm.openLoginModal()">Sign in/Sign up</a>
+                        ng-click="vm.openLoginModal()">Sign in/Sign up</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<style type="text/css">
-</style>
+<style type="text/css"></style>

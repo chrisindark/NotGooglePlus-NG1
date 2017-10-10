@@ -34,7 +34,6 @@
 
         vm.$onChanges = function (changesObj) {
             // console.log('onchange');
-
         };
 
         vm.$onDestroy = function () {

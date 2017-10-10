@@ -49,11 +49,16 @@ exports.wiredepOptions = {
                 "dist/css/bootstrap.css"
             ]
         },
-        masonry: {
+        "masonry": {
             "main": [
                 "dist/masonry.pkgd.js"
             ],
             "dependencies": {}
+        },
+        "videojs-contrib-hls": {
+            "main": [
+                "dist/videojs-contrib-hls.js"
+            ]
         }
     }
 };

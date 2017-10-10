@@ -3,12 +3,12 @@
         .module('notgoogleplus.services')
         .service('TagsService', TagsService);
 
-    TagsService.$inject = ['$http', 'ApiUrls'];
+    TagsService.$inject = ['$http', 'EnvironmentConfig'];
 
-    function TagsService ($http, ApiUrls) {
+    function TagsService ($http, EnvironmentConfig) {
         this.allTags = function (params) {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/tags/',
+                url: EnvironmentConfig.api + 'api/v1/tags/',
                 method: 'GET',
                 params: params
             });

@@ -92,10 +92,10 @@
                 templateUrl: 'app/js/posts/select-file.html',
                 controller: 'FilesController',
                 controllerAs: 'vm',
-                windowClass: 'my-modal'
+                windowClass: 'my-modal upload-modal'
             };
 
-            PopupService.show(modalDefaults)
+            PopupService.open(modalDefaults)
                 .then(function () {
                     $rootScope.$emit('file.received', vm.post.file);
                 });

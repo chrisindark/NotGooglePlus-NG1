@@ -1,5 +1,5 @@
-<div class="">
-    <div class="well">
+<div class="panel panel-default">
+    <div class="panel-body">
         <div class="my-content-header">
             <div class="my-user-item">
                 <a class="my-user-username" ui-sref="profile({ username: vm.comment.user.username })"
@@ -35,7 +35,7 @@
                               name="content"
                               rows="2"
                               required
-                              auto-grow-dir
+                              my-auto-grow-dir
                               agd-message="vm.comment.content"
                               ng-model="vm.comment.content">
                                 </textarea>
@@ -54,10 +54,22 @@
         </div>
 
         <div class="my-content-footer">
-                        <span class="">
-                            <i class="material-icons teal">favorite</i>
-                            <i class="material-icons teal">favorite_border</i>
-                        </span>
+            <button type="button" class="btn btn-xs"
+                    ng-click="vm.doLike(false)"
+                    ng-class="{'teal': vm.comment.liked === true}">
+                <span class="">
+                    <i class="material-icons">thumb_up</i>
+                    {{vm.comment.dislikes_count}}
+                </span>
+            </button>
+            <button type="button" class="btn btn-xs"
+                    ng-click="vm.doLike(false)"
+                    ng-class="{'teal': vm.comment.liked === false}">
+                <span class="">
+                    <i class="material-icons">thumb_down</i>
+                    {{vm.comment.dislikes_count}}
+                </span>
+            </button>
         </div>
     </div>
 </div>

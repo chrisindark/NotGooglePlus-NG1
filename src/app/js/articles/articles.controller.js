@@ -17,8 +17,7 @@
 
     //@namespace ArticlesController
     function ArticlesController($stateParams, Authentication,
-                                ArticlesService, FilterService,
-                                MarkedService) {
+        ArticlesService, FilterService, MarkedService) {
         var vm = this;
 
         // store the params received from $stateparams

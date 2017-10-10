@@ -20,13 +20,15 @@
         </div>
 
         <div class="col-md-4 col-xs-12 text-center">
-            <ul uib-pagination ng-if="vm.totalItems"
-                            total-items="vm.totalItems"
-                            items-per-page="vm.itemsPerPage"
-                            max-size="vm.maxSize ? vm.maxSize : 5"
-                            ng-model="vm.params.page"
-                            ng-change="vm.onPageChange()"
-                            previous-text="&lsaquo;" next-text="&rsaquo;">
+            <ul uib-pagination
+                ng-if="vm.totalItems"
+                total-items="vm.totalItems"
+                items-per-page="vm.itemsPerPage"
+                max-size="vm.maxSize ? vm.maxSize : 5"
+                ng-model="vm.params.page"
+                ng-change="vm.onPageChange()"
+                previous-text="&lsaquo;"
+                next-text="&rsaquo;">
             </ul>
         </div>
     </div>
@@ -50,6 +52,7 @@
                 </div>
 
                 <div class="my-content-body">
+
                     <h2 class="text-adjust">{{post.title}}</h2>
                     <br>
                     <h4 class="text-adjust">{{post.content}}</h4>
@@ -57,10 +60,29 @@
                     <div id="file" class="post-media row" ng-if="post.file">
                         <div class="col-xs-12" ng-if="post.file.file_type === 'image'">
                             <div>
-                                <img ng-src="{{post.file.file}}" alt="image" class="img-responsive" my-image-loader>
+                                <img ng-src="{{post.file.file}}" alt="image"
+                                    class="img-responsive" my-image-loader-dir>
                             </div>
                         </div>
-                        <div></div>
+                        <div class="col-xs-12" ng-if="post.file.file_type === 'video'">
+                            <div class="video-js-responsive-container vjs-hd">
+                                <video id="my-player-{{$index}}"
+                                       class="video-js"
+                                       controls
+                                       preload="none"
+                                       ng-src="{{post.file.file}}"
+                                       my-video-js-dir>
+                                    <source ng-src="{{post.file.file}}" type="video/mp4">
+                                    <source ng-src="{{post.file.file}}" type="video/ogg">
+                                    <source ng-src="{{post.file.file}}" type="video/webm">
+
+                                    <p class="vjs-no-js">
+                                        To view this video please enable JavaScript, and consider upgrading to a
+                                        web browser thatsupports HTML5 video
+                                    </p>
+                                </video>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -76,9 +98,9 @@
         </div>
     </div>
 
-    <div ng-if="vm.posts.results && !vm.posts.results.length">
-        <div class="no-posts-here">
-            <h2>There are no posts here.</h2>
+    <div ng-if="vm.posts.results && !vm.posts.results.length" class="" style="">
+        <div class="no-content-here">
+            <em>There are no posts here.</em>
         </div>
     </div>
 </div>

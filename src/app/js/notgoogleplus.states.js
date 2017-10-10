@@ -1,13 +1,13 @@
 (function () {
     angular
         .module('notgoogleplus.routes')
-        .config(routeConfig);
+        .config(stateConfig);
 
-    routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$injector'];
+    stateConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$injector'];
 
-    // @name routeConfig
+    // @name stateConfig
     // @desc Define valid application states
-    function routeConfig($stateProvider, $urlRouterProvider, $injector) {
+    function stateConfig($stateProvider, $urlRouterProvider, $injector) {
         $stateProvider
             .state('home', {
                 url: '/home',
@@ -41,6 +41,13 @@
                     params: null
                 }
             })
+            .state('accountActivation', {
+                parent: 'home',
+                url: '/account/activate/:token',
+                controller: 'AuthenticationController',
+                controllerAs: 'vm',
+                templateUrl: 'app/js/authentication/account-activate.html'
+            })
             .state('emailResendConfirm', {
                 parent: 'home',
                 url: '/email/resend/confirm',
@@ -50,10 +57,24 @@
             })
             .state('passwordResetConfirm', {
                 parent: 'home',
-                url: '/password/reset/confirm/:uid/:token',
+                url: '/password/reset/confirm/:token',
                 controller: 'AuthenticationController',
                 controllerAs: 'vm',
                 templateUrl: 'app/js/authentication/password-reset-confirm.html'
+            })
+            .state('googleOauthCallback', {
+                // parent: 'home',
+                url: '/auth/google/callback',
+                controller: 'GoogleOauthController',
+                controllerAs: 'vm',
+                templateUrl: 'app/js/oauth/oauth-callback.html'
+            })
+            .state('twitterOauthCallback', {
+                // parent: 'home',
+                url: '/auth/twitter/callback',
+                controller: 'TwitterOauthController',
+                controllerAs: 'vm',
+                templateUrl: 'app/js/oauth/oauth-callback.html'
             })
             .state('profile', {
                 parent: 'home',
@@ -127,16 +148,21 @@
                 params: {
                     errorObj: null
                 }
+            })
+            .state('paymentCard', {
+                parent: 'home',
+                url: '/addcard',
+                templateUrl: 'app/js/payments/square-payment.html',
+                controller: 'PaymentController',
+                controllerAs: 'vm'
             });
 
-        $urlRouterProvider.when('/', urlRouterConfig);
-
         urlRouterConfig.$inject = ['$state'];
-
         function urlRouterConfig($state) {
             $state.go('home');
         }
 
+        $urlRouterProvider.when('/', urlRouterConfig);
         $urlRouterProvider.otherwise('/');
     }
 

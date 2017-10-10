@@ -1,0 +1,15 @@
+{
+    "version": "1.0.0",
+    "env": {
+        "local": {
+            "EnvironmentConfig": {
+                "api": "http://172.16.9.234:8000/"
+            }
+        },
+        "production": {
+            "EnvironmentConfig": {
+                "api": "https://ancient-tor-16694.herokuapp.com/"
+            }
+        }
+    }
+}

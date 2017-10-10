@@ -1,5 +1,5 @@
-<div class="">
-    <div class="well">
+<div class="panel panel-default">
+    <div class="panel-body">
         <form name="vm.form" ng-submit="vm.submit()">
             <div class="form-group label-static" ng-class="{'has-error': vm.comment.errors.content}">
                 <label for="content" class="control-label">Content</label>
@@ -9,7 +9,7 @@
                           rows="2"
                           placeholder="ex. This is my first time posting on NotGooglePlus!"
                           required
-                          auto-grow-dir
+                          my-auto-grow-dir
                           message="vm.comment.content"
                           ng-model="vm.comment.content">
                         </textarea>

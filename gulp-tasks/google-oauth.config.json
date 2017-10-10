@@ -1,0 +1,18 @@
+{
+    "env": {
+        "local": {
+            "GOOGLE_OAUTH2": {
+                "CALLBACK_URL": "http://127.0.0.1:3000/auth/google/callback",
+                "CLIENT_ID": "307738501047-pnpgrstnfm2r3bmqceptf5mve28sdt3c.apps.googleusercontent.com",
+                "REQUEST_TOKEN_URL": "https://accounts.google.com/o/oauth2/auth"
+            }
+        },
+        "production": {
+            "GOOGLE_OAUTH2": {
+                "CALLBACK_URL": "https://ancient-tor-16694.herokuapp.com/auth/google/callback",
+                "CLIENT_ID": "307738501047-pnpgrstnfm2r3bmqceptf5mve28sdt3c.apps.googleusercontent.com",
+                "REQUEST_TOKEN_URL": "https://accounts.google.com/o/oauth2/auth"
+            }
+        }
+    }
+}

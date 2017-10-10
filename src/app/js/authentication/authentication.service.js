@@ -3,11 +3,13 @@
         .module('notgoogleplus.services')
         .service('Authentication', Authentication);
 
-    Authentication.$inject = ['$rootScope', '$http', '$q', '$state', 'ApiUrls', 'Snackbar', 'SessionService'];
+    Authentication.$inject = ['$rootScope', '$http', '$q', '$state',
+        'EnvironmentConfig', 'Snackbar', 'SessionService'];
 
     // @namespace Authentication
     // @returns {Factory}
-    function Authentication($rootScope, $http, $q, $state, ApiUrls, Snackbar, SessionService) {
+    function Authentication($rootScope, $http, $q, $state,
+        EnvironmentConfig, Snackbar, SessionService) {
         var self = this;
 
         var tokenKey = 'notgoogleplus_auth_token';
@@ -20,7 +22,7 @@
         // @returns {Promise}
         this.login = function (data) {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/auth/login/',
+                url: EnvironmentConfig.api + 'api/v1/auth/login/',
                 method: 'POST',
                 data: data
             }).then(function (response) {
@@ -39,7 +41,7 @@
         // @returns {Promise}
         this.logout = function () {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/auth/logout/',
+                url: EnvironmentConfig.api + 'api/v1/auth/logout/',
                 method: 'POST'
             }).then(function(response) {
                 $rootScope.$broadcast('Unauthenticated');
@@ -59,7 +61,20 @@
         // @returns {Promise}
         this.register = function (data) {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/accounts/',
+                url: EnvironmentConfig.api + 'api/v1/accounts/',
+                method: 'POST',
+                data: data
+            }).then(function(response) {
+                return response;
+            }).catch(function (error) {
+                console.log(error);
+                return $q.reject(error);
+            });
+        };
+
+        this.accountActivate = function (data) {
+            return $http({
+                url: EnvironmentConfig.api + 'api/v1/auth/account/activate/confirm/',
                 method: 'POST',
                 data: data
             }).then(function(response) {
@@ -72,7 +87,7 @@
 
         this.passwordReset = function (data) {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/auth/password/reset/',
+                url: EnvironmentConfig.api + 'api/v1/auth/password/reset/',
                 method: 'POST',
                 data: data
             }).then(function (response) {
@@ -85,7 +100,7 @@
 
         this.emailResendConfirm = function (data) {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/auth/account/activate/',
+                url: EnvironmentConfig.api + 'api/v1/auth/account/activate/',
                 method: 'POST',
                 data: data
             }).then(function (response) {
@@ -98,7 +113,7 @@
 
         this.passwordResetConfirm = function (data) {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/auth/password/reset/confirm/',
+                url: EnvironmentConfig.api + 'api/v1/auth/password/reset/confirm/',
                 method: 'POST',
                 data: data
             }).then(function (response) {

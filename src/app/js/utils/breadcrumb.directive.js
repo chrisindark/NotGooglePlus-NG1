@@ -1,13 +1,18 @@
-angular
-    .module('notgoogleplus.utils')
-    .directive('breadcrumbs', breadcrumbs);
+(function () {
+    angular
+        .module('notgoogleplus.utils')
+        .directive('myBreadcrumbDir', myBreadcrumbDir);
 
-function breadcrumbs () {
-    return {
-        restrict: 'E',
-        scope: {},
-        templateUrl: 'app/js/utils/breadcrumb.html',
-        controller: 'BreadcrumbController',
-        controllerAs: 'vm'
-    };
-}
+    myBreadcrumbDir.$inject = [];
+
+    function myBreadcrumbDir () {
+        return {
+            restrict: 'E',
+            scope: {},
+            templateUrl: 'app/js/utils/breadcrumb.html',
+            controller: 'BreadcrumbController',
+            controllerAs: 'vm'
+        };
+    }
+
+})();

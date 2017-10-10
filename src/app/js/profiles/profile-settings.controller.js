@@ -8,8 +8,7 @@
 
     //@namespace ProfileSettingsController
     function ProfileSettingsController($scope, $state, $stateParams,
-                                       Authentication, AccountsService,
-                                       ProfileService, Snackbar) {
+        Authentication, AccountsService, ProfileService, Snackbar) {
         var vm = this;
 
         vm.username = $stateParams.username;

@@ -1,47 +1,41 @@
 (function () {
     angular
         .module('notgoogleplus.services')
-        .factory('Snackbar', Snackbar);
+        .service('Snackbar', Snackbar);
 
     //@namespace
     //Snackbar
     function Snackbar() {
+        var self = this;
 
-        //@name Snackbar
-        //@desc The factory to be returned
-        var Snackbar = {
-            error: error,
-            show: show
-        };
-
-        return Snackbar;
+        this.ifOpen = false;
 
         //@name _snackbar
         //@desc Display a _snackbar
         //@param {string} content The content of the snackbar
         //@param {Object} options Options  for displaying the snackbar
         function _snackbar(content, options) {
+            if (this.ifOpen) {
+                return;
+            }
+
             options = _.extend({timeout: 3000}, options);
             options.content = content;
+            options.onClose = function () {
+                this.ifOpen = false;
+            }
 
             $.snackbar(options);
-        }
-
-        //@name error
-        //@desc Display an error _snackbar
-        //@param {string} content The content of the _snackbar
-        //@param {Object} options Options for displaying the _snackbar
-        function error(content, options) {
-            _snackbar('Error: ' + content, options);
+            this.ifOpen = true;
         }
 
         //@name show
         //@desc Display a standard snackbar
         //@param {string} content The content of the snackbar
         //@param {Object} options Options for displaying the snackbar
-        function show(content, options) {
+        this.show = function (content, options) {
             _snackbar(content, options);
-        }
+        };
     }
 
 })();

@@ -13,6 +13,7 @@
             'ui.bootstrap',
             'ui.select',
             'angular-loading-bar',
+            'credit-cards',
             'notgoogleplus.config',
             'notgoogleplus.routes',
             'notgoogleplus.services',

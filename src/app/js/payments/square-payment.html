@@ -1,0 +1,49 @@
+<div class="col-xs-12 col-md-4 col-md-offset-4">
+    <div class="well">
+        <h2 class="text-center no-margin">Payment Form</h2>
+        <form name="vm.form" ng-submit="vm.paymentConfirm()" novalidate>
+            <div class="alert alert-danger" ng-show="card_errors">
+                <div id="card-errors" ng-repeat="error in card_errors">
+                    <span>{{error.message}}</span>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="">
+                <label for="sq-card-name" class="control-label">Card Owner's Name</label>
+                <input type="text" class="form-control" id="sq-card-name" name="sq-card-name"
+                    ng-model="data.card.name" ng-required="true">
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': vm.errors['sq-card-number']}">
+                <label for="sq-card-number" class="control-label">Card Number</label>
+                <input type="text" class="form-control" id="sq-card-number" name="sq-card-number">
+            </div>
+
+            <div class="form-group" ng-class="">
+                <label for="sq-card-type" class="control-label">Card Type</label>
+                <p class="form-control" id="sq-card-type" name="sq-card-number" ng-bind="data.card.type"></p>
+                {{data.card.type}}
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': vm.errors['sq-cvv']}">
+                <label for="sq-cvv" class="control-label">CVV</label>
+                <input type="text" class="form-control" id="sq-cvv" name="sq-cvv">
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': vm.errors['sq-expiration-date']}">
+                <label for="sq-expiration-date" class="control-label">Expiration Date</label>
+                <input type="text" class="form-control" id="sq-expiration-date" name="sq-expiration-date">
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': vm.errors['sq-postal-code']}">
+                <label for="sq-postal-code" class="control-label">Postal Code</label>
+                <input type="text" class="form-control" id="sq-postal-code" name="sq-postal-code">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-raised btn-primary btn-block"
+                    ng-disabled="isProcessing || vm.form.$invalid">Pay Now</button>
+            </div>
+        </form>
+    </div>
+</div>

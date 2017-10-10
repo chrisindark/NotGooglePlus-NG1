@@ -25,8 +25,8 @@
         'PopupService', 'Snackbar'];
 
     function ArticleFormController ($rootScope, $scope, $state, $stateParams,
-                                    Authentication, ArticlesService, ProfileService,
-                                    MarkedService, PopupService, Snackbar) {
+        Authentication, ArticlesService, ProfileService, MarkedService,
+        PopupService, Snackbar) {
         var vm = this;
 
         vm.article = {};
@@ -69,17 +69,6 @@
                         vm.isSubmitted = false;
                     });
             }
-        };
-
-        vm.addTag = function () {
-            // if (!vm.article.tags.includes(vm.tagField)) {
-            //     vm.article.tagList.push(vm.tagField);
-            //     vm.tagField = '';
-            // }
-        };
-
-        vm.removeTag = function (tagName) {
-            // vm.article.tagList = vm.article.tagList.filter((slug) => slug != tagName);
         };
 
         vm.markdown = function (content) {

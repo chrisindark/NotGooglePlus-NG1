@@ -2,10 +2,12 @@ angular
     .module('notgoogleplus.controllers')
     .controller('PostsController', PostsController);
 
-PostsController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'Authentication', 'PostsService', 'FilterService'];
+PostsController.$inject = ['$rootScope', '$scope', '$state', '$stateParams',
+    'Authentication', 'PostsService', 'FilterService'];
 
 //@namespace PostsController
-function PostsController($rootScope, $scope, $state, $stateParams, Authentication, PostsService, FilterService) {
+function PostsController($rootScope, $scope, $state, $stateParams,
+    Authentication, PostsService, FilterService) {
     var vm = this;
 
     vm.params = $stateParams || {};

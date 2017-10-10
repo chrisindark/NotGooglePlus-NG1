@@ -1,21 +1,23 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="col-md-offset-5 col-md-3 col-xs-12">
-            <select class="form-control" style="background-color: white; margin: 20px 0;"
+            <!-- <select class="form-control" style="background-color: white; margin: 20px 0;"
                     ng-model="vm.params.o"
                     ng-change="vm.onSortChange()">
                 <option value="created_at" index="0">Sort by date asc</option>
                 <option value="-created_at" index="1">Sort by date desc</option>
-            </select>
+            </select> -->
+
         </div>
 
         <div class="col-md-4 col-xs-12 text-center">
-            <ul uib-pagination ng-if="vm.totalItems"
-                            total-items="vm.totalItems"
-                            items-per-page="vm.itemsPerPage"
-                            max-size="vm.maxSize ? vm.maxSize : 5"
-                            ng-model="vm.params.page"
-                            ng-change="vm.onPageChange()">
+            <ul uib-pagination
+                ng-if="vm.totalItems"
+                total-items="vm.totalItems"
+                items-per-page="vm.itemsPerPage"
+                max-size="vm.maxSize ? vm.maxSize : 5"
+                ng-model="vm.params.page"
+                ng-change="vm.onPageChange()">
             </ul>
         </div>
     </div>

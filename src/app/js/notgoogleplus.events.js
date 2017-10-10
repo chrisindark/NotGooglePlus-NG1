@@ -65,8 +65,11 @@
             'postDetail',
             'articles',
             'articleDetail',
+            'accountActivation',
             'emailResendConfirm',
-            'passwordResetConfirm'
+            'passwordResetConfirm',
+            'googleOauthCallback',
+            'twitterOauthCallback',
         ];
 
         var statesThatRequireAdmin = [
@@ -82,7 +85,8 @@
             return _.contains(statesThatRequireAdmin, route);
         };
 
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams,
+            fromState, fromParams, options) {
             // redirectTo option in states to help in redirection
             // if (toState.redirectTo) {
             //     event.preventDefault();
@@ -100,8 +104,8 @@
             if (!routeCheck(toState.name)) {
                 // if user is not authenticated
                 if (!Authentication.isAuthenticated()) {
-                    event.preventDefault();
-                    $state.go('home', {}, {reload: true});
+                    // event.preventDefault();
+                    // $state.go('home', {}, {reload: true});
                 } else {
                     // if user is authenticated, check if user is owner of account
                     if (toState.name === 'profileSettings' && toParams.username) {
