@@ -7,6 +7,8 @@ var cssnano = require('gulp-cssnano');
 var sourcemaps = require('gulp-sourcemaps');
 var clean = require('gulp-clean');
 var debug = require('gulp-debug');
+var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var inject = require('gulp-inject');
 var concat = require('gulp-concat');
@@ -35,7 +37,7 @@ gulp.task('build-google-oauth-config', function () {
         .pipe(gulp.dest(path.join(conf.paths.dist, conf.folders.js)));
 });
 
-gulp.task('build-config', ['build-google-oauth-config'], function () {
+gulp.task('buildconfig', ['build-google-oauth-config'], function () {
     return gulp.src('gulp-tasks/config.json')
         .pipe(gulpNgConfig('notgoogleplus.config', {
             createModule: false,
@@ -46,7 +48,7 @@ gulp.task('build-config', ['build-google-oauth-config'], function () {
         .pipe(gulp.dest(path.join(conf.paths.dist, conf.folders.js)));
 });
 
-gulp.task('buildsass', function () {
+gulp.task('buildsass', ['buildconfig'], function () {
     return gulp.src(path.join(conf.paths.src, conf.files.scss))
         .pipe(sass())
         .pipe(autoprefixer())
@@ -54,7 +56,7 @@ gulp.task('buildsass', function () {
         .pipe(gulp.dest(conf.paths.dist));
 });
 
-gulp.task('buildhtml', ['build-config'], function () {
+gulp.task('buildhtml', ['buildsass'], function () {
     return gulp.src(path.join(conf.paths.src, conf.files.html))
         .pipe(templateCache('template-cache.js', {
             module: 'notgoogleplus.utils',
@@ -183,6 +185,7 @@ gulp.task('serve-dist', ['dist'], function () {
 });
 
 var awspublish = require('gulp-awspublish');
+
 var localConfig = {
     buildSrc: './dist/**/*',
     getAwsConf: function (environment) {
