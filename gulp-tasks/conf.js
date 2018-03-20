@@ -24,6 +24,7 @@ exports.folders = {
 exports.files = {
     js: '**/*.js',
     css: '**/*.css',
+    scss: '**/*.scss',
     html: '**/*.html',
     fonts: 'app/fonts/**/*.*',
     images: 'app/images/**/*.*',
