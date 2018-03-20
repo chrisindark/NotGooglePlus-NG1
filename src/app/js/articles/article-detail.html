@@ -8,8 +8,10 @@
                 <div class="list-group-item">
                     <div class="row-picture my-profile-icon">
                         <div>
-                            <img class="circle" ng-src="{{vm.article.user.image}}"
-                                alt="icon" my-image-loader-dir>
+                            <img class="circle" ng-src="{{vm.article.user.image}}" ng-if="vm.article.user.image"
+                                alt="icon" my-image-loader-dir e-class="spinner-profile">
+                            <img class="circle" src="/app/images/avatars/1.png" ng-if="!vm.article.user.image"
+                                 alt="icon">
                         </div>
                     </div>
                 </div>
@@ -52,7 +54,7 @@
                        class="btn btn-raised btn-sm btn-primary">{{tag.tag}}</a>
                 </div>
 
-                <div class="row no-padding">
+                <div class="row no-padding" ng-show="vm.articleId">
                     <div class="col-xs-12 col-md-6 no-padding">
                         <div class="col-xs-12 col-md-2 no-padding">
                             <button type="button" class="btn"

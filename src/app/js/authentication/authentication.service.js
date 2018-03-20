@@ -23,6 +23,7 @@
         this.login = function (data) {
             return $http({
                 url: EnvironmentConfig.api + 'api/v1/auth/login/',
+                // url: EnvironmentConfig.api + 'api/v1/auth/jwt/login/',
                 method: 'POST',
                 data: data
             }).then(function (response) {

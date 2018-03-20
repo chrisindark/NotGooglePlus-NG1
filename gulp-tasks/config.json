@@ -3,7 +3,7 @@
     "env": {
         "local": {
             "EnvironmentConfig": {
-                "api": "http://172.16.9.234:8000/"
+                "api": "http://127.0.0.1:8000/"
             }
         },
         "production": {

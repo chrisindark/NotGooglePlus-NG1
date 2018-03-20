@@ -47,11 +47,13 @@
                 $rootScope.$broadcast('Unauthenticated');
             } else if (response.status === 400 || response.status === 500) {
                 // do something
-            } else if (response.status === 404 || response.status === 503) {
+            } else if (response.status === 404) {
                 $rootScope.$broadcast('ErrorIntercepted', {
                     response: response,
                     statusText: statusText
                 });
+            } else if (response.status === 503) {
+                // do something
             }
 
             var deferred = $q.defer();
@@ -100,7 +102,7 @@
 
     angular
         .module('notgoogleplus.utils')
-        .factory('HeaderInterceptor', HeaderInterceptor)
+        .factory('HeaderInterceptor', HeaderInterceptor);
 
     function HeaderInterceptor() {
         return {

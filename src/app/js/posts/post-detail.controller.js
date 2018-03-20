@@ -136,7 +136,7 @@
             // $state.go('home', {}, {reload: true});
 
             if (!vm.postId) {
-                getProfile();
+                // getProfile();
             }
         }
 

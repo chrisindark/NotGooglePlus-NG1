@@ -4,8 +4,10 @@
                 <div class="list-group-item">
                     <div class="row-picture my-profile-picture">
                         <div class="">
-                            <img class="circle" ng-src="{{vm.profile.image}}"
+                            <img class="circle" ng-src="{{vm.profile.image}}" ng-if="vm.profile.image"
                                  alt="icon" my-image-loader-dir e-class="spinner-profile">
+                            <img class="circle" src="/app/images/avatars/1.png" ng-if="!vm.profile.image"
+                                 alt="icon">
                         </div>
                     </div>
                 </div>
@@ -84,7 +86,7 @@
             <div class="form-group" ng-class="{'has-error': vm.errors['dob']}">
                 <label for="dob">Date of birth</label>
                 <input type="text" class="form-control" id="dob"
-                    uib-datepicker-popup="dd-MMMM-yyyy"
+                    uib-datepicker-popup="yyyy-MM-dd"
                     is-open="popup"
                     datepicker-options="datepickerOptions"
                     close-text="Close"

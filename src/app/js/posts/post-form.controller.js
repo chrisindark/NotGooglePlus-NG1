@@ -95,7 +95,7 @@
                 windowClass: 'my-modal upload-modal'
             };
 
-            PopupService.open(modalDefaults)
+            PopupService.show(modalDefaults)
                 .then(function () {
                     $rootScope.$emit('file.received', vm.post.file);
                 });

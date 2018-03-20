@@ -19,7 +19,7 @@
 
                 vm.$onInit = function() {
                     vm.addTab();
-                }
+                };
 
                 vm.tabs = [];
                 vm.addTab = function () {

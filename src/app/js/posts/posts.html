@@ -9,14 +9,14 @@
                 <!-- <option value="created_at" index="0">Sort by date asc</option> -->
                 <!-- <option value="-created_at" index="1">Sort by date desc</option> -->
             </select>
-            <!-- <ui-select ng-model="vm.params.o" ng-class="{'my-ui-select': true}">
-                <ui-select-match>
-                    <span ng-bind="$select.selected.key"></span>
-                </ui-select-match>
-                <ui-select-choices repeat="option.value as option in vm.sortOptions">
-                    <span ng-bind="option.key"></span>
-                </ui-select-choices>
-            </ui-select> -->
+            <!--<ui-select ng-model="vm.params.o" ng-class="{'my-ui-select': true}">-->
+                <!--<ui-select-match>-->
+                    <!--<span ng-bind="$select.selected.key"></span>-->
+                <!--</ui-select-match>-->
+                <!--<ui-select-choices repeat="option.value as option in vm.sortOptions">-->
+                    <!--<span ng-bind="option.key"></span>-->
+                <!--</ui-select-choices>-->
+            <!--</ui-select>-->
         </div>
 
         <div class="col-md-4 col-xs-12 text-center">
@@ -43,7 +43,8 @@
                     <div class="my-user-item" ui-sref="postDetail({ id: post.id })">
                         <a class="my-user-username" ui-sref="profile({ username: post.user.username })"
                            ng-click="$event.stopPropagation()">
-                            <img class="my-user-avatar" src="http://i.stack.imgur.com/Dj7eP.jpg">
+                            <img class="my-user-avatar" ng-src="{{post.user.image}}" ng-if="post.user.image">
+                            <img class="my-user-avatar" src="/app/images/avatars/1.png" ng-if="!post.user.image">
                             +{{post.user.username}}</a>
                         <div class="my-user-date">
                             <span>{{ post.updated_at | date: 'd, MMM, yyyy' }}</span>
@@ -109,6 +110,7 @@
     <!--ng-click="vm.getNextPosts()" ng-class="{'my-btn-disable': vm.showLoading}">-->
     <!--<button type="button" class="btn btn-raised btn-info btn-block">Load More</button>-->
 <!--</div>-->
+
 <div class="row">
     <div class="col-xs-12">
         <div class="col-md-offset-8 col-md-4 col-xs-12">

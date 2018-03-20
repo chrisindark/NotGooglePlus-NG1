@@ -8,8 +8,10 @@
                 <div class="list-group-item">
                     <div class="row-picture my-profile-picture">
                         <div>
-                            <img class="circle" ng-src="{{vm.post.user.image}}" alt="icon"
-                                my-image-loader-dir e-class="spinner-profile">
+                            <img class="circle" ng-src="{{vm.post.user.image}}" ng-if="vm.post.user.image"
+                                 alt="icon" my-image-loader-dir e-class="spinner-profile">
+                            <img class="circle" src="/app/images/avatars/1.png" ng-if="!vm.post.user.image"
+                                 alt="icon">
                         </div>
                     </div>
                 </div>

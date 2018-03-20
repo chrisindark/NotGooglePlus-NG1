@@ -4,7 +4,8 @@
             <div class="my-user-item">
                 <a class="my-user-username" ui-sref="profile({ username: vm.comment.user.username })"
                    ng-click="$event.stopPropagation()">
-                    <img class="my-user-avatar" src="http://i.stack.imgur.com/Dj7eP.jpg">
+                    <img class="my-user-avatar" ng-src="{{vm.comment.user.image}}" ng-if="vm.comment.user.image">
+                    <img class="my-user-avatar" src="/app/images/avatars/1.png" ng-if="!vm.comment.user.image">
                     {{vm.comment.user.username}}</a>
                 <div class="my-user-date">
                     <span>{{ vm.comment.updated_at | date: 'd, MMM, yyyy' }}</span>

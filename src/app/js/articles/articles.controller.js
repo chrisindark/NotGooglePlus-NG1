@@ -60,6 +60,17 @@
             getArticles();
         };
 
+        vm.sortOptions = [
+            {
+                key: 'Sort by date asc',
+                value: 'created_at'
+            },
+            {
+                key: 'Sort by date desc',
+                value: '-created_at'
+            }
+        ];
+
         vm.onSortChange = function() {
             getArticles();
         };

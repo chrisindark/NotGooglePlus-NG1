@@ -185,6 +185,7 @@ gulp.task('serve-dist', ['dist'], function () {
 });
 
 var awspublish = require('gulp-awspublish');
+var cloudfrontInvalidate = require('gulp-cloudfront-invalidate-aws-publish');
 
 var localConfig = {
     buildSrc: './dist/**/*',
@@ -200,6 +201,15 @@ var localConfig = {
     }
 };
 
+var cfSettings = {
+  distribution: 'E2A654H2YRPD0W', // Cloudfront distribution ID 
+  // accessKeyId: '',             // Optional AWS Access Key ID 
+  // secretAccessKey: '',         // Optional AWS Secret Access Key 
+  // sessionToken: '',            // Optional AWS Session Token 
+  wait: true,                     // Whether to wait until invalidation is completed (default: false) 
+  indexRootPath: true             // Invalidate index.html root paths (`foo/index.html` and `foo/`) (default: false) 
+};
+
 gulp.task('s3-publish', function () {
     var awsConf = localConfig.getAwsConf('production');
     var publisher = awspublish.create(awsConf.keys);
@@ -209,6 +219,8 @@ gulp.task('s3-publish', function () {
         // publisher will add Content-Length, Content-Type and headers specified above
         // If not specified it will set x-amz-acl to public-read by default
         .pipe(publisher.publish(awsConf.headers))
+        // invalidates the array of files that were updated, created, or deleted by gulp-awspublish
+        .pipe(cloudfrontInvalidate(cfSettings))
         // create a cache file to speed up consecutive uploads
         .pipe(publisher.cache())
         // create a transform stream that delete old files from the bucket
