@@ -67,9 +67,9 @@
         }
 
         function activate () {
-            // vm.user = Authentication.fetchAuthenticatedUser();
-            // vm.params = FilterService.getModelValues();
-            // getFiles();
+            vm.user = Authentication.fetchAuthenticatedUser();
+            vm.params = FilterService.getModelValues();
+            getFiles();
         }
 
         activate();

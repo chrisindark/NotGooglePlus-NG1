@@ -33,7 +33,7 @@
         vm.submit = function () {
             vm.isSubmitted = true;
 
-            if (typeof vm.post.file === 'object') {
+            if (vm.post.file !== null && typeof vm.post.file === 'object') {
                 vm.file = vm.post.file;
                 vm.post.file = vm.post.file.id;
             }

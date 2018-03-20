@@ -7,9 +7,9 @@
         .module('notgoogleplus.directives')
         .directive('myUploadDir', myUploadDir);
 
-    myUploadDir.$inject = ['$rootScope', '$timeout', 'FilesService', 'FileExtension'];
+    myUploadDir.$inject = ['$rootScope', 'FilesService', 'FileExtension', 'Authentication'];
 
-    function myUploadDir ($rootScope, $timeout, FilesService, FileExtension) {
+    function myUploadDir ($rootScope, FilesService, FileExtension, Authentication) {
         return {
             restrict: 'E',
             scope: {},
@@ -48,8 +48,10 @@
                 // @desc function to upload the selected file and broadcast
                 // an event when the action is successful.
                 scope.uploadFile = function (file) {
+                    var authenticatedUser = Authentication.fetchAuthenticatedUser();
+
                     // file upload to django file storage server
-                    FilesService.createFile(file, scope.progressHandler)
+                    FilesService.createFile(authenticatedUser.username, file, scope.progressHandler)
                         .then(function (response) {
                             var selectedFile = response.data;
                             $rootScope.$emit('file.uploaded', selectedFile);

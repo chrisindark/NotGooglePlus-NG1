@@ -12,9 +12,9 @@
 
         this.createFormDataObject = function (fileObj) {
             var fd = new FormData();
-            // fd.append('file', fileObj);
-            fd.append('avatar', fileObj);
-            fd.append('Content-Type', fileObj.type);
+            fd.append('file', fileObj);
+            // fd.append('avatar', fileObj);
+            // fd.append('Content-Type', fileObj.type);
 
             return fd;
         };
@@ -34,7 +34,7 @@
         //@desc Create a new File
         //@param {file obj} fileObj The content of the new File
         //@returns {Promise}
-        this.createFile = function (fileObj, progress) {
+        this.createFile = function (username, fileObj, progress) {
             // create a formdata object for the file
             // to be uploaded as multipart encoded.
             var fd = this.createFormDataObject(fileObj);
@@ -46,17 +46,15 @@
             // customHeaderObj['Content-Type'] = 'multipart/form-data';
 
             return $http({
-                // url: EnvironmentConfig.api + 'api/v1/files/christopherp/',
-                url: EnvironmentConfig.api + 'api/userprofile-avatar/2/',
-                // method: 'POST',
-                method: 'PUT',
-                data: fd,
-                // data: fileObj,
-                headers: customHeaderObj,
-                // headers: {
-                //     'Content-Type': fileObj.type,
-                //     'Content-Disposition': 'attachment;filename=' + fileObj.name
-                // },
+                url: EnvironmentConfig.api + 'api/v1/files/' + username + '/',
+                method: 'POST',
+                // data: fd,
+                data: fileObj,
+                // headers: customHeaderObj,
+                headers: {
+                    'Content-Type': fileObj.type,
+                    'Content-Disposition': 'attachment;filename=' + fileObj.name
+                },
                 uploadEventHandlers: {
                     progress: progress
                 }
