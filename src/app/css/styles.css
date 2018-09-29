@@ -76,7 +76,7 @@
 
 .image-loader-container .spinner {
     position: absolute;
-    top: 25vh;
+    top: 40%;
     right: 0;
     left: 0;
     bottom: 0;
@@ -95,7 +95,7 @@
 
 
 
-/* loading animation css */
+/* loading element animation css */
 .loading-background {
     background-color: rgba(0, 0, 0, 0.5) !important;
 }
@@ -118,6 +118,8 @@
     stroke: white;
     fill: white;
 }
+/* loading element animation css */
+
 
 /* css to detect orientation and add overlay */
 .orientation-element {
@@ -127,7 +129,7 @@
     bottom: 0;
     left: 0;
     text-align: center;
-    background-color: rgb(71, 188, 195);
+    background-color: #009688;
     z-index: 1000;
     display:none;
 }
@@ -148,12 +150,19 @@
          display: inherit;
     }
 }
+/* css to detect orientation and add overlay */
 
+
+/* css for html5 progress bar */
+.my-progress.progress {
+    height: 10px;
+}
+/* css for html5 progress bar */
 
 
 /* style for changing angular loading bar */
 #loading-bar .bar {
-    background: #000;
+    background: #e60000;
 }
 
 #loading-bar .peg {
@@ -163,16 +172,20 @@
 }
 
 #loading-bar-spinner .spinner-icon {
-    border-top-color: #000;
-    border-left-color: #000;
+    border-top-color: #e60000;
+    border-left-color: #e60000;
 }
 /* endstyle */
+
 
 .side-menu-button {
     color: white;
 }
 
-#article-markdown {}
+#article-markdown {
+    height: 600px;
+    overflow-y: scroll;
+}
 
 #article-markdown img {
     width: 100%;

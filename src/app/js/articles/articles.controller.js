@@ -17,8 +17,7 @@
 
     //@namespace ArticlesController
     function ArticlesController($stateParams, Authentication,
-                                ArticlesService, FilterService,
-                                MarkedService) {
+        ArticlesService, FilterService, MarkedService) {
         var vm = this;
 
         // store the params received from $stateparams
@@ -60,6 +59,17 @@
         vm.onPageChange = function() {
             getArticles();
         };
+
+        vm.sortOptions = [
+            {
+                key: 'Sort by date asc',
+                value: 'created_at'
+            },
+            {
+                key: 'Sort by date desc',
+                value: '-created_at'
+            }
+        ];
 
         vm.onSortChange = function() {
             getArticles();

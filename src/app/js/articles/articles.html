@@ -4,18 +4,22 @@
             <select class="form-control" style="background-color: white; margin: 20px 0;"
                     ng-model="vm.params.o"
                     ng-change="vm.onSortChange()">
-                <option value="created_at" index="0">Sort by date asc</option>
-                <option value="-created_at" index="1">Sort by date desc</option>
+                <option value="{{option.value}}" ng-bind="option.key"
+                        ng-repeat="option in vm.sortOptions track by option.key"></option>
+                <!-- <option value="created_at" index="0">Sort by date asc</option> -->
+                <!-- <option value="-created_at" index="1">Sort by date desc</option> -->
             </select>
+
         </div>
 
         <div class="col-md-4 col-xs-12 text-center">
-            <ul uib-pagination ng-if="vm.totalItems"
-                            total-items="vm.totalItems"
-                            items-per-page="vm.itemsPerPage"
-                            max-size="vm.maxSize ? vm.maxSize : 5"
-                            ng-model="vm.params.page"
-                            ng-change="vm.onPageChange()">
+            <ul uib-pagination
+                ng-if="vm.totalItems"
+                total-items="vm.totalItems"
+                items-per-page="vm.itemsPerPage"
+                max-size="vm.maxSize ? vm.maxSize : 5"
+                ng-model="vm.params.page"
+                ng-change="vm.onPageChange()">
             </ul>
         </div>
     </div>
@@ -31,7 +35,8 @@
                         <div class="my-user-item" ui-sref="articleDetail({ id: article.id })">
                             <a class="my-user-username" ui-sref="profile({ username: article.user.username })"
                                ng-click="$event.stopPropagation()">
-                                <img class="my-user-avatar" src="http://i.stack.imgur.com/Dj7eP.jpg">
+                                <img class="my-user-avatar" ng-src="{{article.user.image}}" ng-if="article.user.image">
+                                <img class="my-user-avatar" src="/app/images/avatars/1.png" ng-if="!article.user.image">
                                 +{{article.user.username}}</a>
                             <div class="my-user-date">
                                 <span>{{ article.updated_at | date: 'd, MMM, yyyy' }}</span>
@@ -87,6 +92,7 @@
 <!--<div class="col-xs-12 col-md-4 col-md-offset-4 load-more" ng-if="vm.loadMore"-->
      <!--ng-click="vm.getNextArticles()" ng-class="{'my-btn-disable': vm.showLoading}">-->
     <!--<button type="button" class="btn btn-raised btn-info btn-block">Load More</button>-->
+<!--</div>-->
 
 <div class="row">
     <div class="col-xs-12">

@@ -1,7 +1,7 @@
 (function () {
     angular
         .module('notgoogleplus.controllers')
-        .component('commentDetail', {
+        .component('commentDetailComponent', {
             controller: CommentDetailController,
             controllerAs: 'vm',
             bindings: {
@@ -23,11 +23,11 @@
         'MarkedService', 'PopupService'];
 
     function CommentDetailController (Authentication, CommentsService,
-                                      MarkedService, PopupService) {
+        MarkedService, PopupService) {
         var vm = this;
 
         // vm.comment = {};
-        vm.markdown = function(content) {
+        vm.markdown = function (content) {
             return content
                 ? MarkedService.markdown(content)
                 : undefined;

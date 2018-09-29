@@ -1,61 +1,13 @@
 (function () {
-    angular
-        .module('notgoogleplus.directives')
-        .directive('mySidebarDir', mySidebarDir);
-
-    function mySidebarDir() {
-        return {
-            // restrict: 'A',
-            // scope: {},
-            link: function(scope, element, attrs) {
-                // element.on('click', function(event) {
-                //     // adding css for hamburger button
-                //     if ($('#sidebar-toggle').hasClass('active')) {
-                //         $('#sidebar-toggle').removeClass('active');
-                //     } else {
-                //         $('#sidebar-toggle').addClass('active');
-                //     }
-
-                //     // adding css for sliding sidebar into view
-                //     if ($('#side-bar').hasClass('slide-left')) {
-                //         $('#side-bar').removeClass('slide-left');
-                //         $('#main-bar').addClass('slide-right');
-                //         $('body').addClass('overflow-hidden');
-                //     } else {
-                //         $('#side-bar').addClass('slide-left');
-                //         $('#main-bar').removeClass('slide-right');
-                //         $('body').removeClass('overflow-hidden');
-                //     }
-                // });
-            }
-        };
-    }
-
-    angular
-        .module('notgoogleplus.directives')
-        .directive('myRipplesDir', myRipplesDir);
-
-    function myRipplesDir() {
-        return {
-            restrict: 'A',
-            link: function(scope, element, attrs) {
-                if (element.hasClass('withoutripple') || element.hasClass('btn-link')) {
-                    return;
-                }
-                $.material.ripples(element);
-            }
-        };
-    }
-
     // @name formValidation
     // @desc Directive function to show errors in forms
     angular
         .module('notgoogleplus.directives')
-        .directive('formValidation', formValidation);
+        .directive('myFormValidation', myFormValidation);
 
-    formValidation.$inject = ['$document'];
+    myFormValidation.$inject = ['$document'];
 
-    function formValidation($document) {
+    function myFormValidation ($document) {
         return {
             restrict: 'E',
             scope: {
@@ -65,7 +17,7 @@
             link: function(scope, element, attrs) {
                 scope.$watch('errors', function (errors) {
                     if (Object.keys(errors).length) {
-                        for(key in errors) {
+                        for(var key in errors) {
                             scope.form[key].$error[key] = errors[key];
                         }
                     }
@@ -90,7 +42,7 @@
                 eClass: '@'
             },
             link: function (scope, element, attrs) {
-                var loader = $compile('<div class="image-loader-container">'+
+                var loader = $compile('<div class="image-loader-container">' +
                     '<span class="spinner"><i class="fa fa-snowflake-o fa-spin" aria-hidden="true"></i>' +
                     '</span></div>')(scope);
 
@@ -159,6 +111,24 @@
 
     angular
         .module('notgoogleplus.directives')
+        .directive('myNgRepeatStarted', myNgRepeatStarted);
+
+    myNgRepeatStarted.$inject = ['$timeout'];
+
+    function myNgRepeatStarted($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                // check if scope is first in the ng-repeat list
+                if (scope.$first) {
+                    element.parent().css('visibility', 'hidden');
+                }
+            }
+        }
+    }
+
+    angular
+        .module('notgoogleplus.directives')
         .directive('myNgRepeatFinished', myNgRepeatFinished);
 
     myNgRepeatFinished.$inject = ['$timeout'];
@@ -173,13 +143,15 @@
                     // by checking 'my-masonry' attribute
                     // and reinitialize masonry
                     if (element.parent().attr('my-masonry')) {
-                        element.parent().masonry('destroy');
+                        // element.parent().masonry('destroy');
                     }
                     $timeout(function () {
                         // wait for images to load before initiating masonry
                         element.parent().imagesLoaded(function () {
+                            // console.log('nothere');
                             element.parent().masonry({itemSelector: '.my-brick'});
                             element.parent().attr('my-masonry', 'my-masonry');
+                            element.parent().css('visibility', 'visible');
                         });
                     });
                 }
@@ -216,8 +188,7 @@
                         || FileExtension.isVideo(event.target.files[0].name)) {
                         scope.uploadFile(event.target.files[0]);
                         event.target.value = '';
-                    }
-                    else {
+                    } else {
                         event.target.value = '';
                     }
                 }
@@ -296,7 +267,6 @@
     function myVideoJsDir ($window) {
         return {
             restrict: 'A',
-            scope: {},
             link: function (scope, element, attrs) {
                 var options = {};
                 var player = $window.videojs(element[0].id, options);

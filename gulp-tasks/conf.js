@@ -24,6 +24,7 @@ exports.folders = {
 exports.files = {
     js: '**/*.js',
     css: '**/*.css',
+    scss: '**/*.scss',
     html: '**/*.html',
     fonts: 'app/fonts/**/*.*',
     images: 'app/images/**/*.*',
@@ -49,11 +50,16 @@ exports.wiredepOptions = {
                 "dist/css/bootstrap.css"
             ]
         },
-        masonry: {
+        "masonry": {
             "main": [
                 "dist/masonry.pkgd.js"
             ],
             "dependencies": {}
+        },
+        "videojs-contrib-hls": {
+            "main": [
+                "dist/videojs-contrib-hls.js"
+            ]
         }
     }
 };

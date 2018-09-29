@@ -47,11 +47,13 @@
                 $rootScope.$broadcast('Unauthenticated');
             } else if (response.status === 400 || response.status === 500) {
                 // do something
-            } else if (response.status === 404 || response.status === 503) {
+            } else if (response.status === 404) {
                 $rootScope.$broadcast('ErrorIntercepted', {
                     response: response,
                     statusText: statusText
                 });
+            } else if (response.status === 503) {
+                // do something
             }
 
             var deferred = $q.defer();
@@ -100,6 +102,25 @@
 
     angular
         .module('notgoogleplus.utils')
+        .factory('HeaderInterceptor', HeaderInterceptor);
+
+    function HeaderInterceptor() {
+        return {
+            request: function (config) {
+                var authHeader = config.headers('authorization');
+                // Check for the host
+                var regex = '/api.cloudinary.com/i';
+                if (regex.test(config.url)) {
+                    //Detach the header
+                    delete config.headers.authorization;
+                }
+                return config;
+            }
+        }
+    }
+
+    angular
+        .module('notgoogleplus.utils')
         .factory('TokenInjector', TokenInjector);
 
     TokenInjector.$inject = ['$rootScope', '$q', '$injector'];
@@ -108,6 +129,11 @@
         var TokenInjector = {};
 
         TokenInjector.request = function (config) {
+            if (config.skipAuthorization && config.skipAuthorization === true) {
+                delete config.skipAuthorization;
+                return config;
+            }
+
             var Authentication = $injector.get('Authentication');
             var authHeader = Authentication.getAuthHeader();
             if (authHeader) {

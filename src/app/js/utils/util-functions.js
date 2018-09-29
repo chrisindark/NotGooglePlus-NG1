@@ -77,8 +77,8 @@ function parentsByCode (code, array) {
     return array;
 }
 
-function parentsById (id) {
-    parentsByCode(treeObjById[id].code);
+function parentsById (id, array) {
+    parentsByCode(treeObjById[id].code, array);
 }
 
 function childrenByCode (code, array) {
@@ -90,8 +90,8 @@ function childrenByCode (code, array) {
     return array;
 }
 
-function childrenById (id) {
-    childrenByCode(treeObjById[id].code);
+function childrenById (id, array) {
+    childrenByCode(treeObjById[id].code, array);
 }
 
 function getKeys (object) {

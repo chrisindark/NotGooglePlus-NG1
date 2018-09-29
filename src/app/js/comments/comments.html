@@ -7,14 +7,13 @@
         </div>
 
         <div ng-repeat="comment in vm.comments">
-            <comment-detail comment-type="vm.commentType"
+            <comment-detail-component comment-type="vm.commentType"
                             comment-parent="vm.commentParent"
                             comment="comment"
                             comment-index="$index"
                             on-update="vm.doUpdate(comment, commentIndex)"
-                            on-delete="vm.doDelete(comment, commentIndex)"></comment-detail>
+                            on-delete="vm.doDelete(comment, commentIndex)"></comment-detail-component>
         </div>
-
 
         <comment-form comment-type="vm.commentType"
                       comment-parent="vm.commentParent"
@@ -22,4 +21,3 @@
 
     </section>
 </div>
-

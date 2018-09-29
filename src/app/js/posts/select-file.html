@@ -12,7 +12,9 @@
                  ng-click="vm.selectFile(file)"
                  ng-class="vm.selectedFile.id === file.id ? 'selected-file': ''">
                 <div class="inner-file-item">
-                    <img class="file-item-img" ng-src="{{file.file}}">
+                    <img class="file-item-img" ng-src="{{file.file}}" ng-if="file.file">
+                    <img class="file-item-img" ng-if="!file.file"
+                        ng-src="{{'http://127.0.0.1:4567/notgoogleplus-media/' + file.file_name}}">
                 </div>
             </div>
         </div>
@@ -22,7 +24,9 @@
         </div>
     </form>
     <div class="text-center">
-        <my-upload-dir selected-file="vm.selectedFile"></my-upload-dir>
+        <my-progress-bar-dir></my-progress-bar-dir>
+        <my-upload-dir></my-upload-dir>
+        <!-- <my-s3-upload-dir></my-s3-upload-dir> -->
     </div>
 </div>
 
@@ -31,5 +35,10 @@
 <style>
     .selected-file {
         border: 5px solid teal;
+    }
+
+    .my-modal.upload-modal .modal-body {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 </style>

@@ -6,10 +6,11 @@ var clean = require('gulp-clean');
 var inject = require('gulp-inject');
 var concat = require('gulp-concat');
 var templateCache = require('gulp-angular-templatecache');
+var gulpNgConfig = require('gulp-ng-config');
 var wiredep = require('wiredep');
-
 var browserSync = require('browser-sync').create();
 var historyApiFallback = require('connect-history-api-fallback');
+var connectLogger = require('connect-logger');
 
 var conf = require('../conf');
 
@@ -30,7 +31,29 @@ gulp.task('clean', function () {
 //         .pipe(gulp.dest('dest'));
 // });
 
-gulp.task('template-cache', ['clean'], function () {
+gulp.task('google-oauth', ['clean'], function () {
+    return gulp.src('gulp-tasks/google-oauth.config.json')
+        .pipe(gulpNgConfig('notgoogleplus.config', {
+            createModule: false,
+            wrap: true,
+            pretty: 4,
+            environment: 'env.local'
+        }))
+        .pipe(gulp.dest(path.join(conf.paths.tmp, conf.folders.js)));
+});
+
+gulp.task('config', ['google-oauth'], function () {
+    return gulp.src('gulp-tasks/config.json')
+        .pipe(gulpNgConfig('notgoogleplus.config', {
+            createModule: false,
+            wrap: true,
+            pretty: 4,
+            environment: 'env.local'
+        }))
+        .pipe(gulp.dest(path.join(conf.paths.tmp, conf.folders.js)));
+});
+
+gulp.task('template-cache', ['config'], function () {
     return gulp.src(path.join(conf.paths.src, conf.files.html))
         .pipe(templateCache('template-cache.js', {
             module: 'notgoogleplus.utils',
@@ -49,10 +72,11 @@ gulp.task('inject-tmp', ['copy-tmp'], function () {
     return gulp.src(path.join(conf.paths.tmp, 'index.html'))
         .pipe(wiredep.stream(conf.wiredepOptions))
         // to get rid of all Uncaught Error: [$injector:modulerr].
-        .pipe(inject(gulp.src([
-                                path.join(conf.paths.tmp, '**/*.module.js'),
-                                path.join(conf.paths.tmp, conf.files.js)
-                              ], {read: false}), {relative: true}))
+        .pipe(inject(gulp.src(
+            [
+                path.join(conf.paths.tmp, '**/*.module.js'),
+                path.join(conf.paths.tmp, conf.files.js)
+            ], {read: false}), {relative: true}))
         .pipe(inject(gulp.src(path.join(conf.paths.tmp, conf.files.css),
                               {read: false}), {relative: true}))
         .pipe(gulp.dest(conf.paths.tmp));
@@ -82,6 +106,7 @@ gulp.task('serve', ['inject-tmp'], function () {
         },
         open: false,
         notify: false,
+        ghostMode: false,
         reloadOnRestart: true
     });
 

@@ -6,9 +6,12 @@
 
             <div class="list-group text-center">
                 <div class="list-group-item">
-                    <div class="row-picture my-profile-icon">
+                    <div class="row-picture my-profile-picture">
                         <div>
-                            <img class="circle" ng-src="{{vm.post.user.image}}" alt="icon">
+                            <img class="circle" ng-src="{{vm.post.user.image}}" ng-if="vm.post.user.image"
+                                 alt="icon" my-image-loader-dir e-class="spinner-profile">
+                            <img class="circle" src="/app/images/avatars/1.png" ng-if="!vm.post.user.image"
+                                 alt="icon">
                         </div>
                     </div>
                 </div>
@@ -31,6 +34,11 @@
                     </p>
                 </div>
 
+                <div ng-if="vm.postId">
+                    <p class="no-margin">Created on: {{vm.post.created_at | date: 'd, MMM, yyyy'}}</p>
+                    <p class="">Updated on: {{vm.post.updated_at | date: 'd, MMM, yyyy'}}</p>
+                </div>
+
                 <div class="togglebutton my-inline-block" style="padding-left: 20px;"
                     ng-if="vm.postId && vm.isOwner">
                     <label>
@@ -39,15 +47,48 @@
                     </label>
                 </div>
 
-                <div ng-if="vm.postId">
-                    <p class="no-margin">Created on: {{vm.post.created_at | date: 'd, MMM, yyyy'}}</p>
-                    <p class="">Updated on: {{vm.post.updated_at | date: 'd, MMM, yyyy'}}</p>
+                <div class="row no-padding" ng-if="vm.postId">
+                    <div class="col-xs-12 col-md-6 no-padding">
+                        <div class="col-xs-12 col-md-2 no-padding">
+                            <button type="button" class="btn"
+                                    ng-click="vm.doLike(true)"
+                                    ng-class="{'teal': vm.post.liked === true}">
+                                <span class="">
+                                    <i class="material-icons">thumb_up</i>
+                                    {{vm.post.likes_count}}
+                                </span>
+                            </button>
+                        </div>
+
+                        <div class="col-xs-12 col-md-2 no-padding">
+                            <button type="button" class="btn"
+                                    ng-click="vm.doLike(false)"
+                                    ng-class="{'teal': vm.post.liked === false}">
+                                <span class="">
+                                    <i class="material-icons">thumb_down</i>
+                                    {{vm.post.dislikes_count}}
+                                </span>
+                            </button>
+                        </div>
+
+                        <div class="col-xs-12 col-md-2 no-padding">
+                            <button type="button" class="btn">
+                                <span class="">
+                                    <i class="material-icons">comment</i>
+                                    {{vm.post.comments_count}}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 no-padding">
+                        <div class="col-xs-12 col-md-6 col-md-offset-6 no-padding">
+                            <button type="button" class="btn btn-raised btn-danger" ng-if="vm.isOwner"
+                                    ng-click="vm.doDelete()">Delete Post</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-xs-12 col-md-2 col-md-offset-10 no-padding no-float">
-                    <button type="button" class="btn btn-raised btn-danger" ng-if="vm.isOwner"
-                            ng-click="vm.doDelete()">Delete Post</button>
-                </div>
             </div>
         </div>
     </div>

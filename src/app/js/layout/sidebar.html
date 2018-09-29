@@ -6,10 +6,39 @@
 </div>
 
 <div class="modal-body">
-    <div><p>Modal Body</p></div>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a class="btn btn-lg"
+               ui-sref="profile({ username: vm.user.username })"
+               ui-sref-opts="{ reload: true }"
+               ng-click="vm.closeModal()"
+               style="width: 100%; text-align: left;">
+                <i class="material-icons">account_circle</i>
+                <span style="padding-left: 20px;">+{{vm.user.username}}</span>
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a class="btn btn-lg"
+               ui-sref="profileSettings({ username: vm.user.username })"
+               ui-sref-opts="{ reload: true }"
+               ng-click="vm.closeModal()"
+               style="width: 100%; text-align: left;">
+                <i class="material-icons">settings</i>
+                <span style="padding-left: 20px;">Settings</span>
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a class="btn btn-lg"
+               href="javascript:void(0)"
+               ng-click="vm.logout()"
+               style="width: 100%; text-align: left;">
+                <i class="material-icons">exit_to_app</i>
+                <span style="padding-left: 20px;">Logout</span>
+            </a>
+        </li>
+    </ul>
 </div>
 
 <div class="modal-footer">
-    <br>
-    <div><p>Modal Footer</p></div>
+    <h2 class="text-center no-margin">SideBar</h2>
 </div>

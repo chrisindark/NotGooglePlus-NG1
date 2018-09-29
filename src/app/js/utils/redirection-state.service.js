@@ -1,15 +1,15 @@
-// @name RedirectionState
-// @desc Factory function to handle redirection of state
-// from landing page after logging in to the state
-// the user left.
-angular
-    .module('notgoogleplus.utils')
-    .factory('RedirectionState', RedirectionState);
+(function () {
+    // @name RedirectionState
+    // @desc Factory function to handle redirection of state
+    // from landing page after logging in to the state
+    // the user left.
+    angular
+        .module('notgoogleplus.utils')
+        .factory('RedirectionState', RedirectionState);
 
-RedirectionState.$inject = ['$location', 'SessionService'];
+    RedirectionState.$inject = ['$location', 'SessionService'];
 
-    function RedirectionState($location, SessionService) {
-
+    function RedirectionState ($location, SessionService) {
         var RedirectionState = {};
 
         // @name getState
@@ -54,3 +54,5 @@ RedirectionState.$inject = ['$location', 'SessionService'];
         return RedirectionState;
 
     }
+
+})();

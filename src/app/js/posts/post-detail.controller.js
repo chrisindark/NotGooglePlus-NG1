@@ -3,14 +3,14 @@
         .module('notgoogleplus.controllers')
         .controller('PostDetailController', PostDetailController);
 
-    PostDetailController.$inject = ['$rootScope', '$scope', '$state',
-        '$stateParams', 'Authentication', 'PostsService',
-        'ProfileService', 'PopupService'];
+    PostDetailController.$inject = ['$state', '$stateParams',
+    'Authentication', 'PostsService', 'ProfileService',
+    'PopupService', 'Snackbar', 'Utility'];
 
     //@namespace PostDetailController
-    function PostDetailController ($rootScope, $scope, $state, $stateParams,
-                                   Authentication, PostsService,
-                                   ProfileService, PopupService) {
+    function PostDetailController ($state, $stateParams,
+        Authentication, PostsService, ProfileService,
+        PopupService, Snackbar, Utility) {
         var vm = this;
 
         vm.postId = $stateParams.id;
@@ -94,13 +94,49 @@
                 });
         };
 
+        vm.doLike = function (boolFlag) {
+            if (!vm.isAuthenticated) {
+                Snackbar.show('Please sign in to like/unlike posts !!');
+                return;
+            } else if (vm.isSubmitted) {
+                return;
+            }
+            vm.isSubmitted = true;
+
+            var data = {};
+            if (vm.post.liked === boolFlag) {
+                data.liked = null;
+            } else {
+                data.liked = boolFlag;
+            }
+
+            PostsService.votePost(vm.postId, data)
+                .then(function (response) {
+                    if (response.data.liked) {
+                        Snackbar.show("Added to liked posts!");
+                    }
+                    Utility.likeUnlike(vm.post, response);
+                    vm.isSubmitted = false;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        };
+
+
         //@name activate
         //@desc Actions to be performed when the controller is instantiated
         function activate() {
             getPost();
 
+            vm.isAuthenticated = Authentication.isAuthenticated();
+            if (vm.isAuthenticated) {
+                vm.user = Authentication.fetchAuthenticatedUser();
+            }
+            // $state.go('home', {}, {reload: true});
+
             if (!vm.postId) {
-                getProfile();
+                // getProfile();
             }
         }
 

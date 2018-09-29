@@ -3,8 +3,8 @@
         .module('notgoogleplus.controllers')
         .controller('AuthenticationController', AuthenticationController);
 
-    AuthenticationController.$inject = ['$scope', '$state', '$stateParams', 'Authentication',
-        'PopupService', 'Snackbar'];
+    AuthenticationController.$inject = ['$scope', '$state', '$stateParams',
+    'Authentication', 'PopupService', 'Snackbar'];
 
     // @namespace AuthenticationController
     function AuthenticationController($scope, $state, $stateParams, Authentication,
@@ -51,6 +51,28 @@
                 });
         };
 
+        vm.accountActivate = function () {
+            var data = {
+                token: $stateParams.token
+            };
+
+            Authentication.accountActivate(data)
+                .then(function (response) {
+                    Snackbar.show(response.data.detail);
+                    $state.go('home', {}, {reload: true});
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    var errArr = [];
+                    for (var key in error.data) {
+                        errArr.push(key + ': ' + error.data[key]);
+                    }
+                    errArr = errArr.join('\n');
+                    Snackbar.show(errArr);
+                    $state.go('home', {}, {reload: true});
+                });
+        };
+
         vm.emailResendConfirm = function () {
             var data = {
                 email: vm.email
@@ -59,6 +81,7 @@
             Authentication.emailResendConfirm(data)
                 .then(function (response) {
                     vm.errors = {};
+                    Snackbar.show(response.data.detail);
                     console.log("confirmation email sent");
                 }).catch(function (response) {
                     vm.errors = response.data;
@@ -74,6 +97,7 @@
                 .then(function (response) {
                     vm.errors = {};
                     vm.closeModal();
+                    Snackbar.show(response.data.detail);
                     console.log("reset password email sent");
                 })
                 .catch(function (response) {
@@ -92,6 +116,8 @@
             Authentication.passwordResetConfirm(data)
                 .then(function (response) {
                     vm.errors = {};
+                    Snackbar.show(response.data.detail);
+                    $state.go('home', {}, {reload: true});
                     console.log("password reset complete");
                 })
                 .catch(function (response) {
@@ -99,7 +125,7 @@
                 });
         };
 
-        vm.changeModal = function (arg) {
+        vm.changeModal = function (templateName) {
             vm.closeModal();
 
             var modalDefaults = {
@@ -107,7 +133,7 @@
                 keyboard: false,
                 modalFade: false,
                 animation: false,
-                templateUrl: 'app/js/authentication/' + arg + '.html',
+                templateUrl: 'app/js/authentication/' + templateName + '.html',
                 controller: 'AuthenticationController',
                 controllerAs: 'vm',
                 windowClass: 'my-modal'
@@ -126,6 +152,8 @@
             // If the user is authenticated, the modal should not open
             if (Authentication.isAuthenticated()) {
                 $state.go('home');
+            } else if ($state.current.name === 'accountActivation') {
+                vm.accountActivate();
             }
         }
 

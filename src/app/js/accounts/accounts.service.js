@@ -3,14 +3,14 @@
         .module('notgoogleplus.services')
         .service('AccountsService', AccountsService);
 
-    AccountsService.$inject = ['$rootScope', '$http', 'ApiUrls', 'Snackbar'];
+    AccountsService.$inject = ['$rootScope', '$http', 'EnvironmentConfig', 'Snackbar'];
 
-    function AccountsService ($rootScope, $http, ApiUrls, Snackbar) {
+    function AccountsService ($rootScope, $http, EnvironmentConfig, Snackbar) {
         var self = this;
 
         this.getAuthenticatedUser = function () {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/auth/me/',
+                url: EnvironmentConfig.api + 'api/v1/auth/me/',
                 method: 'GET'
             }).then(function (response) {
                 $rootScope.$broadcast('SetAuthenticatedUser', response.data);
@@ -20,7 +20,7 @@
 
         this.updateAccount = function (id, data) {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/accounts/' + id + '/',
+                url: EnvironmentConfig.api + 'api/v1/accounts/' + id + '/',
                 method: 'PUT',
                 data: data
             }).then(function (response) {
@@ -32,7 +32,7 @@
 
         this.deleteAccount = function (id) {
             return $http({
-                url: ApiUrls.domainUrl + 'api/v1/accounts/' + id + '/',
+                url: EnvironmentConfig.api + 'api/v1/accounts/' + id + '/',
                 method: 'DELETE'
             }).then(function (response) {
                 $rootScope.$broadcast('DeleteAuthenticatedUser', response.data);

@@ -1,0 +1,56 @@
+<div class="well box">
+    <div class="my-content-header">
+        <div class="my-user-item" ui-sref="postDetail({ id: vm.post.id })">
+            <a class="my-user-username" ui-sref="profile({ username: vm.post.user.username })"
+               ng-click="$event.stopPropagation()">
+                <img class="my-user-avatar" ng-src="{{vm.post.user.image}}" ng-if="vm.post.user.image">
+                <img class="my-user-avatar" src="/app/images/avatars/3.png" ng-if="!vm.post.user.image">
+                +{{vm.post.user.username}}</a>
+            <div class="my-user-date">
+                <span>{{ vm.post.updated_at | date: 'd, MMM, yyyy' }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-content-body">
+        <h2 class="text-adjust">{{vm.post.title}}</h2>
+        <br>
+        <h4 class="text-adjust">{{vm.post.content}}</h4>
+
+        <div id="file" class="post-media row" ng-if="vm.post.file">
+            <div class="col-xs-12" ng-if="vm.post.file.file_type === 'image'">
+                <div>
+                    <img ng-src="{{vm.post.file.file}}" alt="image"
+                         class="img-responsive" my-image-loader-dir>
+                </div>
+            </div>
+            <div class="col-xs-12" ng-if="vm.post.file.file_type === 'video'">
+                <div class="video-js-responsive-container vjs-hd">
+                    <video id="my-player-{{vm.post.id}}"
+                           class="video-js"
+                           controls
+                           preload="none"
+                           ng-src="{{vm.post.file.file}}"
+                           vjs-video>
+                        <source ng-src="{{vm.post.file.file}}" type="video/mp4">
+                        <source ng-src="{{vm.post.file.file}}" type="video/ogg">
+                        <source ng-src="{{vm.post.file.file}}" type="video/webm">
+
+                        <p class="vjs-no-js">
+                            To view this video please enable JavaScript, and consider upgrading to a
+                            web browser thatsupports HTML5 video
+                        </p>
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-pills">
+        <li class="active">
+            <a ui-sref="postDetail({ id: vm.post.id })">Comments
+                <span class="badge">{{vm.post.comments_count}}</span>
+            </a>
+        </li>
+    </ul>
+</div>

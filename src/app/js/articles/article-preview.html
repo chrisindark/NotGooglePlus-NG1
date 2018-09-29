@@ -1,8 +1,11 @@
 <div id="article-markdown">
-    <div class="text-left" style="">
+    <div class="text-left" style="word-wrap: break-word;">
         <h2 ng-bind-html="vm.markdown(vm.article.description)"></h2>
     </div>
-    <div>
+
+    <hr>
+
+    <div style="word-wrap:break-word">
         <div ng-bind-html="vm.markdown(vm.article.content)"></div>
     </div>
 </div>

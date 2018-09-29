@@ -57,7 +57,7 @@
         }
 
         vm.getNextPosts = function () {
-            if(vm.posts.next) {
+            if (vm.posts.next) {
                 vm.params = {};
                 getPosts(vm.posts.next);
                 vm.posts.next = undefined;
@@ -89,7 +89,7 @@
         };
 
         function isOwner () {
-            if(vm.isAuthenticated) {
+            if (vm.isAuthenticated) {
                 Authentication.isOwner(vm.username)
                     .then(function (response) {
                         vm.isOwner = response;

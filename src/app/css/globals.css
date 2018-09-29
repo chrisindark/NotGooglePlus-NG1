@@ -6,6 +6,7 @@ html, body {
 
 body {
     padding-top: 70px;
+    background-color: white;
 }
 
 .no-padding {
@@ -21,7 +22,6 @@ body {
 }
 
 a:hover {
-    opacity: 0.8;
     text-decoration: none;
 }
 
@@ -55,11 +55,11 @@ a:hover {
 }
 
 .help {
-    color: red;
+    color: red !important;
 }
 
 .teal {
-    color: teal;
+    color: teal !important;
 }
 
 .footer {

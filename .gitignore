@@ -6,3 +6,4 @@ tests
 .tmp
 dist
 *.*~
+.awspublish-notgoogleplus-static

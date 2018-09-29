@@ -24,8 +24,7 @@
         'Authentication', 'Snackbar', 'CommentsService', 'MarkedService', 'PopupService'];
 
     function CommentController($rootScope, $scope, $state, $stateParams,
-                               Authentication, Snackbar, CommentsService,
-                               MarkedService, PopupService) {
+        Authentication, Snackbar, CommentsService, MarkedService, PopupService) {
         var vm = this;
 
         vm.comments = [];

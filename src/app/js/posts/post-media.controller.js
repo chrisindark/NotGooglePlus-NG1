@@ -14,10 +14,12 @@
         .module('notgoogleplus.controllers')
         .controller('PostMediaController', PostMediaController);
 
-    PostMediaController.$inject = [];
+    PostMediaController.$inject = ['EnvironmentConfig'];
 
-    function PostMediaController () {
+    function PostMediaController (EnvironmentConfig) {
         var vm = this;
+
+        vm.domainUrl = EnvironmentConfig.api;
     }
 
 })();

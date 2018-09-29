@@ -4,12 +4,11 @@
         .controller('ProfileSettingsController', ProfileSettingsController);
 
     ProfileSettingsController.$inject = ['$scope', '$state', '$stateParams',
-        'Authentication', 'AccountsService', 'ProfileService', 'Snackbar'];
+        'Authentication', 'AccountsService', 'ProfileService', 'Snackbar', 'moment'];
 
     //@namespace ProfileSettingsController
     function ProfileSettingsController($scope, $state, $stateParams,
-                                       Authentication, AccountsService,
-                                       ProfileService, Snackbar) {
+        Authentication, AccountsService, ProfileService, Snackbar, moment) {
         var vm = this;
 
         vm.username = $stateParams.username;
@@ -17,9 +16,6 @@
             'M': 'Male',
             'F': 'Female',
             'O': 'Other'
-        };
-        vm.initDatepicker = function () {
-            vm.dateOfBirth = new Date(vm.profile.dob);
         };
 
         $scope.datepickerOptions = {
@@ -37,6 +33,7 @@
             ProfileService.getProfile(vm.username)
                 .then(function (response) {
                     vm.profile = response.data;
+                    vm.profile.dob = moment(vm.profile.dob, 'YYYY-MM-DD').toDate();
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -75,10 +72,16 @@
         // @name updateProfile
         // @desc Update this user's profile
         function updateProfile () {
+            if (vm.profile.dob) {
+                vm.profile.dob = moment(vm.profile.dob).format('YYYY-MM-DD');
+            }
+
             ProfileService.updateProfile(vm.user.username, vm.profile)
                 .then(function (response) {
                     vm.errors = {};
                     console.log(response);
+                    vm.profile = response.data;
+                    vm.profile.dob = moment(vm.profile.dob, 'YYYY-MM-DD').toDate();
                 })
                 .catch(function (response) {
                     vm.errors = response.data;
