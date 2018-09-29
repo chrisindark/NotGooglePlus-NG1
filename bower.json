@@ -56,7 +56,6 @@
     "angular": "1.7.4",
     "jquery": "^2.1.4",
     "bootstrap-material-design": "^0.5.10",
-    "outlayer": "~2.0.0",
-    "video.js": "^7.2.4"
+    "outlayer": "~2.0.0"
   }
 }
