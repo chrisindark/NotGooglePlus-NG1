@@ -3,12 +3,12 @@
         .module('notgoogleplus.config')
         .config(config);
 
-    config.$inject = ['$httpProvider', '$locationProvider', '$compileProvider',
-        '$qProvider'];
+    config.$inject = ['$httpProvider', '$locationProvider', '$compileProvider', '$qProvider',
+        '$ocLazyLoadProvider'];
     // @name config
     // @desc Enable HTML5 routing
-    function config($httpProvider, $locationProvider, $compileProvider,
-                    $qProvider) {
+    function config($httpProvider, $locationProvider, $compileProvider, $qProvider,
+                    $ocLazyLoadProvider) {
         $locationProvider.hashPrefix('');
         $locationProvider.html5Mode(true);
 
@@ -26,6 +26,12 @@
 
         $compileProvider.debugInfoEnabled(false);
         $qProvider.errorOnUnhandledRejections(false);
+
+        $ocLazyLoadProvider.config({
+            debug: false,
+            events: false,
+            modules: []
+        });
     }
 
 })();

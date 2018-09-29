@@ -1,13 +1,17 @@
 (function () {
     angular
         .module('notgoogleplus.utils')
-        .factory('ApisService', ApisService);
+        .service('ApiUrls', ApiUrls);
 
-    ApisService.$inject = [];
+    ApiUrls.$inject = [];
 
-    function ApisService () {
-        var ApisService = {};
-        return ApisService;
+    function ApiUrls() {
+        // var self = this;
+        // var ApiUrls = {};
+        // ApiUrls.domainUrl = 'http://localhost:8000/';
+        // return ApiUrls;
+
+        this.domainUrl = 'https://ancient-tor-16694.herokuapp.com/';
     }
 
 })();

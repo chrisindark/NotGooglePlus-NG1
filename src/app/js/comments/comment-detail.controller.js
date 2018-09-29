@@ -1,7 +1,7 @@
 (function () {
     angular
         .module('notgoogleplus.controllers')
-        .component('commentDetail', {
+        .component('commentDetailComponent', {
             controller: CommentDetailController,
             controllerAs: 'vm',
             bindings: {

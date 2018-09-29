@@ -6,8 +6,8 @@
     run.$inject = ['$rootScope', '$state', '$stateParams', '$window',
         'Authentication', 'SessionService', 'Snackbar', '$anchorScroll'];
 
-    function run ($rootScope, $state, $stateParams, $window,
-                  Authentication, SessionService, Snackbar, $anchorScroll) {
+    function run($rootScope, $state, $stateParams, $window,
+                 Authentication, SessionService, Snackbar, $anchorScroll) {
         // added to rootScope to be available in templates
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;

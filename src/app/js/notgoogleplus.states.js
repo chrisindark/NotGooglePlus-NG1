@@ -13,7 +13,12 @@
                 url: '/home',
                 controller: 'HomeController',
                 controllerAs: 'vm',
-                templateUrl: 'app/js/layout/home.html'
+                templateUrl: 'app/js/layout/home.html',
+                resolve: {
+                    // people: function(PeopleService) {
+                    //     return PeopleService.getAllPeople();
+                    // }
+                }
             })
             .state('tabs', {
                 abstract: true,
