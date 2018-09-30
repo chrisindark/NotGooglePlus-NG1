@@ -31,6 +31,17 @@ gulp.task('clean', function () {
 //         .pipe(gulp.dest('dest'));
 // });
 
+gulp.task('twitter-oauth', ['clean'], function() {
+    return gulp.src('gulp-tasks/twitter-oauth.config.json')
+        .pipe(gulpNgConfig('notgoogleplus.config', {
+            createModule: false,
+            wrap: true,
+            pretty: 4,
+            environment: 'env.local'
+        }))
+        .pipe(gulp.dest(path.join(conf.paths.tmp, conf.folders.js)));
+});
+
 gulp.task('google-oauth', ['clean'], function () {
     return gulp.src('gulp-tasks/google-oauth.config.json')
         .pipe(gulpNgConfig('notgoogleplus.config', {
@@ -42,7 +53,7 @@ gulp.task('google-oauth', ['clean'], function () {
         .pipe(gulp.dest(path.join(conf.paths.tmp, conf.folders.js)));
 });
 
-gulp.task('config', ['google-oauth'], function () {
+gulp.task('config', ['google-oauth', 'twitter-oauth'], function () {
     return gulp.src('gulp-tasks/config.json')
         .pipe(gulpNgConfig('notgoogleplus.config', {
             createModule: false,

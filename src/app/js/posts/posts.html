@@ -6,9 +6,10 @@
                     ng-change="vm.onSortChange()">
                 <option value="{{option.value}}" ng-bind="option.key"
                     ng-repeat="option in vm.sortOptions track by option.key"></option>
-                <!-- <option value="created_at" index="0">Sort by date asc</option> -->
-                <!-- <option value="-created_at" index="1">Sort by date desc</option> -->
+                 <!--<option value="created_at" index="0">Sort by date asc</option>-->
+                 <!--<option value="-created_at" index="1">Sort by date desc</option>-->
             </select>
+
             <!--<ui-select ng-model="vm.params.o" ng-class="{'my-ui-select': true}">-->
                 <!--<ui-select-match>-->
                     <!--<span ng-bind="$select.selected.key"></span>-->
@@ -66,7 +67,7 @@
     </div>
 </div>
 
-<a href="javascript:void(0)"
+<a href=""
     class="btn btn-primary btn-fab btn-raised btn-add-new-post"
     ui-sref="postNew"
     ng-if="vm.isAuthenticated">

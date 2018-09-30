@@ -9,7 +9,7 @@
         return {
             restrict: 'E',
             scope: {},
-            template: '<a href="javascript:void(0)"' +
+            template: '<a href=""' +
                 ' class="btn btn-raised btn-google btn-block oauth-btn"' +
                 ' ng-click="loginWithGoogle()">Sign in with Google</a>',
             link: function (scope, element, attrs) {
@@ -33,14 +33,6 @@
     }
 
     angular
-        .module('notgoogleplus.config')
-        .constant('TWITTER_OAUTH', {
-            "CALLBACK_URL": "http://127.0.0.1:3000/auth/twitter/callback",
-            "CLIENT_ID": "",
-            "REQUEST_TOKEN_URL": "https://api.twitter.com/oauth/authorize"
-        });
-
-    angular
         .module('notgoogleplus.directives')
         .directive('twitterOauthDir', twitterOauthDir);
 
@@ -52,7 +44,7 @@
         return {
             restrict: 'E',
             scope: {},
-            template: '<a href="javascript:void(0)"' +
+            template: '<a href=""' +
                 ' class="btn btn-raised btn-twitter btn-block oauth-btn"' +
                 ' ng-click="loginWithTwitter()">Sign in with Twitter</a>',
             link: function (scope, element, attrs) {
@@ -92,7 +84,7 @@
         return {
             restrict: 'E',
             scope: {},
-            template: '<a href="javascript:void(0)"' +
+            template: '<a href=""' +
             ' class="btn btn-raised btn-github btn-block oauth-btn"' +
             ' ng-click="loginWithGithub()">Sign in with Github</a>',
             link: function (scope, element, attrs) {
@@ -129,7 +121,7 @@
         return {
             restrict: 'E',
             scope: {},
-            template: '<a href="javascript:void(0)"' +
+            template: '<a href=""' +
             ' class="btn btn-raised btn-google btn-block oauth-btn"' +
             ' ng-click="loginWithStripe()">Sign in with Google</a>',
             link: function (scope, element, attrs) {

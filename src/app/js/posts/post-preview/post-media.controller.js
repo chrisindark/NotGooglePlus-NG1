@@ -7,7 +7,7 @@
             bindings: {
                 post: '<'
             },
-            templateUrl: 'app/js/posts/post-media-preview.html'
+            templateUrl: 'app/js/posts/post-preview/post-media-preview.html'
         });
 
     angular

@@ -26,7 +26,18 @@ var historyApiFallback = require('connect-history-api-fallback');
 var conf = require('../conf');
 
 
-gulp.task('build-google-oauth-config', function () {
+gulp.task('twitter-oauth-config', function () {
+    return gulp.src('gulp-tasks/twitter-oauth.config.json')
+        .pipe(gulpNgConfig('notgoogleplus.config', {
+            createModule: false,
+            wrap: true,
+            pretty: 4,
+            environment: 'env.production'
+        }))
+        .pipe(gulp.dest(path.join(conf.paths.dist, conf.folders.js)));
+});
+
+gulp.task('google-oauth-config', function () {
     return gulp.src('gulp-tasks/google-oauth.config.json')
         .pipe(gulpNgConfig('notgoogleplus.config', {
             createModule: false,
@@ -37,7 +48,7 @@ gulp.task('build-google-oauth-config', function () {
         .pipe(gulp.dest(path.join(conf.paths.dist, conf.folders.js)));
 });
 
-gulp.task('buildconfig', ['build-google-oauth-config'], function () {
+gulp.task('buildconfig', ['google-oauth-config', 'twitter-oauth-config'], function () {
     return gulp.src('gulp-tasks/config.json')
         .pipe(gulpNgConfig('notgoogleplus.config', {
             createModule: false,

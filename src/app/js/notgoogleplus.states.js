@@ -15,9 +15,9 @@
                 controllerAs: 'vm',
                 templateUrl: 'app/js/layout/home.html',
                 resolve: {
-                    // people: function(PeopleService) {
-                    //     return PeopleService.getAllPeople();
-                    // }
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/layout/home.controller.js');
+                    }]
                 }
             })
             .state('tabs', {
@@ -26,6 +26,7 @@
                 url: '/tabs',
                 templateUrl: 'app/js/layout/tabs.html'
             })
+
             .state('posts', {
                 parent: 'tabs',
                 url: '/posts',
@@ -34,8 +35,38 @@
                 templateUrl: 'app/js/posts/posts.html',
                 params: {
                     params: null
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/posts/posts.controller.js');
+                    }]
                 }
             })
+            .state('postNew', {
+                parent: 'home',
+                url: '/posts/new',
+                templateUrl: 'app/js/posts/post-detail/post-detail.html',
+                controller: 'PostDetailController',
+                controllerAs: 'vm',
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/posts/post-detail/post-detail.controller.js');
+                    }]
+                }
+            })
+            .state('postDetail', {
+                parent: 'home',
+                url: '/posts/{id:int}',
+                templateUrl: 'app/js/posts/post-detail/post-detail.html',
+                controller: 'PostDetailController',
+                controllerAs: 'vm',
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/posts/post-detail/post-detail.controller.js');
+                    }]
+                }
+            })
+
             .state('articles', {
                 parent: 'tabs',
                 url: '/articles',
@@ -44,8 +75,38 @@
                 templateUrl: 'app/js/articles/articles.html',
                 params: {
                     params: null
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/articles/articles.controller.js');
+                    }]
                 }
             })
+            .state('articleNew', {
+                parent: 'home',
+                url: '/articles/new',
+                templateUrl: 'app/js/articles/article-detail.html',
+                controller: 'ArticleDetailController',
+                controllerAs: 'vm',
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/articles/article-detail.controller.js');
+                    }]
+                }
+            })
+            .state('articleDetail', {
+                parent: 'home',
+                url: '/articles/{id:int}',
+                templateUrl: 'app/js/articles/article-detail.html',
+                controller: 'ArticleDetailController',
+                controllerAs: 'vm',
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/articles/article-detail.controller.js');
+                    }]
+                }
+            })
+
             .state('accountActivation', {
                 parent: 'home',
                 url: '/account/activate/:token',
@@ -81,6 +142,7 @@
                 controllerAs: 'vm',
                 templateUrl: 'app/js/oauth/oauth-callback.html'
             })
+
             .state('profile', {
                 parent: 'home',
                 url: '/+:username',
@@ -116,34 +178,7 @@
                 templateUrl: 'app/js/profiles/profile-settings.html',
                 resolve: {}
             })
-            .state('postNew', {
-                parent: 'home',
-                url: '/posts/new',
-                templateUrl: 'app/js/posts/post-detail.html',
-                controller: 'PostDetailController',
-                controllerAs: 'vm'
-            })
-            .state('postDetail', {
-                parent: 'home',
-                url: '/posts/{id:int}',
-                templateUrl: 'app/js/posts/post-detail.html',
-                controller: 'PostDetailController',
-                controllerAs: 'vm'
-            })
-            .state('articleNew', {
-                parent: 'home',
-                url: '/articles/new',
-                templateUrl: 'app/js/articles/article-detail.html',
-                controller: 'ArticleDetailController',
-                controllerAs: 'vm'
-            })
-            .state('articleDetail', {
-                parent: 'home',
-                url: '/articles/{id:int}',
-                templateUrl: 'app/js/articles/article-detail.html',
-                controller: 'ArticleDetailController',
-                controllerAs: 'vm'
-            })
+
             .state('error', {
                 parent: 'home',
                 url: '/error',

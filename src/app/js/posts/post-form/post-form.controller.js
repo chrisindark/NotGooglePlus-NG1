@@ -12,7 +12,7 @@
                 onCreate: '&',
                 onUpdate: '&'
             },
-            templateUrl: 'app/js/posts/post-form.html'
+            templateUrl: 'app/js/posts/post-form/post-form.html'
         });
 
     angular
