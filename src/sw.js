@@ -2,6 +2,8 @@
     var log = console.log.bind(console);
     var error = console.error.bind(console);
 
+    // these tags are needed for gulp to inject
+    // versioned service worker file in production build
     /* service-worker:js */
     var swFileName = 'sw.js';
     /* endinject */

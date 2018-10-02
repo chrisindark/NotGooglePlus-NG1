@@ -37,6 +37,8 @@
         vm.getPosts = function () {
             PostsService.allPosts(vm.params)
                 .then(function (response) {
+                    // console.log('posts', response);
+
                     vm.posts.results = response.data.results;
                     vm.posts.next = response.data.next;
                     vm.totalItems = response.data.count;

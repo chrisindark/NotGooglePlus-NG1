@@ -127,7 +127,66 @@ gulp.task('revision', ['build'], function () {
         .pipe(gulp.dest(conf.paths.dist));
 });
 
-gulp.task("inject-dist", ['revision'], function () {
+gulp.task("inject-service-worker-old", ['revision'], function() {
+    var manifest= JSON.parse(fs.readFileSync(conf.paths.dist + "/rev-manifest.json"));
+    var arr = [];
+    var swFileName = '';
+    for (var fileName in manifest) {
+        if (fileName.indexOf('sw.js') > -1) {
+            arr.push(path.join(conf.paths.dist, manifest[fileName]));
+            swFileName = manifest[fileName];
+        }
+    }
+    return gulp.src(path.join(conf.paths.dist, 'index.html'))
+        .pipe(inject(gulp.src(arr, {read: false}), {
+            name: 'body',
+            transform: function (filepath, i, length, sourceFile, targetFile) {
+                if (filepath.slice(-3) === '.js') {
+                    return '<script defer>' +
+                        'if (navigator.serviceWorker) {' +
+                            'navigator.serviceWorker.register(\'' + swFileName + '\')' +
+                                '.then(function (res) {' +
+                                    'console.log(\'Service worker installed\', res)' +
+                                '})' +
+                                '.catch(function (err) {' +
+                                    'console.error(\'Service worker error:\', err);' +
+                                '});' +
+                        '}' +
+                    '</script>';
+                }
+                // Use the default transform as fallback:
+                return inject.transform.apply(inject.transform, arguments);
+            }
+        }))
+        .pipe(gulp.dest(conf.paths.dist));
+});
+
+gulp.task("inject-service-worker-new", ['revision'], function() {
+    var manifest= JSON.parse(fs.readFileSync(conf.paths.dist + "/rev-manifest.json"));
+    var arr = [];
+    var swFileName = '';
+    for (var fileName in manifest) {
+        if (fileName.indexOf('sw.js') > -1) {
+            arr.push(path.join(conf.paths.dist, manifest[fileName]));
+            swFileName = manifest[fileName];
+        }
+    }
+    return gulp.src(path.join(conf.paths.dist, 'index.html'))
+        .pipe(inject(gulp.src(arr, {read: false}), {
+            name: 'service-worker',
+            transform: function (filepath, i, length, sourceFile, targetFile) {
+                if (filepath.slice(-3) === '.js') {
+                    return 'var swFileName = \'' + swFileName + '\';';
+                }
+                // Use the default transform as fallback:
+                return inject.transform.apply(inject.transform, arguments);
+            }
+        }))
+        .pipe(gulp.dest(conf.paths.dist));
+});
+
+
+gulp.task("inject-dist", ['inject-service-worker-new'], function () {
     var manifest= JSON.parse(fs.readFileSync(conf.paths.dist + "/rev-manifest.json"));
     var arr = [];
     var revArr = [];
@@ -138,6 +197,7 @@ gulp.task("inject-dist", ['revision'], function () {
             revArr.push(path.join(conf.paths.dist, manifest[fileName]));
             // Add the original filename to delete
             arr.push(path.join(conf.paths.dist, fileName));
+            // console.log(arr);
         }
     }
 
@@ -176,9 +236,7 @@ gulp.task('dist', function (callback) {
     runSequence('clean', 'copy-dist', 'inject-dist', callback);
 });
 
-
 gulp.task('serve-dist', ['dist'], function () {
-
     // Serve files from the root of this project
     browserSync.init({
         server: {
@@ -194,6 +252,7 @@ gulp.task('serve-dist', ['dist'], function () {
         reloadOnRestart: true
     });
 });
+
 
 var awspublish = require('gulp-awspublish');
 var cloudfrontInvalidate = require('gulp-cloudfront-invalidate-aws-publish');

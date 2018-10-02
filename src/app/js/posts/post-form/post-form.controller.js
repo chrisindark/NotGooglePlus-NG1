@@ -90,7 +90,7 @@
                 keyboard: false,
                 modalFade: false,
                 templateUrl: 'app/js/posts/select-file.html',
-                controller: 'FilesController',
+                controller: 'SelectFilesController',
                 controllerAs: 'vm',
                 windowClass: 'my-modal upload-modal'
             };

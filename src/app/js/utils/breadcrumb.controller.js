@@ -3,7 +3,7 @@
         .module('notgoogleplus.utils')
         .controller('BreadcrumbController', BreadcrumbController);
 
-    BreadcrumbController.$inject = ['$scope', '$window', '$stateParams', 'categoryTree']
+    BreadcrumbController.$inject = ['$scope', '$window', '$stateParams', 'categoryTree'];
 
     function BreadcrumbController($scope, $window, $stateParams, categoryTree) {
         var pk = 1;

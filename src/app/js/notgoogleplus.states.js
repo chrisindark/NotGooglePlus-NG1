@@ -107,6 +107,46 @@
                 }
             })
 
+            .state('files', {
+                parent: 'home',
+                url: '/files',
+                controller: 'FilesController',
+                controllerAs: 'vm',
+                templateUrl: 'app/js/files/files.html',
+                params: {
+                    params: null
+                },
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/files/files.controller.js');
+                    }]
+                }
+            })
+            // .state('fileNew', {
+            //     parent: 'home',
+            //     url: '/files/new',
+            //     templateUrl: 'app/js/files/file-detail.html',
+            //     controller: 'FileDetailController',
+            //     controllerAs: 'vm',
+            //     resolve: {
+            //         loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            //             return $ocLazyLoad.load('app/js/files/file-detail.controller.js');
+            //         }]
+            //     }
+            // })
+            .state('fileDetail', {
+                parent: 'home',
+                url: '/files/{id:int}',
+                templateUrl: 'app/js/files/file-detail.html',
+                controller: 'FileDetailController',
+                controllerAs: 'vm',
+                resolve: {
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load('app/js/files/file-detail.controller.js');
+                    }]
+                }
+            })
+
             .state('accountActivation', {
                 parent: 'home',
                 url: '/account/activate/:token',

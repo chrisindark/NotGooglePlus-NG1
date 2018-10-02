@@ -1,13 +1,13 @@
 (function () {
     angular
         .module('notgoogleplus.controllers')
-        .controller('FilesController', FilesController);
+        .controller('SelectFilesController', SelectFilesController);
 
-    FilesController.$inject = ['$rootScope', '$scope', 'Authentication',
+    SelectFilesController.$inject = ['$rootScope', '$scope', 'Authentication',
         'FilesService', 'FilterService'];
 
-    //@namespace FilesController
-    function FilesController($rootScope, $scope, Authentication,
+    //@namespace SelectFilesController
+    function SelectFilesController($rootScope, $scope, Authentication,
                              FilesService, FilterService) {
         var vm = this;
 
@@ -58,7 +58,7 @@
         }
 
         function getFiles() {
-            FilesService.allFiles(vm.user.username, vm.params)
+            FilesService.getUserFiles(vm.user.username, vm.params)
                 .then(function (response) {
                     vm.files.results = response.data.results;
                 }).catch(function (error) {

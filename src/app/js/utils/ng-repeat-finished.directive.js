@@ -22,6 +22,7 @@
                         element.parent().imagesLoaded(function () {
                             element.parent().masonry({itemSelector: '.my-brick'});
                             element.parent().attr('my-masonry', 'my-masonry');
+                            element.parent().css('visibility', 'visible');
                         });
                     });
                 }
