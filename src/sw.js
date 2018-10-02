@@ -1,6 +1,20 @@
 (function () {
     var log = console.log.bind(console);
-    var err = console.error.bind(console);
+    var error = console.error.bind(console);
+
+    /* service-worker:js */
+    var swFileName = 'sw.js';
+    /* endinject */
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(swFileName)
+            .then(function (res) {
+                log('Service worker installed', res)
+            })
+            .catch(function (err) {
+                error('Service worker error:', err);
+            });
+    }
 
     var version = '1';
     var cacheName = 'pwa-client-v' + version;
@@ -10,7 +24,9 @@
         './index.html'
     ];
 
+    // log(self);
     self.addEventListener('install', function (e) {
+        log('[ServiceWorker] Install');
         e.waitUntil(self.skipWaiting());
         log('Service Worker: Installed');
 
@@ -24,8 +40,9 @@
     });
 
     self.addEventListener('activate', function (e) {
+        log('[ServiceWorker] Activate');
         e.waitUntil(self.clients.claim());
-        log('Service Worker: Active');
+        log('Service Worker: Activated');
 
         e.waitUntil(
             caches.keys()
@@ -49,43 +66,42 @@
             caches.match(e.request.url)
                 .then(function (response) {
                     // Cache hit - return response
-                    if (response) {
-                        // if (e.request.url.indexOf(dataUrl) === 0) {
-                            // response.json().then(function (json) {
-                            //   console.log(json);
-                            // });
-                        // }
-                    }
+                    // if (response) {
+                    //     if (e.request.url.indexOf(dataUrl) === 0) {
+                    //         response.json().then(function (json) {
+                    //           console.log(json);
+                    //         });
+                    //     }
+                    // }
 
                     return fetch(e.request.clone())
-                            .then(function (r2) {
-                                // IMPORTANT: Clone the response. A response is a stream
-                                // and because we want the browser to consume the response
-                                // as well as the cache consuming the response, we need
-                                // to clone it so we have two streams.
-                                // if (e.request.url.indexOf(dataUrl) === 0) {
-                                  // console.log('Service Worker: Fetched & Cached Response ',
-                                  //   r2.clone().json().then(function (json) {
-                                  //     console.log(json);
-                                  //   })
-                                  // );
-                                // }
-                                return caches.open(dataCacheName)
-                                    .then(function (cache) {
-                                        cache.put(e.request.url, r2.clone());
-                                        // console.log('Service Worker: Fetched & Cached URL ', e.request.url);
-                                        // console.log('Service Worker: Fetched & Cached Response ', r2.clone());
-
-                                        return r2;
-                                    });
+                        .then(function (r2) {
+                            // IMPORTANT: Clone the response. A response is a stream
+                            // and because we want the browser to consume the response
+                            // as well as the cache consuming the response, we need
+                            // to clone it so we have two streams.
+                            // if (e.request.url.indexOf(dataUrl) === 0) {
+                            //   console.log('Service Worker: Fetched & Cached Response ',
+                            //     r2.clone().json().then(function (json) {
+                            //       console.log(json);
+                            //     })
+                            //   );
+                            // }
+                            return caches.open(dataCacheName)
+                                .then(function (cache) {
+                                    cache.put(e.request.url, r2.clone());
+                                    // console.log('Service Worker: Fetched & Cached URL ', e.request.url);
+                                    // console.log('Service Worker: Fetched & Cached Response ', r2.clone());
+                                    return r2;
+                                });
                             })
                             .catch(function (error) {
                                 // First try to fetch the response from server
                                 // If error, then send response if present
                                 // else error
-                                if (response) {
-                                  // console.log('Service Worker: Cached Response ', response);
-                                }
+                                // if (response) {
+                                //   log('Service Worker: Cached Response ', response);
+                                // }
                                 return response || error;
                             });
                 })
