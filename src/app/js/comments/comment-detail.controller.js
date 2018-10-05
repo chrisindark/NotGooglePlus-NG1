@@ -20,10 +20,10 @@
         .controller('CommentDetailController', CommentDetailController);
 
     CommentDetailController.$inject = ['Authentication', 'CommentsService',
-        'MarkedService', 'PopupService'];
+        'MarkedService', 'PopupService', 'Snackbar', 'Utility'];
 
     function CommentDetailController (Authentication, CommentsService,
-        MarkedService, PopupService) {
+        MarkedService, PopupService, Snackbar, Utility) {
         var vm = this;
 
         // vm.comment = {};
@@ -111,6 +111,35 @@
 
         vm.$doCheck = function () {
             // console.log('docheck');
+        };
+
+        vm.doLike = function (boolFlag) {
+            if (!vm.isAuthenticated) {
+                Snackbar.show('Please sign in to like/unlike posts !!');
+                return;
+            } else if (vm.isSubmitted) {
+                return;
+            }
+            vm.isSubmitted = true;
+
+            var data = {};
+            if (vm.comment.liked === boolFlag) {
+                data.liked = null;
+            } else {
+                data.liked = boolFlag;
+            }
+
+            CommentsService.voteComment(vm.comment.post, vm.comment.id, data)
+                .then(function (response) {
+                    if (response.data.liked) {
+                        Snackbar.show("Added to liked comments!");
+                    }
+                    Utility.likeUnlike(vm.comment, response);
+                    vm.isSubmitted = false;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         };
     }
 

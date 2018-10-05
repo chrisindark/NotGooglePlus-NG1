@@ -40,7 +40,7 @@
 
             CommentsService.all(vm.commentParent.id, vm.params)
                 .then(function(response) {
-                    vm.comments = vm.comments.concat(response.data.results);
+                    vm.comments = response.data.results;
                 })
                 .catch(function(error) {
                     console.log(error);

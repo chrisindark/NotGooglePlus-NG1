@@ -85,6 +85,22 @@
             });
         };
 
+        /**
+         * name voteComment
+         * desc like/dislike a comment of a given user
+         * param id of the comment, data to be sent as {liked: false}
+         * returns promise object
+         * */
+        this.voteComment = function(typeId, id, data) {
+            return $http({
+                url: EnvironmentConfig.api + 'api/v1/' + commentType + '/' + typeId + '/comments/' + id + '/likes/',
+                method: 'POST',
+                data: data
+            }).then(function (response) {
+                return response;
+            });
+        };
+
     }
 
 })();

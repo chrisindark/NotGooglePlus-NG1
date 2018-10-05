@@ -62,7 +62,7 @@
 
         //@name removePost
         //@desc Delete the posts of a given user
-        //@param {string} username The username to get Posts for
+        //@param {id} id of the post to remove
         //@returns {Promise}
         this.removePost = function (id) {
             return $http({
@@ -74,6 +74,12 @@
             });
         };
 
+        /**
+         * name votePost
+         * desc like/dislike a post of a given user
+         * param id of the post, data to be sent as {liked: false}
+         * returns promise object
+         * */
         this.votePost = function(id, data) {
             return $http({
                 url: EnvironmentConfig.api + 'api/v1/posts/' + id + '/likes/',
