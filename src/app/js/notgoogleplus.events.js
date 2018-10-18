@@ -4,10 +4,10 @@
         .run(run);
 
     run.$inject = ['$rootScope', '$state', '$stateParams', '$window',
-        'Authentication', 'SessionService', 'Snackbar', '$anchorScroll'];
+        'Authentication', 'SessionService', 'Snackbar', '$anchorScroll', 'NavbarService'];
 
     function run($rootScope, $state, $stateParams, $window,
-                 Authentication, SessionService, Snackbar, $anchorScroll) {
+                 Authentication, SessionService, Snackbar, $anchorScroll, NavbarService) {
         // added to rootScope to be available in templates
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -85,8 +85,12 @@
             return _.contains(statesThatRequireAdmin, route);
         };
 
+        // no need to deregister events in run function, since it is called only once.
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams,
-            fromState, fromParams, options) {
+                                                      fromState, fromParams, options) {
+            // console.log('stateChangeStart');
+            NavbarService.setCurrentState(toState);
+
             // redirectTo option in states to help in redirection
             // if (toState.redirectTo) {
             //     event.preventDefault();
@@ -123,6 +127,11 @@
                     }
                 }
             }
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams,
+                                                        fromState, fromParams, options) {
+            // console.log('stateChangeSuccess');
         });
 
     }

@@ -7,11 +7,17 @@
             controllerAs: 'vm'
         });
 
-    NavbarController.$inject = ['$rootScope', 'Authentication', 'AccountsService', 'PopupService'];
+    NavbarController.$inject = ['$rootScope', '$scope', '$state', '$window', 'Authentication',
+        'AccountsService', 'PopupService', 'NavbarService'];
 
     // @namespace NavbarController
-    function NavbarController($rootScope, Authentication, AccountsService, PopupService) {
+    function NavbarController($rootScope, $scope, $state, $window, Authentication, AccountsService,
+                              PopupService, NavbarService) {
         var vm = this;
+
+        vm.showBackButton = false;
+        vm.showSidebarButton = true;
+        vm.showNavbarBrand = true;
 
         // @name logout
         // @desc Log the user out
@@ -36,8 +42,14 @@
             PopupService.show(modalDefaults);
         };
 
+        function checkResourceStateType() {
+            vm.showBackButton = NavbarService.isResourceDetailState();
+            vm.showSidebarButton = !NavbarService.isResourceDetailState();
+        }
+
         function activate() {
             // console.log('NavbarController loaded');
+
             vm.isAuthenticated = Authentication.isAuthenticated();
             if (vm.isAuthenticated) {
                 if (Authentication.fetchAuthenticatedUser()) {
@@ -46,15 +58,41 @@
             }
         }
 
+        function addEventListeners() {
+            var deregisterEventAuthenticated = $rootScope.$on('Authenticated', function() {
+                activate();
+            });
+
+            var deregisterEventUnauthenticated = $rootScope.$on('Unauthenticated', function() {
+                activate();
+            });
+
+            var deregisterEventStateChangeStart = $rootScope.$on('$stateChangeStart', function (
+                event, toState, toParams, fromState, fromParams, options) {
+                // console.log(toState.name);
+                checkResourceStateType();
+            });
+
+            var deregisterEventStateChangeSuccess = $rootScope.$on('$stateChangeSuccess', function (
+                event, toState, toParams, fromState, fromParams, options) {
+                // console.log(toState.name);
+            });
+
+            $scope.$on('$destroy', function () {
+                deregisterEventAuthenticated();
+                deregisterEventUnauthenticated();
+                deregisterEventStateChangeStart();
+                deregisterEventStateChangeSuccess();
+            });
+        }
+
         activate();
+        checkResourceStateType();
+        addEventListeners();
 
-        $rootScope.$on('Authenticated', function() {
-            activate();
-        });
-
-        $rootScope.$on('Unauthenticated', function() {
-            activate();
-        });
+        vm.goBack = function () {
+            NavbarService.goBack();
+        };
     }
 
 })();

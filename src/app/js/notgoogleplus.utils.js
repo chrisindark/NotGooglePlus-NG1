@@ -111,7 +111,7 @@
                 // Check for the host
                 var regex = '/api.cloudinary.com/i';
                 if (regex.test(config.url)) {
-                    //Detach the header
+                    // Detach the header
                     delete config.headers.authorization;
                 }
                 return config;

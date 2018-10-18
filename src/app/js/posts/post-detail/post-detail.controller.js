@@ -14,12 +14,17 @@
         var vm = this;
 
         vm.postId = $stateParams.id;
-        vm.post = undefined;
+        vm.post = $stateParams.post;
         vm.formTitle = undefined;
         vm.editMode = undefined;
 
         function getPost () {
             if (vm.postId) {
+                if (vm.post) {
+                    isOwner();
+                    return;
+                }
+
                 PostsService.getPost(vm.postId)
                     .then(function (response) {
                         vm.post = response.data;

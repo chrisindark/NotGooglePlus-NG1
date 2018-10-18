@@ -60,6 +60,7 @@
                 templateUrl: 'app/js/posts/post-detail/post-detail.html',
                 controller: 'PostDetailController',
                 controllerAs: 'vm',
+                params: {'post': null},
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('app/js/posts/post-detail/post-detail.controller.js');
@@ -100,6 +101,7 @@
                 templateUrl: 'app/js/articles/article-detail.html',
                 controller: 'ArticleDetailController',
                 controllerAs: 'vm',
+                params: {'article': null},
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
                         return $ocLazyLoad.load('app/js/articles/article-detail.controller.js');

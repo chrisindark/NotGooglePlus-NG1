@@ -1,7 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation" my-navbar-dir>
     <div class="container-fluid">
         <div class="navbar-header custom-navbar-header">
-
             <button type="button" class="navbar-toggle collapsed"
                 data-toggle="collapse" data-target="#not-google-plus-nav">
                 <span class="sr-only">Toggle Navigation</span>
@@ -10,13 +9,19 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <div id="sidebar-toggle" class="animated-hamburger" my-sidebar-dir>
+            <div id="back-button" class="back-button" ng-if="vm.showBackButton" ng-click="vm.goBack()">
+                <a>
+                <i class="arrow left"></i>
+                </a>
+            </div>
+
+            <div id="sidebar-toggle" class="animated-hamburger" my-sidebar-dir ng-if="vm.showSidebarButton">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
 
-            <a class="navbar-brand custom-navbar-brand"
+            <a class="navbar-brand custom-navbar-brand" ng-if="vm.showNavbarBrand"
                 ui-sref="home" ui-sref-opts="{ reload: true }" my-ripples-dir>NotGooglePlus</a>
         </div>
 

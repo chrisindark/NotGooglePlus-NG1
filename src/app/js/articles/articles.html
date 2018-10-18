@@ -32,7 +32,7 @@
             <div class="well box">
                 <div class="my-article-container">
                     <div class="my-content-header">
-                        <div class="my-user-item" ui-sref="articleDetail({ id: article.id })">
+                        <div class="my-user-item" ui-sref="articleDetail({ id: article.id, article: vm.article })">
                             <a class="my-user-username" ui-sref="profile({ username: article.user.username })"
                                ng-click="$event.stopPropagation()">
                                 <img class="my-user-avatar" ng-src="{{article.user.image}}" ng-if="article.user.image">

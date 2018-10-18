@@ -14,12 +14,17 @@
         var vm = this;
 
         vm.articleId = $stateParams.id;
-        vm.article = undefined;
+        vm.article = $stateParams.article;
         vm.formTitle = undefined;
         vm.editMode = undefined;
 
         function getArticle () {
             if (vm.articleId) {
+                if (vm.article) {
+                    isOwner();
+                    return;
+                }
+
                 ArticlesService.getArticle(vm.articleId)
                     .then(function (response) {
                         vm.article = response.data;

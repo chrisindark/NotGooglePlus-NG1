@@ -3,10 +3,12 @@
         .module('notgoogleplus.controllers')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$state', 'Authentication', 'AccountsService', 'TagsService'];
+    HomeController.$inject = ['$rootScope', '$scope', '$state', 'Authentication', 'AccountsService', 'TagsService',
+        'SeoService'];
 
     // @namespace HomeController
-    function HomeController($state, Authentication, AccountsService, TagsService) {
+    function HomeController($rootScope, $scope, $state, Authentication, AccountsService, TagsService,
+                            SeoService) {
         var vm = this;
 
         vm.tabList = {
@@ -20,12 +22,7 @@
             }
         };
 
-        function activate() {
-            // console.log("HomeController loaded");
-            if (Authentication.isAuthenticated() && !Authentication.fetchAuthenticatedUser() ) {
-                return AccountsService.getAuthenticatedUser();
-            }
-
+        function redirectToState() {
             if ($state.current.name === 'home') {
                 // if state is 'home' redirect to another state
                 // as if home is abstract
@@ -33,8 +30,37 @@
             }
         }
 
-        activate();
+        function activate() {
+            SeoService.setTitle('Notgoogleplus Home');
+            SeoService.setDescription('Home');
 
+            // console.log("HomeController loaded");
+            if (Authentication.isAuthenticated() && !Authentication.fetchAuthenticatedUser() ) {
+                return AccountsService.getAuthenticatedUser();
+            }
+
+            redirectToState();
+        }
+
+        function addEventListeners() {
+            var deregisterEventStateChangeStart = $rootScope.$on('$stateChangeStart', function (
+                event, toState, toParams, fromState, fromParams, options) {
+                // console.log(toState.name);
+            });
+
+            var deregisterEventStateChangeSuccess = $rootScope.$on('$stateChangeSuccess', function (
+                event, toState, toParams, fromState, fromParams, options) {
+                // console.log(toState.name);
+            });
+
+            $scope.$on('$destroy', function () {
+                deregisterEventStateChangeStart();
+                deregisterEventStateChangeSuccess();
+            });
+        }
+
+        activate();
+        addEventListeners();
     }
 
 })();

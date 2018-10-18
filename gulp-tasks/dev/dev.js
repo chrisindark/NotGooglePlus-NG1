@@ -118,7 +118,7 @@ gulp.task('serve', ['inject-tmp'], function () {
         open: false,
         notify: false,
         ghostMode: false,
-        reloadOnRestart: true
+        reloadOnRestart: false
     });
 
     // add browserSync.reload to the tasks array to make
