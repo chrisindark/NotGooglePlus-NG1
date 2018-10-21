@@ -7,7 +7,7 @@
             bindings: {
                 'article': '<'
             },
-            templateUrl: 'app/js/articles/article-preview.html'
+            templateUrl: 'app/js/articles/article-preview/article-preview.html'
         });
 
     angular

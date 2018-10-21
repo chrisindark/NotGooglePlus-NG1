@@ -13,7 +13,7 @@
                 onCreate: '&',
                 onUpdate: '&'
             },
-            templateUrl: 'app/js/articles/article-form.html'
+            templateUrl: 'app/js/articles/article-form/article-form.html'
         });
 
     angular

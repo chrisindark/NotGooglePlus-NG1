@@ -10,12 +10,10 @@
             }
         });
 
-    PostCardController.$inject = ['$rootScope', 'Authentication', 'AccountsService', 'PopupService'];
+    PostCardController.$inject = [];
 
     function PostCardController() {
         var vm = this;
-
-        vm.hello = 'world';
 
         function activate() {}
 

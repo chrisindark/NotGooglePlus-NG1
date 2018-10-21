@@ -28,56 +28,7 @@
 <div class="my-articles-container col-xs-12 col-md-10 col-md-offset-1">
     <div ng-if="vm.articles.results && vm.articles.results.length" class="">
         <div ng-repeat="article in vm.articles.results">
-
-            <div class="well box">
-                <div class="my-article-container">
-                    <div class="my-content-header">
-                        <div class="my-user-item" ui-sref="articleDetail({ id: article.id, article: vm.article })">
-                            <a class="my-user-username" ui-sref="profile({ username: article.user.username })"
-                               ng-click="$event.stopPropagation()">
-                                <img class="my-user-avatar" ng-src="{{article.user.image}}" ng-if="article.user.image">
-                                <img class="my-user-avatar" src="/app/images/avatars/1.png" ng-if="!article.user.image">
-                                +{{article.user.username}}</a>
-                            <div class="my-user-date">
-                                <span>{{ article.updated_at | date: 'd, MMM, yyyy' }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="my-content-body">
-                        <div class="text-center">
-                            <h1 class="text-adjust">{{article.title}}</h1>
-                        </div>
-
-                        <div class="text-center">
-                            <h2 class="text-adjust">{{article.description}}</h2>
-                        </div>
-
-                        <div class="my-content">
-                            <div class="text-adjust" ng-bind-html="vm.markdown(article.content)"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="my-article-overlay" style=""></div>
-
-                <div class="text-center">
-                    <a ui-sref="articleDetail({ id: article.id })">
-                        <h3>Read More</h3>
-                    </a>
-                </div>
-
-                <br>
-
-                <ul class="nav nav-pills">
-                    <li class="active">
-                        <a ui-sref="articleDetail({ id: article.id })">Comments
-                            <span class="badge">{{article.comments_count}}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
+            <article-card-component article="article"></article-card-component>
         </div>
     </div>
 

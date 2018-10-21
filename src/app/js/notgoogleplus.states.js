@@ -86,25 +86,25 @@
             .state('articleNew', {
                 parent: 'home',
                 url: '/articles/new',
-                templateUrl: 'app/js/articles/article-detail.html',
+                templateUrl: 'app/js/articles/article-detail/article-detail.html',
                 controller: 'ArticleDetailController',
                 controllerAs: 'vm',
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load('app/js/articles/article-detail.controller.js');
+                        return $ocLazyLoad.load('app/js/articles/article-detail/article-detail.controller.js');
                     }]
                 }
             })
             .state('articleDetail', {
                 parent: 'home',
                 url: '/articles/{id:int}',
-                templateUrl: 'app/js/articles/article-detail.html',
+                templateUrl: 'app/js/articles/article-detail/article-detail.html',
                 controller: 'ArticleDetailController',
                 controllerAs: 'vm',
                 params: {'article': null},
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-                        return $ocLazyLoad.load('app/js/articles/article-detail.controller.js');
+                        return $ocLazyLoad.load('app/js/articles/article-detail/article-detail.controller.js');
                     }]
                 }
             })

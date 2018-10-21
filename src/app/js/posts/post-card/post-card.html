@@ -1,6 +1,6 @@
 <div class="well box">
     <div class="my-content-header">
-        <div class="my-user-item" ui-sref="postDetail({ id: vm.post.id, post: vm.post })">
+        <div class="my-user-item" ui-sref="postDetail({ id: vm.post.id, post: vm.post })" ui-sref-opts="{ reload: true }">
             <a class="my-user-username" ui-sref="profile({ username: vm.post.user.username })"
                ng-click="$event.stopPropagation()">
                 <img class="my-user-avatar" ng-src="{{vm.post.user.image}}" ng-if="vm.post.user.image">
